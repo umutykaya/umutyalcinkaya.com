@@ -1,0 +1,37 @@
+{
+  "providers": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-umutykaya-dev-25c76-authRole",
+      "UnauthRoleArn": "arn:aws:iam::585008043730:role/amplify-umutykaya-dev-25c76-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::585008043730:role/amplify-umutykaya-dev-25c76-authRole",
+      "Region": "eu-west-2",
+      "DeploymentBucketName": "amplify-umutykaya-dev-25c76-deployment",
+      "UnauthRoleName": "amplify-umutykaya-dev-25c76-unauthRole",
+      "StackName": "amplify-umutykaya-dev-25c76",
+      "StackId": "arn:aws:cloudformation:eu-west-2:585008043730:stack/amplify-umutykaya-dev-25c76/d28a7320-366d-11f1-b23a-0228de485351",
+      "AmplifyAppId": "d2rbe7wwcy2otb"
+    }
+  },
+  "hosting": {
+    "S3AndCloudFront": {
+      "service": "S3AndCloudFront",
+      "providerPlugin": "awscloudformation",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-umutykaya-dev-25c76-deployment/amplify-cfn-templates/hosting/template.json",
+        "logicalId": "hostingS3AndCloudFront"
+      },
+      "lastPushTimeStamp": "2026-04-14T13:55:13.959Z",
+      "output": {
+        "CloudFrontSecureURL": "https://dj12v0dmvw7pz.cloudfront.net",
+        "S3BucketSecureURL": "https://umutykaya-20260412161350-hostingbucket-dev.s3.amazonaws.com",
+        "CloudFrontOriginAccessIdentity": "E3OYBDXYXDYA7P",
+        "WebsiteURL": "http://umutykaya-20260412161350-hostingbucket-dev.s3-website.eu-west-2.amazonaws.com",
+        "CloudFrontDistributionID": "E31PYIEXB9QRFM",
+        "Region": "eu-west-2",
+        "HostingBucketName": "umutykaya-20260412161350-hostingbucket-dev",
+        "CloudFrontDomainName": "dj12v0dmvw7pz.cloudfront.net"
+      },
+      "lastPushDirHash": "exrrCqkqj3O8fCA/lOFnrXLaQnI="
+    }
+  }
+}

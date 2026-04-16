@@ -1,0 +1,44 @@
+# Reference GraphQL Schema for Amplify API
+# To use: run `amplify add api` and paste this schema
+
+type Slot
+  @model
+  @auth(
+    rules: [
+      { allow: groups, groups: ["Admins"], operations: [create, update, delete, read] }
+      { allow: private, operations: [read] }
+    ]
+  ) {
+  id: ID!
+  date: AWSDate!
+  startTime: AWSTime!
+  endTime: AWSTime!
+  duration: Int!
+  isBooked: Boolean!
+  createdBy: String!
+}
+
+type Booking
+  @model
+  @auth(
+    rules: [
+      { allow: owner, operations: [create, read] }
+      { allow: groups, groups: ["Admins"], operations: [read, update] }
+    ]
+  ) {
+  id: ID!
+  slotId: ID!
+  userId: String!
+  userName: String!
+  userEmail: String!
+  status: BookingStatus!
+  message: String
+  createdAt: AWSDateTime!
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  REJECTED
+  CANCELLED
+}

@@ -1,0 +1,197 @@
+{
+  "nav": {
+    "work": "Trabajos",
+    "about": "Sobre mí",
+    "contact": "Contacto",
+    "letsTalk": "Hablemos",
+    "login": "Iniciar sesión",
+    "register": "Registrarse",
+    "profile": "Perfil",
+    "logout": "Cerrar sesión",
+    "appointments": "Citas",
+    "myBookings": "Mis Reservas",
+    "admin": "Administración"
+  },
+  "hero": {
+    "badge": "Disponible para nuevos proyectos",
+    "title1": "Construyo cosas",
+    "title2": "para la web",
+    "subtitle": "Desarrollador full-stack y diseñador creando experiencias digitales modernas con precisión y dedicación.",
+    "viewWork": "Ver Trabajos",
+    "aboutMe": "Sobre Mí"
+  },
+  "work": {
+    "label": "// Trabajos Seleccionados",
+    "title": "Proyectos",
+    "nebula": {
+      "title": "Nebula Dashboard",
+      "description": "Plataforma de análisis en tiempo real con visualización dinámica de datos, construida para escala y claridad."
+    },
+    "aura": {
+      "title": "Aura Commerce",
+      "description": "Tienda de comercio electrónico headless con cargas ultrarrápidas y flujos de pago sin interrupciones."
+    },
+    "synthwave": {
+      "title": "Synthwave Studio",
+      "description": "Herramienta de creación musical impulsada por IA con una interfaz intuitiva de composición basada en nodos."
+    },
+    "vertex": {
+      "title": "Vertex Protocol",
+      "description": "Kit de herramientas para desarrolladores y plataforma de documentación con playgrounds de API interactivos."
+    },
+    "horizon": {
+      "title": "Horizon OS",
+      "description": "Interfaz de sistema operativo conceptual construida completamente en el navegador con gestión de ventanas y temas."
+    },
+    "pulse": {
+      "title": "Pulse Health",
+      "description": "Panel de seguimiento de salud con integración de dispositivos wearables y motor de insights personalizados."
+    }
+  },
+  "about": {
+    "label": "// Sobre mí",
+    "title1": "Creando experiencias",
+    "title2": "digitales",
+    "bio1": "Soy un desarrollador full-stack y diseñador apasionado por construir productos que no solo son funcionales sino también bellamente diseñados. Mi enfoque combina arquitectura de código limpio con diseño pixel-perfect.",
+    "bio2": "Me especializo en tecnologías web modernas y me encanta empujar los límites de lo posible en el navegador. Cada proyecto es una oportunidad para crear algo significativo.",
+    "yearsExp": "Años de Experiencia",
+    "projects": "Proyectos Entregados",
+    "clients": "Clientes Satisfechos",
+    "techStack": "// Stack Tecnológico"
+  },
+  "contact": {
+    "label": "// Contáctame",
+    "title1": "Trabajemos",
+    "title2": "juntos",
+    "subtitle": "¿Tienes un proyecto en mente o simplemente quieres saludar? No dudes en contactarme — siempre estoy abierto a nuevas oportunidades y colaboraciones.",
+    "name": "Tu Nombre",
+    "email": "Tu Email",
+    "subject": "Asunto",
+    "message": "Mensaje",
+    "sendWhatsApp": "Enviar por WhatsApp",
+    "sendEmail": "Enviar por Email",
+    "quickActions": "Acciones Rápidas",
+    "bookAppointment": "Reservar Cita",
+    "requestQuote": "Solicitar Presupuesto",
+    "sayHello": "Saludar",
+    "businessHours": "Horario Laboral",
+    "monFri": "Lun – Vie: 9:00 – 18:00 CET",
+    "weekend": "Fin de semana: Cerrado",
+    "available": "Disponible Ahora",
+    "unavailable": "No Disponible",
+    "namePlaceholder": "Juan García",
+    "emailPlaceholder": "juan@ejemplo.com",
+    "subjectPlaceholder": "Consulta de proyecto",
+    "messagePlaceholder": "Cuéntame sobre tu proyecto..."
+  },
+  "footer": {
+    "rights": "Todos los derechos reservados.",
+    "builtWith": "Hecho con precisión y dedicación"
+  },
+  "notFound": {
+    "title": "404",
+    "message": "¡Ups! Página no encontrada",
+    "backHome": "Volver al Inicio"
+  },
+  "auth": {
+    "loginTitle": "Bienvenido de nuevo",
+    "loginSubtitle": "Inicia sesión en tu cuenta",
+    "registerTitle": "Crear cuenta",
+    "registerSubtitle": "Regístrate para empezar",
+    "email": "Email",
+    "password": "Contraseña",
+    "confirmPassword": "Confirmar contraseña",
+    "fullName": "Nombre completo",
+    "signIn": "Iniciar Sesión",
+    "signUp": "Registrarse",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "noAccount": "¿No tienes cuenta?",
+    "hasAccount": "¿Ya tienes cuenta?",
+    "verifyTitle": "Verifica tu email",
+    "verifySubtitle": "Introduce el código de verificación enviado a tu email",
+    "code": "Código de verificación",
+    "verify": "Verificar",
+    "resend": "Reenviar código",
+    "configError": "El servicio de autenticación no está configurado. Configure Amplify Auth."
+  },
+  "profile": {
+    "title": "Perfil",
+    "personalInfo": "Información Personal",
+    "email": "Email",
+    "name": "Nombre",
+    "role": "Rol",
+    "user": "Usuario",
+    "admin": "Administrador",
+    "signOut": "Cerrar Sesión"
+  },
+  "appointments": {
+    "title": "Reservar una Cita",
+    "subtitle": "Selecciona un horario disponible para programar una reunión.",
+    "available": "Horarios Disponibles",
+    "noSlots": "No hay horarios disponibles en este momento. Por favor, vuelve más tarde.",
+    "book": "Reservar",
+    "confirmTitle": "Confirmar Reserva",
+    "confirmMessage": "Añadir un mensaje (opcional)",
+    "confirmPlaceholder": "Cuéntanos sobre tus necesidades...",
+    "confirm": "Confirmar",
+    "cancel": "Cancelar",
+    "myBookings": "Mis Reservas",
+    "noBookings": "Aún no tienes reservas.",
+    "pending": "Pendiente",
+    "confirmed": "Confirmada",
+    "rejected": "Rechazada",
+    "cancelled": "Cancelada",
+    "date": "Fecha",
+    "time": "Hora",
+    "duration": "Duración",
+    "minutes": "min",
+    "status": "Estado",
+    "bookedSuccess": "¡Cita reservada con éxito!",
+    "bookingError": "Error al reservar. Por favor, inténtalo de nuevo."
+  },
+  "admin": {
+    "dashboard": "Panel de Control",
+    "manageSlots": "Gestionar Horarios",
+    "manageBookings": "Gestionar Reservas",
+    "calendarSync": "Sincronización de Calendario",
+    "createSlot": "Crear Horario",
+    "editSlot": "Editar Horario",
+    "deleteSlot": "Eliminar Horario",
+    "deleteConfirm": "¿Estás seguro de que quieres eliminar este horario?",
+    "date": "Fecha",
+    "startTime": "Hora de Inicio",
+    "endTime": "Hora de Fin",
+    "durationMin": "Duración (min)",
+    "save": "Guardar",
+    "approve": "Aprobar",
+    "reject": "Rechazar",
+    "totalSlots": "Total Horarios",
+    "bookedSlots": "Horarios Reservados",
+    "pendingBookings": "Pendientes",
+    "totalBookings": "Total Reservas",
+    "exportIcs": "Exportar .ics",
+    "importIcs": "Importar .ics",
+    "exportDesc": "Descarga tus citas como archivo iCalendar compatible con Google Calendar e iCloud.",
+    "importDesc": "Sube un archivo .ics para importar citas.",
+    "selectFile": "Seleccionar archivo .ics",
+    "importSuccess": "Eventos importados con éxito",
+    "exportSuccess": "Archivo de calendario descargado",
+    "noSlots": "No hay horarios creados.",
+    "noBookings": "No hay reservas aún."
+  },
+  "cookie": {
+    "message": "Usamos cookies y Google Analytics para analizar el tráfico del sitio y mejorar tu experiencia.",
+    "accept": "Aceptar",
+    "decline": "Rechazar"
+  },
+  "common": {
+    "loading": "Cargando...",
+    "error": "Ocurrió un error",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "back": "Atrás",
+    "close": "Cerrar"
+  }
+}

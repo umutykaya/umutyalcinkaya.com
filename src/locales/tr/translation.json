@@ -1,0 +1,197 @@
+{
+  "nav": {
+    "work": "Çalışmalar",
+    "about": "Hakkımda",
+    "contact": "İletişim",
+    "letsTalk": "Konuşalım",
+    "login": "Giriş Yap",
+    "register": "Kayıt Ol",
+    "profile": "Profil",
+    "logout": "Çıkış Yap",
+    "appointments": "Randevular",
+    "myBookings": "Randevularım",
+    "admin": "Yönetim"
+  },
+  "hero": {
+    "badge": "Yeni projeler için müsaitim",
+    "title1": "Web için",
+    "title2": "projeler geliştiriyorum",
+    "subtitle": "Modern dijital deneyimleri özen ve hassasiyetle tasarlayan full-stack geliştirici ve tasarımcı.",
+    "viewWork": "Çalışmalarım",
+    "aboutMe": "Hakkımda"
+  },
+  "work": {
+    "label": "// Seçili Çalışmalar",
+    "title": "Projeler",
+    "nebula": {
+      "title": "Nebula Dashboard",
+      "description": "Dinamik veri görselleştirme ile ölçeklenebilirlik ve netlik için tasarlanmış gerçek zamanlı analitik platformu."
+    },
+    "aura": {
+      "title": "Aura Commerce",
+      "description": "Ultra hızlı sayfa yüklemeleri ve sorunsuz ödeme akışları sunan headless e-ticaret mağazası."
+    },
+    "synthwave": {
+      "title": "Synthwave Studio",
+      "description": "Sezgisel düğüm tabanlı kompozisyon arayüzüne sahip yapay zeka destekli müzik oluşturma aracı."
+    },
+    "vertex": {
+      "title": "Vertex Protocol",
+      "description": "Etkileşimli API deneme alanlarına sahip geliştirici araç seti ve dokümantasyon platformu."
+    },
+    "horizon": {
+      "title": "Horizon OS",
+      "description": "Pencere yönetimi ve tema desteği ile tamamen tarayıcıda oluşturulmuş konsept işletim sistemi arayüzü."
+    },
+    "pulse": {
+      "title": "Pulse Health",
+      "description": "Giyilebilir cihaz entegrasyonu ve kişiselleştirilmiş içgörü motoru ile sağlık takip panosu."
+    }
+  },
+  "about": {
+    "label": "// Hakkımda",
+    "title1": "Dijital",
+    "title2": "deneyimler tasarlıyorum",
+    "bio1": "Sadece işlevsel değil, aynı zamanda güzel tasarlanmış ürünler geliştirme tutkusu olan bir full-stack geliştirici ve tasarımcıyım. Yaklaşımım, temiz kod mimarisini piksel mükemmelliğinde tasarımla birleştirir.",
+    "bio2": "Modern web teknolojilerinde uzmanlaşıyorum ve tarayıcıda mümkün olanın sınırlarını zorlamayı seviyorum. Her proje, anlamlı bir şey yaratma fırsatıdır.",
+    "yearsExp": "Yıl Deneyim",
+    "projects": "Tamamlanan Proje",
+    "clients": "Mutlu Müşteri",
+    "techStack": "// Teknoloji Yığını"
+  },
+  "contact": {
+    "label": "// İletişime Geçin",
+    "title1": "Birlikte",
+    "title2": "çalışalım",
+    "subtitle": "Aklınızda bir proje mi var yoksa sadece merhaba mı demek istiyorsunuz? Çekinmeyin — yeni fırsatlara ve işbirliklerine her zaman açığım.",
+    "name": "Adınız",
+    "email": "E-posta Adresiniz",
+    "subject": "Konu",
+    "message": "Mesaj",
+    "sendWhatsApp": "WhatsApp ile Gönder",
+    "sendEmail": "E-posta ile Gönder",
+    "quickActions": "Hızlı İşlemler",
+    "bookAppointment": "Randevu Al",
+    "requestQuote": "Teklif İste",
+    "sayHello": "Merhaba De",
+    "businessHours": "Çalışma Saatleri",
+    "monFri": "Pzt – Cum: 9:00 – 18:00 CET",
+    "weekend": "Hafta sonu: Kapalı",
+    "available": "Şu An Müsait",
+    "unavailable": "Şu An Müsait Değil",
+    "namePlaceholder": "Ahmet Yılmaz",
+    "emailPlaceholder": "ahmet@ornek.com",
+    "subjectPlaceholder": "Proje talebi",
+    "messagePlaceholder": "Projeniz hakkında bilgi verin..."
+  },
+  "footer": {
+    "rights": "Tüm hakları saklıdır.",
+    "builtWith": "Özen ve hassasiyetle yapıldı"
+  },
+  "notFound": {
+    "title": "404",
+    "message": "Sayfa bulunamadı",
+    "backHome": "Ana Sayfaya Dön"
+  },
+  "auth": {
+    "loginTitle": "Tekrar hoş geldiniz",
+    "loginSubtitle": "Hesabınıza giriş yapın",
+    "registerTitle": "Hesap oluştur",
+    "registerSubtitle": "Başlamak için kayıt olun",
+    "email": "E-posta",
+    "password": "Şifre",
+    "confirmPassword": "Şifre tekrar",
+    "fullName": "Ad soyad",
+    "signIn": "Giriş Yap",
+    "signUp": "Kayıt Ol",
+    "forgotPassword": "Şifrenizi mi unuttunuz?",
+    "noAccount": "Hesabınız yok mu?",
+    "hasAccount": "Zaten hesabınız var mı?",
+    "verifyTitle": "E-postanızı doğrulayın",
+    "verifySubtitle": "E-postanıza gönderilen doğrulama kodunu girin",
+    "code": "Doğrulama kodu",
+    "verify": "Doğrula",
+    "resend": "Kodu tekrar gönder",
+    "configError": "Kimlik doğrulama servisi yapılandırılmamış. Lütfen Amplify Auth kurulumunu yapın."
+  },
+  "profile": {
+    "title": "Profil",
+    "personalInfo": "Kişisel Bilgiler",
+    "email": "E-posta",
+    "name": "İsim",
+    "role": "Rol",
+    "user": "Kullanıcı",
+    "admin": "Yönetici",
+    "signOut": "Çıkış Yap"
+  },
+  "appointments": {
+    "title": "Randevu Al",
+    "subtitle": "Bir görüşme planlamak için uygun zaman dilimini seçin.",
+    "available": "Uygun Zaman Dilimleri",
+    "noSlots": "Şu an uygun zaman dilimi bulunmamaktadır. Lütfen daha sonra tekrar kontrol edin.",
+    "book": "Rezerve Et",
+    "confirmTitle": "Rezervasyonu Onayla",
+    "confirmMessage": "Mesaj ekleyin (isteğe bağlı)",
+    "confirmPlaceholder": "İhtiyaçlarınız hakkında bilgi verin...",
+    "confirm": "Onayla",
+    "cancel": "İptal",
+    "myBookings": "Randevularım",
+    "noBookings": "Henüz randevunuz bulunmamaktadır.",
+    "pending": "Beklemede",
+    "confirmed": "Onaylandı",
+    "rejected": "Reddedildi",
+    "cancelled": "İptal Edildi",
+    "date": "Tarih",
+    "time": "Saat",
+    "duration": "Süre",
+    "minutes": "dk",
+    "status": "Durum",
+    "bookedSuccess": "Randevu başarıyla oluşturuldu!",
+    "bookingError": "Randevu oluşturulamadı. Lütfen tekrar deneyin."
+  },
+  "admin": {
+    "dashboard": "Kontrol Paneli",
+    "manageSlots": "Slot Yönetimi",
+    "manageBookings": "Randevu Yönetimi",
+    "calendarSync": "Takvim Senkronizasyonu",
+    "createSlot": "Slot Oluştur",
+    "editSlot": "Slotu Düzenle",
+    "deleteSlot": "Slotu Sil",
+    "deleteConfirm": "Bu slotu silmek istediğinizden emin misiniz?",
+    "date": "Tarih",
+    "startTime": "Başlangıç Saati",
+    "endTime": "Bitiş Saati",
+    "durationMin": "Süre (dk)",
+    "save": "Kaydet",
+    "approve": "Onayla",
+    "reject": "Reddet",
+    "totalSlots": "Toplam Slot",
+    "bookedSlots": "Dolu Slotlar",
+    "pendingBookings": "Bekleyen",
+    "totalBookings": "Toplam Randevu",
+    "exportIcs": ".ics Dışa Aktar",
+    "importIcs": ".ics İçe Aktar",
+    "exportDesc": "Randevularınızı Google Takvim ve iCloud ile uyumlu iCalendar dosyası olarak indirin.",
+    "importDesc": "Randevuları içe aktarmak için .ics dosyası yükleyin.",
+    "selectFile": ".ics dosyası seçin",
+    "importSuccess": "Etkinlikler başarıyla içe aktarıldı",
+    "exportSuccess": "Takvim dosyası indirildi",
+    "noSlots": "Henüz slot oluşturulmamış.",
+    "noBookings": "Henüz randevu bulunmuyor."
+  },
+  "cookie": {
+    "message": "Site trafiğini analiz etmek ve deneyiminizi iyileştirmek için çerezler ve Google Analytics kullanıyoruz.",
+    "accept": "Kabul Et",
+    "decline": "Reddet"
+  },
+  "common": {
+    "loading": "Yükleniyor...",
+    "error": "Bir hata oluştu",
+    "save": "Kaydet",
+    "cancel": "İptal",
+    "delete": "Sil",
+    "edit": "Düzenle",
+    "back": "Geri",
+    "close": "Kapat"
+  }
+}

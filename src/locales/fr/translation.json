@@ -1,0 +1,197 @@
+{
+  "nav": {
+    "work": "Projets",
+    "about": "À propos",
+    "contact": "Contact",
+    "letsTalk": "Parlons-en",
+    "login": "Connexion",
+    "register": "Inscription",
+    "profile": "Profil",
+    "logout": "Déconnexion",
+    "appointments": "Rendez-vous",
+    "myBookings": "Mes Réservations",
+    "admin": "Administration"
+  },
+  "hero": {
+    "badge": "Disponible pour de nouveaux projets",
+    "title1": "Je construis des choses",
+    "title2": "pour le web",
+    "subtitle": "Développeur full-stack et designer créant des expériences numériques modernes avec précision et soin.",
+    "viewWork": "Voir les Projets",
+    "aboutMe": "À Propos"
+  },
+  "work": {
+    "label": "// Travaux Sélectionnés",
+    "title": "Projets",
+    "nebula": {
+      "title": "Nebula Dashboard",
+      "description": "Plateforme d'analyse en temps réel avec visualisation dynamique des données, conçue pour la scalabilité et la clarté."
+    },
+    "aura": {
+      "title": "Aura Commerce",
+      "description": "Boutique e-commerce headless avec des chargements ultra-rapides et des flux de paiement fluides."
+    },
+    "synthwave": {
+      "title": "Synthwave Studio",
+      "description": "Outil de création musicale alimenté par l'IA avec une interface de composition intuitive basée sur des nœuds."
+    },
+    "vertex": {
+      "title": "Vertex Protocol",
+      "description": "Kit d'outils pour développeurs et plateforme de documentation avec des playgrounds d'API interactifs."
+    },
+    "horizon": {
+      "title": "Horizon OS",
+      "description": "Interface de système d'exploitation conceptuel entièrement construite dans le navigateur avec gestion de fenêtres et thèmes."
+    },
+    "pulse": {
+      "title": "Pulse Health",
+      "description": "Tableau de bord de suivi de santé avec intégration de dispositifs portables et moteur d'insights personnalisés."
+    }
+  },
+  "about": {
+    "label": "// À propos",
+    "title1": "Créer des expériences",
+    "title2": "numériques",
+    "bio1": "Je suis un développeur full-stack et designer passionné par la création de produits non seulement fonctionnels mais aussi magnifiquement conçus. Mon approche combine une architecture de code propre avec un design pixel-perfect.",
+    "bio2": "Je me spécialise dans les technologies web modernes et j'aime repousser les limites du possible dans le navigateur. Chaque projet est une opportunité de créer quelque chose de significatif.",
+    "yearsExp": "Années d'Expérience",
+    "projects": "Projets Livrés",
+    "clients": "Clients Satisfaits",
+    "techStack": "// Stack Technologique"
+  },
+  "contact": {
+    "label": "// Me Contacter",
+    "title1": "Travaillons",
+    "title2": "ensemble",
+    "subtitle": "Vous avez un projet en tête ou vous voulez simplement dire bonjour ? N'hésitez pas — je suis toujours ouvert aux nouvelles opportunités et collaborations.",
+    "name": "Votre Nom",
+    "email": "Votre Email",
+    "subject": "Sujet",
+    "message": "Message",
+    "sendWhatsApp": "Envoyer via WhatsApp",
+    "sendEmail": "Envoyer par Email",
+    "quickActions": "Actions Rapides",
+    "bookAppointment": "Prendre Rendez-vous",
+    "requestQuote": "Demander un Devis",
+    "sayHello": "Dire Bonjour",
+    "businessHours": "Heures d'Ouverture",
+    "monFri": "Lun – Ven : 9h00 – 18h00 CET",
+    "weekend": "Week-end : Fermé",
+    "available": "Disponible Maintenant",
+    "unavailable": "Non Disponible",
+    "namePlaceholder": "Jean Dupont",
+    "emailPlaceholder": "jean@exemple.com",
+    "subjectPlaceholder": "Demande de projet",
+    "messagePlaceholder": "Parlez-moi de votre projet..."
+  },
+  "footer": {
+    "rights": "Tous droits réservés.",
+    "builtWith": "Fait avec précision et soin"
+  },
+  "notFound": {
+    "title": "404",
+    "message": "Oups ! Page non trouvée",
+    "backHome": "Retour à l'Accueil"
+  },
+  "auth": {
+    "loginTitle": "Bon retour",
+    "loginSubtitle": "Connectez-vous à votre compte",
+    "registerTitle": "Créer un compte",
+    "registerSubtitle": "Inscrivez-vous pour commencer",
+    "email": "Email",
+    "password": "Mot de passe",
+    "confirmPassword": "Confirmer le mot de passe",
+    "fullName": "Nom complet",
+    "signIn": "Se Connecter",
+    "signUp": "S'Inscrire",
+    "forgotPassword": "Mot de passe oublié ?",
+    "noAccount": "Pas encore de compte ?",
+    "hasAccount": "Déjà un compte ?",
+    "verifyTitle": "Vérifiez votre email",
+    "verifySubtitle": "Entrez le code de vérification envoyé à votre email",
+    "code": "Code de vérification",
+    "verify": "Vérifier",
+    "resend": "Renvoyer le code",
+    "configError": "Le service d'authentification n'est pas configuré. Veuillez configurer Amplify Auth."
+  },
+  "profile": {
+    "title": "Profil",
+    "personalInfo": "Informations Personnelles",
+    "email": "Email",
+    "name": "Nom",
+    "role": "Rôle",
+    "user": "Utilisateur",
+    "admin": "Administrateur",
+    "signOut": "Déconnexion"
+  },
+  "appointments": {
+    "title": "Prendre Rendez-vous",
+    "subtitle": "Sélectionnez un créneau disponible pour planifier une réunion.",
+    "available": "Créneaux Disponibles",
+    "noSlots": "Aucun créneau disponible pour le moment. Veuillez revenir plus tard.",
+    "book": "Réserver",
+    "confirmTitle": "Confirmer la Réservation",
+    "confirmMessage": "Ajouter un message (optionnel)",
+    "confirmPlaceholder": "Parlez-nous de vos besoins...",
+    "confirm": "Confirmer",
+    "cancel": "Annuler",
+    "myBookings": "Mes Réservations",
+    "noBookings": "Vous n'avez pas encore de réservations.",
+    "pending": "En attente",
+    "confirmed": "Confirmé",
+    "rejected": "Refusé",
+    "cancelled": "Annulé",
+    "date": "Date",
+    "time": "Heure",
+    "duration": "Durée",
+    "minutes": "min",
+    "status": "Statut",
+    "bookedSuccess": "Rendez-vous réservé avec succès !",
+    "bookingError": "Échec de la réservation. Veuillez réessayer."
+  },
+  "admin": {
+    "dashboard": "Tableau de Bord",
+    "manageSlots": "Gérer les Créneaux",
+    "manageBookings": "Gérer les Réservations",
+    "calendarSync": "Synchronisation du Calendrier",
+    "createSlot": "Créer un Créneau",
+    "editSlot": "Modifier le Créneau",
+    "deleteSlot": "Supprimer le Créneau",
+    "deleteConfirm": "Êtes-vous sûr de vouloir supprimer ce créneau ?",
+    "date": "Date",
+    "startTime": "Heure de Début",
+    "endTime": "Heure de Fin",
+    "durationMin": "Durée (min)",
+    "save": "Enregistrer",
+    "approve": "Approuver",
+    "reject": "Refuser",
+    "totalSlots": "Total Créneaux",
+    "bookedSlots": "Créneaux Réservés",
+    "pendingBookings": "En Attente",
+    "totalBookings": "Total Réservations",
+    "exportIcs": "Exporter .ics",
+    "importIcs": "Importer .ics",
+    "exportDesc": "Téléchargez vos rendez-vous en fichier iCalendar compatible avec Google Calendar et iCloud.",
+    "importDesc": "Importez un fichier .ics pour ajouter des rendez-vous.",
+    "selectFile": "Sélectionner un fichier .ics",
+    "importSuccess": "Événements importés avec succès",
+    "exportSuccess": "Fichier calendrier téléchargé",
+    "noSlots": "Aucun créneau créé.",
+    "noBookings": "Aucune réservation."
+  },
+  "cookie": {
+    "message": "Nous utilisons des cookies et Google Analytics pour analyser le trafic et améliorer votre expérience.",
+    "accept": "Accepter",
+    "decline": "Refuser"
+  },
+  "common": {
+    "loading": "Chargement...",
+    "error": "Une erreur est survenue",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "back": "Retour",
+    "close": "Fermer"
+  }
+}

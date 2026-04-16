@@ -1,0 +1,197 @@
+{
+  "nav": {
+    "work": "Arbeiten",
+    "about": "Über mich",
+    "contact": "Kontakt",
+    "letsTalk": "Sprechen wir",
+    "login": "Anmelden",
+    "register": "Registrieren",
+    "profile": "Profil",
+    "logout": "Abmelden",
+    "appointments": "Termine",
+    "myBookings": "Meine Buchungen",
+    "admin": "Verwaltung"
+  },
+  "hero": {
+    "badge": "Verfügbar für neue Projekte",
+    "title1": "Ich baue Dinge",
+    "title2": "fürs Web",
+    "subtitle": "Full-Stack-Entwickler und Designer, der moderne digitale Erlebnisse mit Präzision und Sorgfalt gestaltet.",
+    "viewWork": "Arbeiten ansehen",
+    "aboutMe": "Über mich"
+  },
+  "work": {
+    "label": "// Ausgewählte Arbeiten",
+    "title": "Projekte",
+    "nebula": {
+      "title": "Nebula Dashboard",
+      "description": "Echtzeit-Analyseplattform mit dynamischer Datenvisualisierung, entwickelt für Skalierbarkeit und Klarheit."
+    },
+    "aura": {
+      "title": "Aura Commerce",
+      "description": "Headless-E-Commerce-Storefront mit ultraschnellen Ladezeiten und nahtlosen Checkout-Abläufen."
+    },
+    "synthwave": {
+      "title": "Synthwave Studio",
+      "description": "KI-gestütztes Musikerstellungstool mit einer intuitiven knotenbasierten Kompositionsoberfläche."
+    },
+    "vertex": {
+      "title": "Vertex Protocol",
+      "description": "Entwickler-Toolkit und Dokumentationsplattform mit interaktiven API-Playgrounds."
+    },
+    "horizon": {
+      "title": "Horizon OS",
+      "description": "Konzeptuelles Betriebssystem-UI, vollständig im Browser erstellt mit Fensterverwaltung und Themes."
+    },
+    "pulse": {
+      "title": "Pulse Health",
+      "description": "Gesundheits-Tracking-Dashboard mit Wearable-Integration und personalisiertem Insights-Engine."
+    }
+  },
+  "about": {
+    "label": "// Über mich",
+    "title1": "Digitale Erlebnisse",
+    "title2": "gestalten",
+    "bio1": "Ich bin ein Full-Stack-Entwickler und Designer mit einer Leidenschaft für Produkte, die nicht nur funktional, sondern auch wunderschön gestaltet sind. Mein Ansatz verbindet saubere Code-Architektur mit pixelgenauem Design.",
+    "bio2": "Ich spezialisiere mich auf moderne Web-Technologien und liebe es, die Grenzen des im Browser Möglichen zu erweitern. Jedes Projekt ist eine Gelegenheit, etwas Bedeutungsvolles zu schaffen.",
+    "yearsExp": "Jahre Erfahrung",
+    "projects": "Gelieferte Projekte",
+    "clients": "Zufriedene Kunden",
+    "techStack": "// Tech Stack"
+  },
+  "contact": {
+    "label": "// Kontakt aufnehmen",
+    "title1": "Lass uns",
+    "title2": "zusammenarbeiten",
+    "subtitle": "Haben Sie ein Projekt im Sinn oder möchten Sie einfach Hallo sagen? Zögern Sie nicht — ich bin immer offen für neue Möglichkeiten und Zusammenarbeit.",
+    "name": "Ihr Name",
+    "email": "Ihre Email",
+    "subject": "Betreff",
+    "message": "Nachricht",
+    "sendWhatsApp": "Per WhatsApp senden",
+    "sendEmail": "Per Email senden",
+    "quickActions": "Schnellaktionen",
+    "bookAppointment": "Termin buchen",
+    "requestQuote": "Angebot anfordern",
+    "sayHello": "Hallo sagen",
+    "businessHours": "Geschäftszeiten",
+    "monFri": "Mo – Fr: 9:00 – 18:00 CET",
+    "weekend": "Wochenende: Geschlossen",
+    "available": "Jetzt Verfügbar",
+    "unavailable": "Derzeit Nicht Verfügbar",
+    "namePlaceholder": "Max Mustermann",
+    "emailPlaceholder": "max@beispiel.de",
+    "subjectPlaceholder": "Projektanfrage",
+    "messagePlaceholder": "Erzählen Sie mir von Ihrem Projekt..."
+  },
+  "footer": {
+    "rights": "Alle Rechte vorbehalten.",
+    "builtWith": "Mit Präzision und Sorgfalt gebaut"
+  },
+  "notFound": {
+    "title": "404",
+    "message": "Hoppla! Seite nicht gefunden",
+    "backHome": "Zurück zur Startseite"
+  },
+  "auth": {
+    "loginTitle": "Willkommen zurück",
+    "loginSubtitle": "Melden Sie sich bei Ihrem Konto an",
+    "registerTitle": "Konto erstellen",
+    "registerSubtitle": "Registrieren Sie sich, um loszulegen",
+    "email": "Email",
+    "password": "Passwort",
+    "confirmPassword": "Passwort bestätigen",
+    "fullName": "Vollständiger Name",
+    "signIn": "Anmelden",
+    "signUp": "Registrieren",
+    "forgotPassword": "Passwort vergessen?",
+    "noAccount": "Kein Konto?",
+    "hasAccount": "Bereits ein Konto?",
+    "verifyTitle": "Email verifizieren",
+    "verifySubtitle": "Geben Sie den Bestätigungscode ein, der an Ihre Email gesendet wurde",
+    "code": "Bestätigungscode",
+    "verify": "Verifizieren",
+    "resend": "Code erneut senden",
+    "configError": "Der Authentifizierungsdienst ist nicht konfiguriert. Bitte richten Sie Amplify Auth ein."
+  },
+  "profile": {
+    "title": "Profil",
+    "personalInfo": "Persönliche Informationen",
+    "email": "Email",
+    "name": "Name",
+    "role": "Rolle",
+    "user": "Benutzer",
+    "admin": "Administrator",
+    "signOut": "Abmelden"
+  },
+  "appointments": {
+    "title": "Termin buchen",
+    "subtitle": "Wählen Sie einen verfügbaren Zeitraum für ein Meeting.",
+    "available": "Verfügbare Termine",
+    "noSlots": "Derzeit keine verfügbaren Termine. Bitte versuchen Sie es später erneut.",
+    "book": "Buchen",
+    "confirmTitle": "Buchung bestätigen",
+    "confirmMessage": "Nachricht hinzufügen (optional)",
+    "confirmPlaceholder": "Erzählen Sie uns von Ihren Bedürfnissen...",
+    "confirm": "Bestätigen",
+    "cancel": "Abbrechen",
+    "myBookings": "Meine Buchungen",
+    "noBookings": "Sie haben noch keine Buchungen.",
+    "pending": "Ausstehend",
+    "confirmed": "Bestätigt",
+    "rejected": "Abgelehnt",
+    "cancelled": "Storniert",
+    "date": "Datum",
+    "time": "Zeit",
+    "duration": "Dauer",
+    "minutes": "Min",
+    "status": "Status",
+    "bookedSuccess": "Termin erfolgreich gebucht!",
+    "bookingError": "Buchung fehlgeschlagen. Bitte versuchen Sie es erneut."
+  },
+  "admin": {
+    "dashboard": "Dashboard",
+    "manageSlots": "Termine verwalten",
+    "manageBookings": "Buchungen verwalten",
+    "calendarSync": "Kalender-Synchronisierung",
+    "createSlot": "Termin erstellen",
+    "editSlot": "Termin bearbeiten",
+    "deleteSlot": "Termin löschen",
+    "deleteConfirm": "Sind Sie sicher, dass Sie diesen Termin löschen möchten?",
+    "date": "Datum",
+    "startTime": "Startzeit",
+    "endTime": "Endzeit",
+    "durationMin": "Dauer (Min)",
+    "save": "Speichern",
+    "approve": "Genehmigen",
+    "reject": "Ablehnen",
+    "totalSlots": "Gesamttermine",
+    "bookedSlots": "Gebuchte Termine",
+    "pendingBookings": "Ausstehend",
+    "totalBookings": "Gesamtbuchungen",
+    "exportIcs": ".ics exportieren",
+    "importIcs": ".ics importieren",
+    "exportDesc": "Laden Sie Ihre Termine als iCalendar-Datei herunter, kompatibel mit Google Kalender und iCloud.",
+    "importDesc": "Laden Sie eine .ics-Datei hoch, um Termine zu importieren.",
+    "selectFile": ".ics-Datei auswählen",
+    "importSuccess": "Ereignisse erfolgreich importiert",
+    "exportSuccess": "Kalenderdatei heruntergeladen",
+    "noSlots": "Noch keine Termine erstellt.",
+    "noBookings": "Noch keine Buchungen."
+  },
+  "cookie": {
+    "message": "Wir verwenden Cookies und Google Analytics, um den Website-Traffic zu analysieren und Ihre Erfahrung zu verbessern.",
+    "accept": "Akzeptieren",
+    "decline": "Ablehnen"
+  },
+  "common": {
+    "loading": "Laden...",
+    "error": "Ein Fehler ist aufgetreten",
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "delete": "Löschen",
+    "edit": "Bearbeiten",
+    "back": "Zurück",
+    "close": "Schließen"
+  }
+}

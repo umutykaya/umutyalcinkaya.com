@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-umutykaya-dev-25c76-authRole",
+      "UnauthRoleArn": "arn:aws:iam::585008043730:role/amplify-umutykaya-dev-25c76-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::585008043730:role/amplify-umutykaya-dev-25c76-authRole",
+      "Region": "eu-west-2",
+      "DeploymentBucketName": "amplify-umutykaya-dev-25c76-deployment",
+      "UnauthRoleName": "amplify-umutykaya-dev-25c76-unauthRole",
+      "StackName": "amplify-umutykaya-dev-25c76",
+      "StackId": "arn:aws:cloudformation:eu-west-2:585008043730:stack/amplify-umutykaya-dev-25c76/d28a7320-366d-11f1-b23a-0228de485351",
+      "AmplifyAppId": "d2rbe7wwcy2otb"
+    },
+    "categories": {
+      "hosting": {
+        "S3AndCloudFront": {}
+      }
+    }
+  }
+}

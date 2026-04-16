@@ -1,0 +1,197 @@
+{
+  "nav": {
+    "work": "Work",
+    "about": "About",
+    "contact": "Contact",
+    "letsTalk": "Let's Talk",
+    "login": "Sign In",
+    "register": "Sign Up",
+    "profile": "Profile",
+    "logout": "Sign Out",
+    "appointments": "Appointments",
+    "myBookings": "My Bookings",
+    "admin": "Admin"
+  },
+  "hero": {
+    "badge": "Available for new projects",
+    "title1": "I build things",
+    "title2": "for the web",
+    "subtitle": "Full-stack developer & designer crafting modern digital experiences with precision and care.",
+    "viewWork": "View Work",
+    "aboutMe": "About Me"
+  },
+  "work": {
+    "label": "// Selected Work",
+    "title": "Projects",
+    "nebula": {
+      "title": "Nebula Dashboard",
+      "description": "A real-time analytics platform with dynamic data visualization, built for scale and clarity."
+    },
+    "aura": {
+      "title": "Aura Commerce",
+      "description": "Headless e-commerce storefront featuring ultra-fast page loads and seamless checkout flows."
+    },
+    "synthwave": {
+      "title": "Synthwave Studio",
+      "description": "AI-powered music creation tool with an intuitive node-based composition interface."
+    },
+    "vertex": {
+      "title": "Vertex Protocol",
+      "description": "Developer toolkit and documentation platform with interactive API playgrounds."
+    },
+    "horizon": {
+      "title": "Horizon OS",
+      "description": "Concept operating system UI built entirely in the browser with window management and theming."
+    },
+    "pulse": {
+      "title": "Pulse Health",
+      "description": "Health tracking dashboard with wearable integration and personalized insights engine."
+    }
+  },
+  "about": {
+    "label": "// About",
+    "title1": "Crafting digital",
+    "title2": "experiences",
+    "bio1": "I'm a full-stack developer and designer with a passion for building products that are not only functional but beautifully crafted. My approach combines clean code architecture with pixel-perfect design.",
+    "bio2": "I specialize in modern web technologies and love pushing the boundaries of what's possible in the browser. Every project is an opportunity to create something meaningful.",
+    "yearsExp": "Years Experience",
+    "projects": "Projects Delivered",
+    "clients": "Happy Clients",
+    "techStack": "// Tech Stack"
+  },
+  "contact": {
+    "label": "// Get in Touch",
+    "title1": "Let's work",
+    "title2": "together",
+    "subtitle": "Have a project in mind or just want to say hi? Feel free to reach out — I'm always open to new opportunities and collaborations.",
+    "name": "Umut Yalcinkaya",
+    "email": "Your Email",
+    "subject": "Subject",
+    "message": "Message",
+    "sendWhatsApp": "Send via WhatsApp",
+    "sendEmail": "Send via Email",
+    "quickActions": "Quick Actions",
+    "bookAppointment": "Book Appointment",
+    "requestQuote": "Request Quote",
+    "sayHello": "Say Hello",
+    "businessHours": "Business Hours",
+    "monFri": "Mon – Fri: 9:00 – 18:00 CET",
+    "weekend": "Weekend: Closed",
+    "available": "Available Now",
+    "unavailable": "Currently Unavailable",
+    "namePlaceholder": "John Doe",
+    "emailPlaceholder": "john@example.com",
+    "subjectPlaceholder": "Project inquiry",
+    "messagePlaceholder": "Tell me about your project..."
+  },
+  "footer": {
+    "rights": "All rights reserved.",
+    "builtWith": "Built with precision & care"
+  },
+  "notFound": {
+    "title": "404",
+    "message": "Oops! Page not found",
+    "backHome": "Return to Home"
+  },
+  "auth": {
+    "loginTitle": "Welcome back",
+    "loginSubtitle": "Sign in to your account",
+    "registerTitle": "Create account",
+    "registerSubtitle": "Sign up to get started",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm password",
+    "fullName": "Full name",
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "forgotPassword": "Forgot password?",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "verifyTitle": "Verify your email",
+    "verifySubtitle": "Enter the verification code sent to your email",
+    "code": "Verification code",
+    "verify": "Verify",
+    "resend": "Resend code",
+    "configError": "Authentication service is not configured. Please set up Amplify Auth."
+  },
+  "profile": {
+    "title": "Profile",
+    "personalInfo": "Personal Information",
+    "email": "Email",
+    "name": "Name",
+    "role": "Role",
+    "user": "User",
+    "admin": "Admin",
+    "signOut": "Sign Out"
+  },
+  "appointments": {
+    "title": "Book an Appointment",
+    "subtitle": "Select an available time slot to schedule a meeting.",
+    "available": "Available Slots",
+    "noSlots": "No available slots at the moment. Please check back later.",
+    "book": "Book This Slot",
+    "confirmTitle": "Confirm Booking",
+    "confirmMessage": "Add a message (optional)",
+    "confirmPlaceholder": "Tell us about your needs...",
+    "confirm": "Confirm Booking",
+    "cancel": "Cancel",
+    "myBookings": "My Bookings",
+    "noBookings": "You don't have any bookings yet.",
+    "pending": "Pending",
+    "confirmed": "Confirmed",
+    "rejected": "Rejected",
+    "cancelled": "Cancelled",
+    "date": "Date",
+    "time": "Time",
+    "duration": "Duration",
+    "minutes": "min",
+    "status": "Status",
+    "bookedSuccess": "Appointment booked successfully!",
+    "bookingError": "Failed to book appointment. Please try again."
+  },
+  "admin": {
+    "dashboard": "Dashboard",
+    "manageSlots": "Manage Slots",
+    "manageBookings": "Manage Bookings",
+    "calendarSync": "Calendar Sync",
+    "createSlot": "Create Slot",
+    "editSlot": "Edit Slot",
+    "deleteSlot": "Delete Slot",
+    "deleteConfirm": "Are you sure you want to delete this slot?",
+    "date": "Date",
+    "startTime": "Start Time",
+    "endTime": "End Time",
+    "durationMin": "Duration (min)",
+    "save": "Save",
+    "approve": "Approve",
+    "reject": "Reject",
+    "totalSlots": "Total Slots",
+    "bookedSlots": "Booked Slots",
+    "pendingBookings": "Pending",
+    "totalBookings": "Total Bookings",
+    "exportIcs": "Export .ics",
+    "importIcs": "Import .ics",
+    "exportDesc": "Download appointments as an iCalendar file compatible with Google Calendar and iCloud.",
+    "importDesc": "Upload an .ics file to import appointments.",
+    "selectFile": "Select .ics file",
+    "importSuccess": "Successfully imported events",
+    "exportSuccess": "Calendar file downloaded",
+    "noSlots": "No slots created yet.",
+    "noBookings": "No bookings yet."
+  },
+  "cookie": {
+    "message": "We use cookies and Google Analytics to analyze site traffic and improve your experience.",
+    "accept": "Accept",
+    "decline": "Decline"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "back": "Back",
+    "close": "Close"
+  }
+}
