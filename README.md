@@ -1,4 +1,4 @@
-# umutykaya.com
+# umutyalcinkaya.com
 
 Personal website built with React, TypeScript, Vite, and Tailwind CSS. Hosted on AWS Amplify.
 
@@ -27,22 +27,22 @@ Lint with ESLint.
 
 The site is hosted on AWS Amplify with S3 + CloudFront.
 
-### Custom Domain Setup
+The repo and local project folder can be renamed safely, but the generated Amplify stack, bucket, and role names may continue to use the original project slug. That is expected for an existing Gen 1 environment and should not be hand-edited in generated files unless you plan a full backend migration.
 
-A script is provided to automate domain association, SSL provisioning, and CloudFront invalidation:
+`amplify publish` updates the files behind the existing CloudFront distribution. It does not create a new CloudFront URL, and cached `index.html` responses can make a deployment look stale.
+
+Use the publish helper to deploy and invalidate CloudFront in one step:
 
 ```bash
-# Uses defaults (APP_ID=d39aeyu68qob2l, DOMAIN=umutykaya.com, BRANCH=main)
-./scripts/amplify-domain-setup.sh
-
-# Or override with environment variables
-APP_ID=<id> DOMAIN=<domain> BRANCH=<branch> ./scripts/amplify-domain-setup.sh
+./scripts/amplify-publish-invalidate.sh
 ```
 
-The script performs:
-1. Domain association with Amplify (AMPLIFY_MANAGED SSL certificate)
-2. Certificate verification and ARN retrieval
-3. Route 53 DNS record verification (auto-managed for same-account hosted zones)
-4. Polling until domain is AVAILABLE, then CloudFront cache invalidation
+Optional:
 
-**Required IAM permissions:** `amplify:*`, `acm:*`, `cloudfront:ListDistributions`, `cloudfront:CreateInvalidation`, `route53:ChangeResourceRecordSets`
+```bash
+INVALIDATE_PATHS='/index.html' ./scripts/amplify-publish-invalidate.sh
+```
+
+### Custom Domain Setup
+
+Custom domain association is managed outside this repo in Amplify Hosting or the AWS console. For an existing Gen 1 app, keep the current backend resources and update the attached custom domain instead of trying to rename generated stack or bucket names in the repository.

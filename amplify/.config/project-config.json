@@ -1,15 +1,15 @@
 {
   "whyContinueWithGen1": "Prefer not to answer",
-  "projectName": "umutykaya",
+  "projectName": "umutyalcinkaya",
   "version": "3.1",
   "frontend": "javascript",
   "javascript": {
     "framework": "react",
     "config": {
       "SourceDir": "src",
-      "DistributionDir": "portfolio/dist",
-      "BuildCommand": "npm run build",
-      "StartCommand": "npm run dev"
+      "DistributionDir": "dist",
+      "BuildCommand": "bun run build",
+      "StartCommand": "bun run dev"
     }
   },
   "providers": [
