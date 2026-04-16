@@ -1,46 +1,86 @@
 import { useTranslation } from "react-i18next";
+import { useQuery } from "@tanstack/react-query";
+import { Github } from "lucide-react";
 import ProjectCard from "./ProjectCard";
+import { fetchGitHubRepos, type GitHubRepo } from "@/services/githubService";
 
-const projectKeys = ["nebula", "aura", "synthwave", "vertex", "horizon", "pulse"] as const;
-
-const projectTags: Record<string, string[]> = {
-  nebula: ["React", "TypeScript", "D3.js", "Supabase"],
-  aura: ["Next.js", "Stripe", "Tailwind"],
-  synthwave: ["Web Audio API", "React", "Python"],
-  vertex: ["TypeScript", "MDX", "Vercel"],
-  horizon: ["React", "Zustand", "Framer Motion"],
-  pulse: ["React Native", "Node.js", "PostgreSQL"],
-};
+const MAX_REPOS = 6;
 
 const WorkSection = () => {
   const { t } = useTranslation();
 
+  const {
+    data: repos,
+    isLoading,
+    isError,
+  } = useQuery<GitHubRepo[]>({
+    queryKey: ["github-repos"],
+    queryFn: fetchGitHubRepos,
+    staleTime: 1000 * 60 * 10,
+  });
+
+  const displayed = repos?.slice(0, MAX_REPOS) ?? [];
+
   return (
     <section id="work" className="py-32">
       <div className="container mx-auto px-6">
-        <div className="mb-16">
-          <p className="text-sm font-mono text-accent mb-3">{t("work.label")}</p>
-          <h2 className="text-4xl sm:text-5xl font-bold text-foreground">
-            {t("work.title")}
-          </h2>
+        <div className="mb-16 flex items-end justify-between gap-4 flex-wrap">
+          <div>
+            <p className="text-sm font-mono text-accent mb-3">{t("work.label")}</p>
+            <h2 className="text-4xl sm:text-5xl font-bold text-foreground">
+              {t("work.title")}
+            </h2>
+          </div>
+          <a
+            href="https://github.com/umutykaya"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+          >
+            <Github size={18} />
+            {t("work.viewGitHub")}
+          </a>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {projectKeys.map((key, i) => (
-            <div
-              key={key}
-              className="opacity-0 animate-fade-up"
-              style={{ animationDelay: `${0.1 * i}s` }}
-            >
-              <ProjectCard
-                title={t(`work.${key}.title`)}
-                description={t(`work.${key}.description`)}
-                tags={projectTags[key]}
-                className="h-full"
+        {isLoading && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {Array.from({ length: MAX_REPOS }).map((_, i) => (
+              <div
+                key={i}
+                className="h-56 rounded-2xl border border-border/50 bg-card animate-pulse"
               />
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
+
+        {isError && (
+          <p className="text-center text-muted-foreground">
+            {t("work.fetchError")}
+          </p>
+        )}
+
+        {!isLoading && !isError && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {displayed.map((repo, i) => (
+              <div
+                key={repo.id}
+                className="opacity-0 animate-fade-up"
+                style={{ animationDelay: `${0.1 * i}s` }}
+              >
+                <ProjectCard
+                  title={repo.name}
+                  description={repo.description ?? ""}
+                  tags={repo.topics}
+                  href={repo.html_url}
+                  language={repo.language}
+                  stars={repo.stargazers_count}
+                  forks={repo.forks_count}
+                  className="h-full"
+                />
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );

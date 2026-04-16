@@ -49,36 +49,34 @@ const AboutSection = () => {
               ))}
             </div>
 
-            <div className="mt-12 p-6 rounded-2xl border border-border/50 bg-card">
-              <div className="flex items-center gap-2 mb-3">
-                <span className="w-3 h-3 rounded-full bg-destructive/80" />
-                <span className="w-3 h-3 rounded-full bg-yellow-500/80" />
-                <span className="w-3 h-3 rounded-full bg-green-500/80" />
+            <div className="mt-12 rounded-2xl border border-border/50 bg-card p-4 sm:p-6">
+              <div className="flex flex-wrap items-start justify-between gap-4 mb-4">
+                <div className="max-w-xl">
+                  <p className="text-sm font-mono text-accent mb-2">{t("about.videoLabel")}</p>
+                  <h3 className="text-xl font-semibold text-foreground">{t("about.videoTitle")}</h3>
+                  <p className="text-sm text-muted-foreground mt-2">{t("about.videoDescription")}</p>
+                </div>
+                <a
+                  href="https://www.youtube.com/watch?v=LHor80uvNWg&t=24s"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="shrink-0 text-sm text-accent hover:underline"
+                >
+                  {t("about.watchVideo")}
+                </a>
               </div>
-              <pre className="text-sm font-mono text-muted-foreground overflow-x-auto">
-                <code>
-{`const developer = {
-  name: "Umut Yalcinkaya",
-  role: "Full-Stack Developer",
-  loves: [
-    "clean code", 
-    "great UX",
-    "open source",
-    "coffee ☕",
-    "Dogs 🐶",
-    "Snowboarding 🏂",
-    "Surfing 🌊",
-    "Road bikes 🚴‍♂️",
-    "Traveling ✈️",
-    "Cooking 🍳",
-    "Tech Gadgets 🖥️",
-    "Music 🎵",
-    "Photography 📸"
-    ],
-  status: "open to work ✨"
-};`}
-                </code>
-              </pre>
+
+              <div className="relative overflow-hidden rounded-xl border border-border/50 bg-secondary/30 aspect-video">
+                <iframe
+                  className="absolute inset-0 h-full w-full"
+                  src="https://www.youtube.com/embed/LHor80uvNWg?start=24"
+                  title={t("about.videoTitle")}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  allowFullScreen
+                  loading="lazy"
+                />
+              </div>
             </div>
           </div>
         </div>

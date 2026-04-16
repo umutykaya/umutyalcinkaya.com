@@ -23,30 +23,8 @@
   "work": {
     "label": "// Seçili Çalışmalar",
     "title": "Projeler",
-    "nebula": {
-      "title": "Nebula Dashboard",
-      "description": "Dinamik veri görselleştirme ile ölçeklenebilirlik ve netlik için tasarlanmış gerçek zamanlı analitik platformu."
-    },
-    "aura": {
-      "title": "Aura Commerce",
-      "description": "Ultra hızlı sayfa yüklemeleri ve sorunsuz ödeme akışları sunan headless e-ticaret mağazası."
-    },
-    "synthwave": {
-      "title": "Synthwave Studio",
-      "description": "Sezgisel düğüm tabanlı kompozisyon arayüzüne sahip yapay zeka destekli müzik oluşturma aracı."
-    },
-    "vertex": {
-      "title": "Vertex Protocol",
-      "description": "Etkileşimli API deneme alanlarına sahip geliştirici araç seti ve dokümantasyon platformu."
-    },
-    "horizon": {
-      "title": "Horizon OS",
-      "description": "Pencere yönetimi ve tema desteği ile tamamen tarayıcıda oluşturulmuş konsept işletim sistemi arayüzü."
-    },
-    "pulse": {
-      "title": "Pulse Health",
-      "description": "Giyilebilir cihaz entegrasyonu ve kişiselleştirilmiş içgörü motoru ile sağlık takip panosu."
-    }
+    "viewGitHub": "Tümünü GitHub'da gör",
+    "fetchError": "Projeler yüklenemedi. Lütfen daha sonra tekrar deneyin."
   },
   "about": {
     "label": "// Hakkımda",
@@ -57,7 +35,11 @@
     "yearsExp": "Yıl Deneyim",
     "projects": "Tamamlanan Proje",
     "clients": "Mutlu Müşteri",
-    "techStack": "// Teknoloji Yığını"
+    "techStack": "// Teknoloji Yığını",
+    "videoLabel": "// Öne Çıkan Video",
+    "videoTitle": "Hollanda'da yazılım mühendisi olarak çalışmak",
+    "videoDescription": "Kariyer yolculuğum, referans bulma, yurt dışında iş arama, Hollanda'daki sosyal hayat, alım gücü ve tek maaşla aile geçindirme gibi konular üzerine kısa bir röportaj.",
+    "watchVideo": "YouTube'da izle"
   },
   "contact": {
     "label": "// İletişime Geçin",

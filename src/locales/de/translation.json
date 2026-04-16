@@ -23,30 +23,8 @@
   "work": {
     "label": "// Ausgewählte Arbeiten",
     "title": "Projekte",
-    "nebula": {
-      "title": "Nebula Dashboard",
-      "description": "Echtzeit-Analyseplattform mit dynamischer Datenvisualisierung, entwickelt für Skalierbarkeit und Klarheit."
-    },
-    "aura": {
-      "title": "Aura Commerce",
-      "description": "Headless-E-Commerce-Storefront mit ultraschnellen Ladezeiten und nahtlosen Checkout-Abläufen."
-    },
-    "synthwave": {
-      "title": "Synthwave Studio",
-      "description": "KI-gestütztes Musikerstellungstool mit einer intuitiven knotenbasierten Kompositionsoberfläche."
-    },
-    "vertex": {
-      "title": "Vertex Protocol",
-      "description": "Entwickler-Toolkit und Dokumentationsplattform mit interaktiven API-Playgrounds."
-    },
-    "horizon": {
-      "title": "Horizon OS",
-      "description": "Konzeptuelles Betriebssystem-UI, vollständig im Browser erstellt mit Fensterverwaltung und Themes."
-    },
-    "pulse": {
-      "title": "Pulse Health",
-      "description": "Gesundheits-Tracking-Dashboard mit Wearable-Integration und personalisiertem Insights-Engine."
-    }
+    "viewGitHub": "Alle auf GitHub ansehen",
+    "fetchError": "Projekte konnten nicht geladen werden. Bitte versuchen Sie es später erneut."
   },
   "about": {
     "label": "// Über mich",
@@ -57,7 +35,11 @@
     "yearsExp": "Jahre Erfahrung",
     "projects": "Gelieferte Projekte",
     "clients": "Zufriedene Kunden",
-    "techStack": "// Tech Stack"
+    "techStack": "// Tech Stack",
+    "videoLabel": "// Featured-Video",
+    "videoTitle": "Als Softwareentwickler in den Niederlanden arbeiten",
+    "videoDescription": "Ein kurzes Interview über meinen Karriereweg, Referenzen, Jobsuche im Ausland, das soziale Leben in den Niederlanden, Kaufkraft und ob ein Gehalt eine Familie tragen kann.",
+    "watchVideo": "Auf YouTube ansehen"
   },
   "contact": {
     "label": "// Kontakt aufnehmen",

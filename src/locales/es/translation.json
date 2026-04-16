@@ -23,30 +23,8 @@
   "work": {
     "label": "// Trabajos Seleccionados",
     "title": "Proyectos",
-    "nebula": {
-      "title": "Nebula Dashboard",
-      "description": "Plataforma de análisis en tiempo real con visualización dinámica de datos, construida para escala y claridad."
-    },
-    "aura": {
-      "title": "Aura Commerce",
-      "description": "Tienda de comercio electrónico headless con cargas ultrarrápidas y flujos de pago sin interrupciones."
-    },
-    "synthwave": {
-      "title": "Synthwave Studio",
-      "description": "Herramienta de creación musical impulsada por IA con una interfaz intuitiva de composición basada en nodos."
-    },
-    "vertex": {
-      "title": "Vertex Protocol",
-      "description": "Kit de herramientas para desarrolladores y plataforma de documentación con playgrounds de API interactivos."
-    },
-    "horizon": {
-      "title": "Horizon OS",
-      "description": "Interfaz de sistema operativo conceptual construida completamente en el navegador con gestión de ventanas y temas."
-    },
-    "pulse": {
-      "title": "Pulse Health",
-      "description": "Panel de seguimiento de salud con integración de dispositivos wearables y motor de insights personalizados."
-    }
+    "viewGitHub": "Ver todo en GitHub",
+    "fetchError": "No se pudieron cargar los proyectos. Inténtelo de nuevo más tarde."
   },
   "about": {
     "label": "// Sobre mí",
@@ -57,7 +35,11 @@
     "yearsExp": "Años de Experiencia",
     "projects": "Proyectos Entregados",
     "clients": "Clientes Satisfechos",
-    "techStack": "// Stack Tecnológico"
+    "techStack": "// Stack Tecnológico",
+    "videoLabel": "// Video destacado",
+    "videoTitle": "Trabajar en los Países Bajos como ingeniero de software",
+    "videoDescription": "Una breve entrevista sobre mi trayectoria profesional, cómo encontrar referencias, buscar trabajo en el extranjero, la vida social en los Países Bajos, el poder adquisitivo y si un solo sueldo puede mantener a una familia.",
+    "watchVideo": "Ver en YouTube"
   },
   "contact": {
     "label": "// Contáctame",

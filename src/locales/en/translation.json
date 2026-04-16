@@ -23,30 +23,8 @@
   "work": {
     "label": "// Selected Work",
     "title": "Projects",
-    "nebula": {
-      "title": "Nebula Dashboard",
-      "description": "A real-time analytics platform with dynamic data visualization, built for scale and clarity."
-    },
-    "aura": {
-      "title": "Aura Commerce",
-      "description": "Headless e-commerce storefront featuring ultra-fast page loads and seamless checkout flows."
-    },
-    "synthwave": {
-      "title": "Synthwave Studio",
-      "description": "AI-powered music creation tool with an intuitive node-based composition interface."
-    },
-    "vertex": {
-      "title": "Vertex Protocol",
-      "description": "Developer toolkit and documentation platform with interactive API playgrounds."
-    },
-    "horizon": {
-      "title": "Horizon OS",
-      "description": "Concept operating system UI built entirely in the browser with window management and theming."
-    },
-    "pulse": {
-      "title": "Pulse Health",
-      "description": "Health tracking dashboard with wearable integration and personalized insights engine."
-    }
+    "viewGitHub": "View all on GitHub",
+    "fetchError": "Could not load projects. Please try again later."
   },
   "about": {
     "label": "// About",
@@ -57,7 +35,11 @@
     "yearsExp": "Years Experience",
     "projects": "Projects Delivered",
     "clients": "Happy Clients",
-    "techStack": "// Tech Stack"
+    "techStack": "// Tech Stack",
+    "videoLabel": "// Featured Video",
+    "videoTitle": "Working in the Netherlands as a software engineer",
+    "videoDescription": "A short interview about my career path, finding references, job hunting abroad, social life in the Netherlands, purchasing power, and whether one salary can support a family.",
+    "watchVideo": "Watch on YouTube"
   },
   "contact": {
     "label": "// Get in Touch",

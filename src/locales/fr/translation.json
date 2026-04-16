@@ -23,30 +23,8 @@
   "work": {
     "label": "// Travaux Sélectionnés",
     "title": "Projets",
-    "nebula": {
-      "title": "Nebula Dashboard",
-      "description": "Plateforme d'analyse en temps réel avec visualisation dynamique des données, conçue pour la scalabilité et la clarté."
-    },
-    "aura": {
-      "title": "Aura Commerce",
-      "description": "Boutique e-commerce headless avec des chargements ultra-rapides et des flux de paiement fluides."
-    },
-    "synthwave": {
-      "title": "Synthwave Studio",
-      "description": "Outil de création musicale alimenté par l'IA avec une interface de composition intuitive basée sur des nœuds."
-    },
-    "vertex": {
-      "title": "Vertex Protocol",
-      "description": "Kit d'outils pour développeurs et plateforme de documentation avec des playgrounds d'API interactifs."
-    },
-    "horizon": {
-      "title": "Horizon OS",
-      "description": "Interface de système d'exploitation conceptuel entièrement construite dans le navigateur avec gestion de fenêtres et thèmes."
-    },
-    "pulse": {
-      "title": "Pulse Health",
-      "description": "Tableau de bord de suivi de santé avec intégration de dispositifs portables et moteur d'insights personnalisés."
-    }
+    "viewGitHub": "Voir tout sur GitHub",
+    "fetchError": "Impossible de charger les projets. Veuillez réessayer plus tard."
   },
   "about": {
     "label": "// À propos",
@@ -57,7 +35,11 @@
     "yearsExp": "Années d'Expérience",
     "projects": "Projets Livrés",
     "clients": "Clients Satisfaits",
-    "techStack": "// Stack Technologique"
+    "techStack": "// Stack Technologique",
+    "videoLabel": "// Vidéo mise en avant",
+    "videoTitle": "Travailler aux Pays-Bas comme ingénieur logiciel",
+    "videoDescription": "Une courte interview sur mon parcours, la recherche de recommandations, la recherche d'emploi à l'étranger, la vie sociale aux Pays-Bas, le pouvoir d'achat et la possibilité de faire vivre une famille avec un seul salaire.",
+    "watchVideo": "Voir sur YouTube"
   },
   "contact": {
     "label": "// Me Contacter",

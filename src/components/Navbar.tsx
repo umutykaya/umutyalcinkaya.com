@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { Menu, X, Sun, Moon, User, LogOut } from "lucide-react";
+import { Menu, X, Sun, Moon } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useAuth } from "@/contexts/AuthContext";
 import LanguageSwitcher from "./LanguageSwitcher";
@@ -71,30 +71,6 @@ const Navbar = () => {
             {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
           </button>
 
-          {user ? (
-            <div className="flex items-center gap-1">
-              <Link
-                to="/profile"
-                className="p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
-              >
-                <User size={18} />
-              </Link>
-              <button
-                onClick={() => logout()}
-                className="p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
-              >
-                <LogOut size={18} />
-              </button>
-            </div>
-          ) : (
-            <Link
-              to="/login"
-              className="text-sm px-3 py-1.5 rounded-lg border border-border text-foreground hover:bg-secondary transition-colors"
-            >
-              {t("nav.login")}
-            </Link>
-          )}
-
           <a
             href="/#contact"
             className="text-sm px-4 py-2 rounded-lg bg-accent text-accent-foreground hover:bg-accent/90 transition-colors"
@@ -151,15 +127,6 @@ const Navbar = () => {
                 {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
               </button>
             </div>
-            {!user && (
-              <Link
-                to="/login"
-                onClick={() => setOpen(false)}
-                className="text-sm text-accent hover:underline"
-              >
-                {t("nav.login")}
-              </Link>
-            )}
           </div>
         </div>
       )}
