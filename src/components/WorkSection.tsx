@@ -6,17 +6,23 @@ import ProjectCard from "./ProjectCard";
 import { fetchGitHubRepos, type GitHubRepo } from "@/services/githubService";
 
 const MAX_REPOS = 6;
-const configuredGitHubUsername = import.meta.env.VITE_GITHUB_USERNAME?.trim();
-const githubProfileUrl = import.meta.env.VITE_GITHUB_URL;
-const githubUsernameFromUrl = githubProfileUrl?.match(/github\.com\/([^/?#]+)/)?.[1];
-const githubUsername = configuredGitHubUsername || githubUsernameFromUrl;
-const githubHeatmapUrl = githubUsername
-  ? `https://ghchart.rshah.org/${githubUsername}`
-  : null;
+const GITHUB_USERNAME_PATTERN = /github\.com\/([^/?#]+)/;
+
+const getGitHubUsername = () => {
+  const configuredGitHubUsername = import.meta.env.VITE_GITHUB_USERNAME?.trim();
+  if (configuredGitHubUsername) {
+    return configuredGitHubUsername;
+  }
+
+  const githubProfileUrl = import.meta.env.VITE_GITHUB_URL;
+  return githubProfileUrl?.match(GITHUB_USERNAME_PATTERN)?.[1] ?? null;
+};
 
 const WorkSection = () => {
   const { t } = useTranslation();
-  const [isHeatMapAvailable, setIsHeatMapAvailable] = useState(Boolean(githubHeatmapUrl));
+  const githubUsername = getGitHubUsername();
+  const githubHeatmapUrl = githubUsername ? `https://ghchart.rshah.org/${githubUsername}` : null;
+  const [hasHeatMapLoadError, setHasHeatMapLoadError] = useState(false);
 
   const {
     data: repos,
@@ -93,12 +99,12 @@ const WorkSection = () => {
 
             {githubHeatmapUrl && (
               <div className="mt-8 rounded-2xl border border-border/50 bg-card/60 p-4 sm:p-6">
-                {isHeatMapAvailable ? (
+                {!hasHeatMapLoadError ? (
                   <img
                     src={githubHeatmapUrl}
                     alt={`${githubUsername} GitHub contribution heat map`}
                     loading="lazy"
-                    onError={() => setIsHeatMapAvailable(false)}
+                    onError={() => setHasHeatMapLoadError(true)}
                     className="w-full h-auto"
                   />
                 ) : (
