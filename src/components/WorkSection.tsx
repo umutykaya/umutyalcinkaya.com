@@ -9,7 +9,8 @@ const MAX_REPOS = 6;
 const GITHUB_USERNAME_PATTERN = /github\.com\/([^/?#]+)/;
 
 const getGitHubUsername = () => {
-  const configuredGitHubUsername = import.meta.env.VITE_GITHUB_USERNAME?.trim();
+  const usernameEnv = import.meta.env.VITE_GITHUB_USERNAME;
+  const configuredGitHubUsername = typeof usernameEnv === "string" ? usernameEnv.trim() : "";
   if (configuredGitHubUsername) {
     return configuredGitHubUsername;
   }
@@ -18,9 +19,10 @@ const getGitHubUsername = () => {
   return githubProfileUrl?.match(GITHUB_USERNAME_PATTERN)?.[1] ?? null;
 };
 
+const githubUsername = getGitHubUsername();
+
 const WorkSection = () => {
   const { t } = useTranslation();
-  const githubUsername = getGitHubUsername();
   const githubHeatmapUrl = githubUsername ? `https://ghchart.rshah.org/${githubUsername}` : null;
   const githubHeatmapAlt = githubUsername
     ? `${githubUsername} GitHub contribution heatmap`
