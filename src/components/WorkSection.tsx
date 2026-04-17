@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useQuery } from "@tanstack/react-query";
 import { Github } from "lucide-react";
@@ -5,11 +6,17 @@ import ProjectCard from "./ProjectCard";
 import { fetchGitHubRepos, type GitHubRepo } from "@/services/githubService";
 
 const MAX_REPOS = 6;
-const GITHUB_USERNAME = import.meta.env.VITE_GITHUB_USERNAME || "umutykaya";
-const GITHUB_HEATMAP_URL = `https://ghchart.rshah.org/${GITHUB_USERNAME}`;
+const configuredGitHubUsername = import.meta.env.VITE_GITHUB_USERNAME?.trim();
+const githubProfileUrl = import.meta.env.VITE_GITHUB_URL;
+const githubUsernameFromUrl = githubProfileUrl?.match(/github\.com\/([^/?#]+)/)?.[1];
+const githubUsername = configuredGitHubUsername || githubUsernameFromUrl;
+const githubHeatmapUrl = githubUsername
+  ? `https://ghchart.rshah.org/${githubUsername}`
+  : null;
 
 const WorkSection = () => {
   const { t } = useTranslation();
+  const [isHeatMapAvailable, setIsHeatMapAvailable] = useState(Boolean(githubHeatmapUrl));
 
   const {
     data: repos,
@@ -84,14 +91,23 @@ const WorkSection = () => {
               ))}
             </div>
 
-            <div className="mt-8 rounded-2xl border border-border/50 bg-card/60 p-4 sm:p-6">
-              <img
-                src={GITHUB_HEATMAP_URL}
-                alt={`${GITHUB_USERNAME} GitHub contribution heat map`}
-                loading="lazy"
-                className="w-full h-auto"
-              />
-            </div>
+            {githubHeatmapUrl && (
+              <div className="mt-8 rounded-2xl border border-border/50 bg-card/60 p-4 sm:p-6">
+                {isHeatMapAvailable ? (
+                  <img
+                    src={githubHeatmapUrl}
+                    alt={`${githubUsername} GitHub contribution heat map`}
+                    loading="lazy"
+                    onError={() => setIsHeatMapAvailable(false)}
+                    className="w-full h-auto"
+                  />
+                ) : (
+                  <p className="text-sm text-muted-foreground text-center">
+                    GitHub heat map is currently unavailable.
+                  </p>
+                )}
+              </div>
+            )}
           </>
         )}
       </div>
