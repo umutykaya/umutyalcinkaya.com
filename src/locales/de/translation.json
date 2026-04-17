@@ -11,7 +11,8 @@
     "appointments": "Termine",
     "myBookings": "Meine Buchungen",
     "admin": "Verwaltung",
-    "resume": "Lebenslauf"
+    "resume": "Lebenslauf",
+    "github": "GitHub"
   },
   "hero": {
     "badge": "Verfügbar für neue Projekte",
@@ -176,5 +177,39 @@
     "edit": "Bearbeiten",
     "back": "Zurück",
     "close": "Schließen"
+  },
+  "github": {
+    "label": "// GitHub Dashboard",
+    "title": "Open Source",
+    "viewProfile": "Profil ansehen",
+    "profile": {
+      "followers": "Follower",
+      "following": "Folgt",
+      "repos": "Repos"
+    },
+    "heatmap": {
+      "contributions": "Beiträge im letzten Jahr",
+      "contributionsOn": "Beiträge am",
+      "less": "Weniger",
+      "more": "Mehr"
+    },
+    "repos": {
+      "title": "Repositories nach Komplexität",
+      "name": "Name",
+      "language": "Sprache",
+      "size": "Größe",
+      "complexity": "Komplexität",
+      "openIssues": "Offene Issues",
+      "languages": "Sprachen",
+      "empty": "Keine Repositories gefunden.",
+      "lastFetched": "Abgerufen"
+    },
+    "rateLimit": {
+      "resetsAt": "Zurücksetzen um"
+    },
+    "errors": {
+      "fetchFailed": "GitHub-Daten konnten nicht geladen werden. Das API-Limit wurde möglicherweise überschritten.",
+      "retry": "Erneut versuchen"
+    }
   }
 }

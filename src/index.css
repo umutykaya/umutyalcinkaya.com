@@ -49,6 +49,12 @@
     --sidebar-accent-foreground: 222 47% 11%;
     --sidebar-border: 214 32% 91%;
     --sidebar-ring: 210 100% 50%;
+
+    --contrib-0: hsl(210, 10%, 91%);
+    --contrib-1: hsl(130, 45%, 72%);
+    --contrib-2: hsl(130, 50%, 52%);
+    --contrib-3: hsl(130, 55%, 38%);
+    --contrib-4: hsl(130, 60%, 25%);
   }
 
   .dark {
@@ -93,6 +99,12 @@
     --sidebar-accent-foreground: 0 0% 93%;
     --sidebar-border: 0 0% 15%;
     --sidebar-ring: 210 100% 60%;
+
+    --contrib-0: hsl(0, 0%, 14%);
+    --contrib-1: hsl(130, 40%, 20%);
+    --contrib-2: hsl(130, 45%, 30%);
+    --contrib-3: hsl(130, 50%, 42%);
+    --contrib-4: hsl(130, 55%, 55%);
   }
 }
 

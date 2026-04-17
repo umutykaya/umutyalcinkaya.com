@@ -11,7 +11,8 @@
     "appointments": "Rendez-vous",
     "myBookings": "Mes Réservations",
     "admin": "Administration",
-    "resume": "CV"
+    "resume": "CV",
+    "github": "GitHub"
   },
   "hero": {
     "badge": "Disponible pour de nouveaux projets",
@@ -176,5 +177,39 @@
     "edit": "Modifier",
     "back": "Retour",
     "close": "Fermer"
+  },
+  "github": {
+    "label": "// Tableau de bord GitHub",
+    "title": "Open Source",
+    "viewProfile": "Voir le Profil",
+    "profile": {
+      "followers": "abonnés",
+      "following": "abonnements",
+      "repos": "dépôts"
+    },
+    "heatmap": {
+      "contributions": "contributions au cours de l'année écoulée",
+      "contributionsOn": "contributions le",
+      "less": "Moins",
+      "more": "Plus"
+    },
+    "repos": {
+      "title": "Dépôts par Complexité",
+      "name": "Nom",
+      "language": "Langage",
+      "size": "Taille",
+      "complexity": "Complexité",
+      "openIssues": "Issues ouvertes",
+      "languages": "Langages",
+      "empty": "Aucun dépôt trouvé.",
+      "lastFetched": "Récupéré"
+    },
+    "rateLimit": {
+      "resetsAt": "Réinitialisation à"
+    },
+    "errors": {
+      "fetchFailed": "Impossible de charger les données GitHub. La limite de l'API a peut-être été atteinte.",
+      "retry": "Réessayer"
+    }
   }
 }

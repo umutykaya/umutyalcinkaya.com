@@ -11,7 +11,8 @@
     "appointments": "Записи",
     "myBookings": "Мои записи",
     "admin": "Панель управления",
-    "resume": "Резюме"
+    "resume": "Резюме",
+    "github": "GitHub"
   },
   "hero": {
     "badge": "Открыт для новых проектов",
@@ -176,5 +177,39 @@
     "edit": "Редактировать",
     "back": "Назад",
     "close": "Закрыть"
+  },
+  "github": {
+    "label": "// GitHub Панель",
+    "title": "Открытый код",
+    "viewProfile": "Перейти к профилю",
+    "profile": {
+      "followers": "подписчиков",
+      "following": "подписок",
+      "repos": "репозиториев"
+    },
+    "heatmap": {
+      "contributions": "вкладов за последний год",
+      "contributionsOn": "вкладов",
+      "less": "Меньше",
+      "more": "Больше"
+    },
+    "repos": {
+      "title": "Репозитории по сложности",
+      "name": "Название",
+      "language": "Язык",
+      "size": "Размер",
+      "complexity": "Сложность",
+      "openIssues": "Открытые issues",
+      "languages": "Языки",
+      "empty": "Репозитории не найдены.",
+      "lastFetched": "Получено"
+    },
+    "rateLimit": {
+      "resetsAt": "Сброс в"
+    },
+    "errors": {
+      "fetchFailed": "Не удалось загрузить данные GitHub. Возможно, превышен лимит API.",
+      "retry": "Повторить"
+    }
   }
 }

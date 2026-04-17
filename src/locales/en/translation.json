@@ -11,7 +11,8 @@
     "appointments": "Appointments",
     "myBookings": "My Bookings",
     "admin": "Admin",
-    "resume": "Resume"
+    "resume": "Resume",
+    "github": "GitHub"
   },
   "hero": {
     "badge": "Available for new projects",
@@ -176,5 +177,39 @@
     "edit": "Edit",
     "back": "Back",
     "close": "Close"
+  },
+  "github": {
+    "label": "// GitHub Dashboard",
+    "title": "Open Source",
+    "viewProfile": "View Profile",
+    "profile": {
+      "followers": "followers",
+      "following": "following",
+      "repos": "repos"
+    },
+    "heatmap": {
+      "contributions": "contributions in the last year",
+      "contributionsOn": "contributions on",
+      "less": "Less",
+      "more": "More"
+    },
+    "repos": {
+      "title": "Repositories by Complexity",
+      "name": "Name",
+      "language": "Language",
+      "size": "Size",
+      "complexity": "Complexity",
+      "openIssues": "Open issues",
+      "languages": "Languages",
+      "empty": "No repositories found.",
+      "lastFetched": "Fetched"
+    },
+    "rateLimit": {
+      "resetsAt": "Resets at"
+    },
+    "errors": {
+      "fetchFailed": "Failed to load GitHub data. The API rate limit may have been exceeded.",
+      "retry": "Retry"
+    }
   }
 }

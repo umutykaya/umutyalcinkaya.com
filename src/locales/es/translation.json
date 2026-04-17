@@ -11,7 +11,8 @@
     "appointments": "Citas",
     "myBookings": "Mis Reservas",
     "admin": "Administración",
-    "resume": "Currículum"
+    "resume": "Currículum",
+    "github": "GitHub"
   },
   "hero": {
     "badge": "Disponible para nuevos proyectos",
@@ -176,5 +177,39 @@
     "edit": "Editar",
     "back": "Atrás",
     "close": "Cerrar"
+  },
+  "github": {
+    "label": "// Panel de GitHub",
+    "title": "Código Abierto",
+    "viewProfile": "Ver Perfil",
+    "profile": {
+      "followers": "seguidores",
+      "following": "siguiendo",
+      "repos": "repos"
+    },
+    "heatmap": {
+      "contributions": "contribuciones en el último año",
+      "contributionsOn": "contribuciones el",
+      "less": "Menos",
+      "more": "Más"
+    },
+    "repos": {
+      "title": "Repositorios por Complejidad",
+      "name": "Nombre",
+      "language": "Lenguaje",
+      "size": "Tamaño",
+      "complexity": "Complejidad",
+      "openIssues": "Issues abiertos",
+      "languages": "Lenguajes",
+      "empty": "No se encontraron repositorios.",
+      "lastFetched": "Obtenido"
+    },
+    "rateLimit": {
+      "resetsAt": "Se reinicia a las"
+    },
+    "errors": {
+      "fetchFailed": "No se pudieron cargar los datos de GitHub. Es posible que se haya excedido el límite de la API.",
+      "retry": "Reintentar"
+    }
   }
 }

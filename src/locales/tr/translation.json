@@ -11,7 +11,8 @@
     "appointments": "Randevular",
     "myBookings": "Randevularım",
     "admin": "Yönetim",
-    "resume": "Özgeçmiş"
+    "resume": "Özgeçmiş",
+    "github": "GitHub"
   },
   "hero": {
     "badge": "Yeni projeler için müsaitim",
@@ -176,5 +177,39 @@
     "edit": "Düzenle",
     "back": "Geri",
     "close": "Kapat"
+  },
+  "github": {
+    "label": "// GitHub Panosu",
+    "title": "Açık Kaynak",
+    "viewProfile": "Profili Görüntüle",
+    "profile": {
+      "followers": "takipçi",
+      "following": "takip edilen",
+      "repos": "depo"
+    },
+    "heatmap": {
+      "contributions": "son yıldaki katkı",
+      "contributionsOn": "katkı -",
+      "less": "Az",
+      "more": "Çok"
+    },
+    "repos": {
+      "title": "Karmaşıklığa Göre Depolar",
+      "name": "Ad",
+      "language": "Dil",
+      "size": "Boyut",
+      "complexity": "Karmaşıklık",
+      "openIssues": "Açık sorunlar",
+      "languages": "Diller",
+      "empty": "Depo bulunamadı.",
+      "lastFetched": "Alındı"
+    },
+    "rateLimit": {
+      "resetsAt": "Sıfırlanma zamanı"
+    },
+    "errors": {
+      "fetchFailed": "GitHub verileri yüklenemedi. API istek sınırı aşılmış olabilir.",
+      "retry": "Tekrar Dene"
+    }
   }
 }
