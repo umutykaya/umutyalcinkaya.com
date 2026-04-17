@@ -124,7 +124,7 @@ const HeroSection = () => {
 
           {/* Right: Profile photo */}
           <div
-            className="hidden lg:flex justify-center opacity-0 animate-fade-up"
+            className="flex justify-center opacity-0 animate-fade-up"
             style={{ animationDelay: "0.6s" }}
           >
             <div className="relative">
@@ -132,7 +132,7 @@ const HeroSection = () => {
               <img
                 src={cartoonProfile}
                 alt="Umut Yalcinkaya"
-                className="relative w-80 h-80 xl:w-96 xl:h-96 rounded-full object-cover border-2 border-border/50 shadow-lg"
+                className="relative w-48 h-48 sm:w-64 sm:h-64 lg:w-80 lg:h-80 xl:w-96 xl:h-96 rounded-full object-cover border-2 border-border/50 shadow-lg"
               />
             </div>
           </div>

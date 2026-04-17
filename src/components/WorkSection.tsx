@@ -81,6 +81,26 @@ const WorkSection = () => {
 
         {!isLoading && !isError && (
           <>
+            {githubHeatmapUrl && (
+              <div className="mb-8 flex justify-center">
+                <div className="w-3/4 rounded-2xl border border-border/50 bg-card/60 p-4 sm:p-6">
+                  {!hasHeatMapLoadError ? (
+                    <img
+                      src={githubHeatmapUrl}
+                      alt={githubHeatmapAlt}
+                      loading="lazy"
+                      onError={() => setHasHeatMapLoadError(true)}
+                      className="w-full h-auto"
+                    />
+                  ) : (
+                    <p className="text-sm text-muted-foreground text-center">
+                      GitHub heatmap is currently unavailable.
+                    </p>
+                  )}
+                </div>
+              </div>
+            )}
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {displayed.map((repo, i) => (
                 <div
@@ -101,24 +121,6 @@ const WorkSection = () => {
                 </div>
               ))}
             </div>
-
-            {githubHeatmapUrl && (
-              <div className="mt-8 rounded-2xl border border-border/50 bg-card/60 p-4 sm:p-6">
-                {!hasHeatMapLoadError ? (
-                  <img
-                    src={githubHeatmapUrl}
-                    alt={githubHeatmapAlt}
-                    loading="lazy"
-                    onError={() => setHasHeatMapLoadError(true)}
-                    className="w-full h-auto"
-                  />
-                ) : (
-                  <p className="text-sm text-muted-foreground text-center">
-                    GitHub heatmap is currently unavailable.
-                  </p>
-                )}
-              </div>
-            )}
           </>
         )}
       </div>
