@@ -22,6 +22,9 @@ const WorkSection = () => {
   const { t } = useTranslation();
   const githubUsername = getGitHubUsername();
   const githubHeatmapUrl = githubUsername ? `https://ghchart.rshah.org/${githubUsername}` : null;
+  const githubHeatmapAlt = githubUsername
+    ? `${githubUsername} GitHub contribution heatmap`
+    : "GitHub contribution heatmap";
   const [hasHeatMapLoadError, setHasHeatMapLoadError] = useState(false);
 
   const {
@@ -102,14 +105,14 @@ const WorkSection = () => {
                 {!hasHeatMapLoadError ? (
                   <img
                     src={githubHeatmapUrl}
-                    alt={`${githubUsername} GitHub contribution heat map`}
+                    alt={githubHeatmapAlt}
                     loading="lazy"
                     onError={() => setHasHeatMapLoadError(true)}
                     className="w-full h-auto"
                   />
                 ) : (
                   <p className="text-sm text-muted-foreground text-center">
-                    GitHub heat map is currently unavailable.
+                    GitHub heatmap is currently unavailable.
                   </p>
                 )}
               </div>
