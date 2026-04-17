@@ -5,6 +5,8 @@ import ProjectCard from "./ProjectCard";
 import { fetchGitHubRepos, type GitHubRepo } from "@/services/githubService";
 
 const MAX_REPOS = 6;
+const GITHUB_USERNAME = import.meta.env.VITE_GITHUB_USERNAME || "umutykaya";
+const GITHUB_HEATMAP_URL = `https://ghchart.rshah.org/${GITHUB_USERNAME}`;
 
 const WorkSection = () => {
   const { t } = useTranslation();
@@ -60,26 +62,37 @@ const WorkSection = () => {
         )}
 
         {!isLoading && !isError && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {displayed.map((repo, i) => (
-              <div
-                key={repo.id}
-                className="opacity-0 animate-fade-up"
-                style={{ animationDelay: `${0.1 * i}s` }}
-              >
-                <ProjectCard
-                  title={repo.name}
-                  description={repo.description ?? ""}
-                  tags={repo.topics}
-                  href={repo.html_url}
-                  language={repo.language}
-                  stars={repo.stargazers_count}
-                  forks={repo.forks_count}
-                  className="h-full"
-                />
-              </div>
-            ))}
-          </div>
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {displayed.map((repo, i) => (
+                <div
+                  key={repo.id}
+                  className="opacity-0 animate-fade-up"
+                  style={{ animationDelay: `${0.1 * i}s` }}
+                >
+                  <ProjectCard
+                    title={repo.name}
+                    description={repo.description ?? ""}
+                    tags={repo.topics}
+                    href={repo.html_url}
+                    language={repo.language}
+                    stars={repo.stargazers_count}
+                    forks={repo.forks_count}
+                    className="h-full"
+                  />
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-8 rounded-2xl border border-border/50 bg-card/60 p-4 sm:p-6">
+              <img
+                src={GITHUB_HEATMAP_URL}
+                alt={`${GITHUB_USERNAME} GitHub contribution heat map`}
+                loading="lazy"
+                className="w-full h-auto"
+              />
+            </div>
+          </>
         )}
       </div>
     </section>
