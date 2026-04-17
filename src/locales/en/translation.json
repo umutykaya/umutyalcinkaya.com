@@ -10,7 +10,8 @@
     "logout": "Sign Out",
     "appointments": "Appointments",
     "myBookings": "My Bookings",
-    "admin": "Admin"
+    "admin": "Admin",
+    "resume": "Resume"
   },
   "hero": {
     "badge": "Available for new projects",

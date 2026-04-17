@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Menu, X, Sun, Moon } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useAuth } from "@/contexts/AuthContext";
@@ -11,12 +11,19 @@ const Navbar = () => {
   const { t } = useTranslation();
   const { theme, toggleTheme } = useTheme();
   const { user, isAdmin, logout } = useAuth();
+  const location = useLocation();
 
-  const sectionLinks = [
+  const navLinks = [
     { label: t("nav.work"), href: "/#work" },
     { label: t("nav.about"), href: "/#about" },
-    { label: t("nav.contact"), href: "/#contact" },
+    { label: t("nav.resume"), href: "/resume" },
+    { label: t("nav.contact"), href: "/contact" },
   ];
+
+  const isActive = (href: string) => {
+    if (href.startsWith("/#")) return location.pathname === "/";
+    return location.pathname === href;
+  };
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 glass">
@@ -26,11 +33,15 @@ const Navbar = () => {
         </a>
 
         <div className="hidden md:flex items-center gap-6">
-          {sectionLinks.map((link) => (
+          {navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200"
+              className={`text-sm transition-colors duration-200 ${
+                isActive(link.href)
+                  ? "text-foreground font-medium"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
             >
               {link.label}
             </a>
@@ -72,7 +83,7 @@ const Navbar = () => {
           </button>
 
           <a
-            href="/#contact"
+            href="/contact"
             className="text-sm px-4 py-2 rounded-lg bg-accent text-accent-foreground hover:bg-accent/90 transition-colors"
           >
             {t("nav.letsTalk")}
@@ -90,12 +101,16 @@ const Navbar = () => {
       {open && (
         <div className="md:hidden glass border-t border-border/50 animate-fade-in">
           <div className="container mx-auto px-6 py-4 flex flex-col gap-3">
-            {sectionLinks.map((link) => (
+            {navLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
                 onClick={() => setOpen(false)}
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                className={`text-sm transition-colors ${
+                  isActive(link.href)
+                    ? "text-foreground font-medium"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
               >
                 {link.label}
               </a>

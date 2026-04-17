@@ -10,7 +10,8 @@
     "logout": "Déconnexion",
     "appointments": "Rendez-vous",
     "myBookings": "Mes Réservations",
-    "admin": "Administration"
+    "admin": "Administration",
+    "resume": "CV"
   },
   "hero": {
     "badge": "Disponible pour de nouveaux projets",

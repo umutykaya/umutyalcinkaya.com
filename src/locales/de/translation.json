@@ -10,7 +10,8 @@
     "logout": "Abmelden",
     "appointments": "Termine",
     "myBookings": "Meine Buchungen",
-    "admin": "Verwaltung"
+    "admin": "Verwaltung",
+    "resume": "Lebenslauf"
   },
   "hero": {
     "badge": "Verfügbar für neue Projekte",

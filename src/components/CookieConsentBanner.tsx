@@ -1,6 +1,6 @@
 import CookieConsentLib from "react-cookie-consent";
 import { useTranslation } from "react-i18next";
-import { initGA } from "@/lib/analytics";
+import { grantConsent, denyConsent } from "@/lib/analytics";
 
 const CookieConsentBanner = () => {
   const { t } = useTranslation();
@@ -11,7 +11,8 @@ const CookieConsentBanner = () => {
       buttonText={t("cookie.accept")}
       declineButtonText={t("cookie.decline")}
       enableDeclineButton
-      onAccept={initGA}
+      onAccept={grantConsent}
+      onDecline={denyConsent}
       cookieName="analytics_consent"
       style={{
         background: "hsl(var(--card))",

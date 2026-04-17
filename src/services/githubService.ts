@@ -1,4 +1,4 @@
-const GITHUB_USERNAME = "umutykaya";
+const GITHUB_USERNAME = import.meta.env.VITE_GITHUB_USERNAME || "umutykaya";
 const GITHUB_API = "https://api.github.com";
 
 export interface GitHubRepo {

@@ -10,7 +10,8 @@
     "logout": "Cerrar sesión",
     "appointments": "Citas",
     "myBookings": "Mis Reservas",
-    "admin": "Administración"
+    "admin": "Administración",
+    "resume": "Currículum"
   },
   "hero": {
     "badge": "Disponible para nuevos proyectos",

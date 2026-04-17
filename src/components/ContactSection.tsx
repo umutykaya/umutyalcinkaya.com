@@ -1,16 +1,17 @@
 import { useState, useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { Mail, Github, Linkedin, Twitter, MessageCircle, Calendar, FileText, Hand, Clock } from "lucide-react";
+import { Mail, Github, Linkedin, Twitter, Instagram, MessageCircle, Calendar, FileText, Hand, Clock } from "lucide-react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-const WA_NUMBER = "31621574053";
+const WA_NUMBER = import.meta.env.VITE_WHATSAPP_NUMBER || "31621574053";
 
 const socials = [
-  { icon: Github, label: "GitHub", href: "#" },
-  { icon: Linkedin, label: "LinkedIn", href: "#" },
-  { icon: Twitter, label: "Twitter", href: "#" },
+  { icon: Github, label: "GitHub", href: import.meta.env.VITE_GITHUB_URL },
+  { icon: Linkedin, label: "LinkedIn", href: import.meta.env.VITE_LINKEDIN_URL },
+  { icon: Twitter, label: "Twitter", href: import.meta.env.VITE_TWITTER_URL },
+  { icon: Instagram, label: "Instagram", href: import.meta.env.VITE_INSTAGRAM_URL },
 ];
 
 const contactSchema = z.object({
@@ -50,7 +51,8 @@ const ContactSection = () => {
   const handleEmail = (data: ContactFormValues) => {
     const subject = encodeURIComponent(data.subject);
     const body = encodeURIComponent(`Name: ${data.name}\nEmail: ${data.email}\n\n${data.message}`);
-    window.open(`mailto:hello@example.com?subject=${subject}&body=${body}`);
+    const email = import.meta.env.VITE_CONTACT_EMAIL || "hello@example.com";
+    window.open(`mailto:${email}?subject=${subject}&body=${body}`);
   };
 
   const handleQuickAction = (action: string) => {

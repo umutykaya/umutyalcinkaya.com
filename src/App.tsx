@@ -19,6 +19,8 @@ import Dashboard from "./pages/admin/Dashboard.tsx";
 import ManageSlots from "./pages/admin/ManageSlots.tsx";
 import ManageBookings from "./pages/admin/ManageBookings.tsx";
 import CalendarSync from "./pages/admin/CalendarSync.tsx";
+import Resume from "./pages/Resume.tsx";
+import Contact from "./pages/Contact.tsx";
 
 const queryClient = new QueryClient();
 
@@ -33,6 +35,8 @@ const App = () => (
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Index />} />
+              <Route path="/resume" element={<Resume />} />
+              <Route path="/contact" element={<Contact />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route

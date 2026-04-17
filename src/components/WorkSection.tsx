@@ -22,7 +22,7 @@ const WorkSection = () => {
   const displayed = repos?.slice(0, MAX_REPOS) ?? [];
 
   return (
-    <section id="work" className="py-32">
+    <section id="work" className="py-32 border-t border-border/30">
       <div className="container mx-auto px-6">
         <div className="mb-16 flex items-end justify-between gap-4 flex-wrap">
           <div>
@@ -32,7 +32,7 @@ const WorkSection = () => {
             </h2>
           </div>
           <a
-            href="https://github.com/umutykaya"
+            href={import.meta.env.VITE_GITHUB_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
