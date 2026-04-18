@@ -55,3 +55,4 @@ amplify/.graphqlconfig.yml
 # Misc
 *.log
 .cache/
+node_modules
