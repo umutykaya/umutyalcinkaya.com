@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useQuery } from "@tanstack/react-query";
 import { Github } from "lucide-react";
@@ -23,11 +22,6 @@ const githubUsername = getGitHubUsername();
 
 const WorkSection = () => {
   const { t } = useTranslation();
-  const githubHeatmapUrl = githubUsername ? `https://ghchart.rshah.org/${githubUsername}` : null;
-  const githubHeatmapAlt = githubUsername
-    ? `${githubUsername} GitHub contribution heatmap`
-    : "GitHub contribution heatmap";
-  const [hasHeatMapLoadError, setHasHeatMapLoadError] = useState(false);
 
   const {
     data: repos,
@@ -80,28 +74,7 @@ const WorkSection = () => {
         )}
 
         {!isLoading && !isError && (
-          <>
-            {githubHeatmapUrl && (
-              <div className="mb-8 flex justify-center">
-                <div className="w-3/4 rounded-2xl border border-border/50 bg-card/60 p-4 sm:p-6">
-                  {!hasHeatMapLoadError ? (
-                    <img
-                      src={githubHeatmapUrl}
-                      alt={githubHeatmapAlt}
-                      loading="lazy"
-                      onError={() => setHasHeatMapLoadError(true)}
-                      className="w-full h-auto"
-                    />
-                  ) : (
-                    <p className="text-sm text-muted-foreground text-center">
-                      GitHub heatmap is currently unavailable.
-                    </p>
-                  )}
-                </div>
-              </div>
-            )}
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {displayed.map((repo, i) => (
                 <div
                   key={repo.id}
@@ -121,7 +94,6 @@ const WorkSection = () => {
                 </div>
               ))}
             </div>
-          </>
         )}
       </div>
     </section>
