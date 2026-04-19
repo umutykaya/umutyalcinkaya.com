@@ -16,7 +16,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
@@ -26,21 +26,19 @@ jobs:
 
       - name: Generate .env file
         run: |
-          cat <<EOF > .env
-          VITE_GITHUB_USERNAME=${{ secrets.VITE_GITHUB_USERNAME }}
-          VITE_GITHUB_URL=${{ secrets.VITE_GITHUB_URL }}
-          VITE_LINKEDIN_URL=${{ secrets.VITE_LINKEDIN_URL }}
-          VITE_TWITTER_URL=${{ secrets.VITE_TWITTER_URL }}
-          VITE_INSTAGRAM_URL=${{ secrets.VITE_INSTAGRAM_URL }}
-          VITE_YOUTUBE_VIDEO_URL=${{ secrets.VITE_YOUTUBE_VIDEO_URL }}
-          VITE_YOUTUBE_EMBED_URL=${{ secrets.VITE_YOUTUBE_EMBED_URL }}
-          VITE_WHATSAPP_NUMBER=${{ secrets.VITE_WHATSAPP_NUMBER }}
-          VITE_CONTACT_EMAIL=${{ secrets.VITE_CONTACT_EMAIL }}
-          VITE_GA_MEASUREMENT_ID=${{ secrets.VITE_GA_MEASUREMENT_ID }}
-          EOF
+          echo "VITE_GITHUB_USERNAME=${{ secrets.VITE_GITHUB_USERNAME }}" >> .env
+          echo "VITE_GITHUB_URL=${{ secrets.VITE_GITHUB_URL }}" >> .env
+          echo "VITE_LINKEDIN_URL=${{ secrets.VITE_LINKEDIN_URL }}" >> .env
+          echo "VITE_TWITTER_URL=${{ secrets.VITE_TWITTER_URL }}" >> .env
+          echo "VITE_INSTAGRAM_URL=${{ secrets.VITE_INSTAGRAM_URL }}" >> .env
+          echo "VITE_YOUTUBE_VIDEO_URL=${{ secrets.VITE_YOUTUBE_VIDEO_URL }}" >> .env
+          echo "VITE_YOUTUBE_EMBED_URL=${{ secrets.VITE_YOUTUBE_EMBED_URL }}" >> .env
+          echo "VITE_WHATSAPP_NUMBER=${{ secrets.VITE_WHATSAPP_NUMBER }}" >> .env
+          echo "VITE_CONTACT_EMAIL=${{ secrets.VITE_CONTACT_EMAIL }}" >> .env
+          echo "VITE_GA_MEASUREMENT_ID=${{ secrets.VITE_GA_MEASUREMENT_ID }}" >> .env
 
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
+        uses: aws-actions/configure-aws-credentials@v6
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
