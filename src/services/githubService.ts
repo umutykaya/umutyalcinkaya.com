@@ -175,6 +175,10 @@ interface GitHubEvent {
 async function fetchContributionsGraphQL(
   username: string,
 ): Promise<ContributionMatrix> {
+  const now = new Date();
+  const sixMonthsAgo = new Date(now);
+  sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
+
   const query = `query($username:String!, $from:DateTime, $to:DateTime) {
     user(login:$username) {
       contributionsCollection(from:$from, to:$to) {
@@ -192,20 +196,20 @@ async function fetchContributionsGraphQL(
     }
   }`;
 
-  const now = new Date();
-  const threeMonthsAgo = new Date(now);
-  threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3);
-
-  const from = threeMonthsAgo.toISOString();
-  const to = now.toISOString();
-
   const res = await fetch("https://api.github.com/graphql", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${GITHUB_TOKEN}`,
     },
-    body: JSON.stringify({ query, variables: { username, from, to } }),
+    body: JSON.stringify({
+      query,
+      variables: {
+        username,
+        from: sixMonthsAgo.toISOString(),
+        to: now.toISOString(),
+      },
+    }),
   });
 
   updateRateLimit(res.headers);
@@ -217,37 +221,23 @@ async function fetchContributionsGraphQL(
 
   const calendar =
     json.data.user.contributionsCollection.contributionCalendar;
-
-  const sortedDays: { date: string; count: number }[] = calendar.weeks.flatMap(
-    (w: GraphQLContributionWeek) =>
-      w.contributionDays.map((d: GraphQLContributionDay) => ({
-        date: d.date,
-        count: d.contributionCount,
-      })),
+  const maxCount = Math.max(
+    ...calendar.weeks.flatMap((w: GraphQLContributionWeek) =>
+      w.contributionDays.map((d: GraphQLContributionDay) => d.contributionCount),
+    ),
+    1,
   );
 
-  const maxCount = Math.max(...sortedDays.map((d) => d.count), 1);
-
-  // Re-group into 7-day weeks starting from Sunday
-  const weeks: { days: HeatmapDay[] }[] = [];
-  let currentWeek: HeatmapDay[] = [];
-
-  for (const day of sortedDays) {
-    currentWeek.push({
-      date: day.date,
-      count: day.count,
-      level: assignLevel(day.count, maxCount),
-    });
-    if (currentWeek.length === 7) {
-      weeks.push({ days: currentWeek });
-      currentWeek = [];
-    }
-  }
-  if (currentWeek.length > 0) {
-    weeks.push({ days: currentWeek });
-  }
-
-  return { totalContributions: calendar.totalContributions, weeks };
+  return {
+    totalContributions: calendar.totalContributions,
+    weeks: calendar.weeks.map((w: GraphQLContributionWeek) => ({
+      days: w.contributionDays.map((d: GraphQLContributionDay) => ({
+        date: d.date,
+        count: d.contributionCount,
+        level: assignLevel(d.contributionCount, maxCount),
+      })),
+    })),
+  };
 }
 
 async function fetchContributionsREST(
@@ -273,7 +263,7 @@ async function fetchContributionsREST(
     }
   }
 
-  // Build a 52-week matrix ending today
+  // Build a 26-week matrix ending today
   const today = new Date();
   const days: HeatmapDay[] = [];
 
@@ -282,7 +272,7 @@ async function fetchContributionsREST(
   endDay.setDate(endDay.getDate() + (6 - endDay.getDay()));
 
   const startDay = new Date(endDay);
-  startDay.setDate(startDay.getDate() - 52 * 7 + 1);
+  startDay.setDate(startDay.getDate() - 26 * 7 + 1);
 
   let maxCount = 0;
   const rawDays: { date: string; count: number }[] = [];
@@ -317,7 +307,7 @@ async function fetchContributionsREST(
 export async function fetchContributions(
   username: string = GITHUB_USERNAME,
 ): Promise<ContributionMatrix> {
-  // Prefer GraphQL (last 3 months) when token is available
+  // Prefer GraphQL (6-month window) when token is available
   if (GITHUB_TOKEN) {
     try {
       return await fetchContributionsGraphQL(username);
