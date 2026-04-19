@@ -193,6 +193,15 @@
       "less": "Меньше",
       "more": "Больше"
     },
+    "activity": {
+      "title": "Обзор активности",
+      "avgPerWeek": "Сред. / неделя",
+      "currentStreak": "Текущая серия",
+      "busiestDay": "Самый активный день",
+      "totalContributions": "Всего",
+      "contributions": "вкладов",
+      "days": "дней"
+    },
     "repos": {
       "title": "Репозитории по сложности",
       "name": "Название",

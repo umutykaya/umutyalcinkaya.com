@@ -193,6 +193,15 @@
       "less": "Less",
       "more": "More"
     },
+    "activity": {
+      "title": "Activity Overview",
+      "avgPerWeek": "Avg / week",
+      "currentStreak": "Current streak",
+      "busiestDay": "Busiest day",
+      "totalContributions": "Total",
+      "contributions": "contributions",
+      "days": "days"
+    },
     "repos": {
       "title": "Repositories by Complexity",
       "name": "Name",

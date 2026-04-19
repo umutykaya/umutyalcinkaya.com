@@ -193,6 +193,15 @@
       "less": "Moins",
       "more": "Plus"
     },
+    "activity": {
+      "title": "Aperçu de l'activité",
+      "avgPerWeek": "Moy. / semaine",
+      "currentStreak": "Série en cours",
+      "busiestDay": "Jour le plus actif",
+      "totalContributions": "Total",
+      "contributions": "contributions",
+      "days": "jours"
+    },
     "repos": {
       "title": "Dépôts par Complexité",
       "name": "Nom",

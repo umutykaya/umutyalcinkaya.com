@@ -4,6 +4,7 @@ import { Github, RefreshCw } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import GitHubProfileCard from "@/components/github/GitHubProfileCard";
 import ContributionHeatmap from "@/components/github/ContributionHeatmap";
+import ActivityOverview from "@/components/github/ActivityOverview";
 import ComplexReposTable from "@/components/github/ComplexReposTable";
 import RateLimitIndicator from "@/components/github/RateLimitIndicator";
 import {
@@ -96,6 +97,14 @@ const GitHub = () => {
         {/* Contribution Heatmap */}
         <section className="mb-8">
           <ContributionHeatmap
+            data={contribQuery.data}
+            isLoading={contribQuery.isLoading}
+          />
+        </section>
+
+        {/* Activity Overview */}
+        <section className="mb-8">
+          <ActivityOverview
             data={contribQuery.data}
             isLoading={contribQuery.isLoading}
           />

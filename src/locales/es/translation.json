@@ -193,6 +193,15 @@
       "less": "Menos",
       "more": "Más"
     },
+    "activity": {
+      "title": "Resumen de actividad",
+      "avgPerWeek": "Prom. / semana",
+      "currentStreak": "Racha actual",
+      "busiestDay": "Día más activo",
+      "totalContributions": "Total",
+      "contributions": "contribuciones",
+      "days": "días"
+    },
     "repos": {
       "title": "Repositorios por Complejidad",
       "name": "Nombre",

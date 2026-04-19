@@ -193,6 +193,15 @@
       "less": "Az",
       "more": "Çok"
     },
+    "activity": {
+      "title": "Aktivite Özeti",
+      "avgPerWeek": "Ort. / hafta",
+      "currentStreak": "Mevcut seri",
+      "busiestDay": "En aktif gün",
+      "totalContributions": "Toplam",
+      "contributions": "katkı",
+      "days": "gün"
+    },
     "repos": {
       "title": "Karmaşıklığa Göre Depolar",
       "name": "Ad",
