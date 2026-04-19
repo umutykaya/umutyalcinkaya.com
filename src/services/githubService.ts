@@ -174,10 +174,11 @@ interface GitHubEvent {
 
 async function fetchContributionsGraphQL(
   username: string,
+  since?: string,
 ): Promise<ContributionMatrix> {
-  const query = `query($username:String!) {
+  const query = `query($username:String!, $from:DateTime, $to:DateTime) {
     user(login:$username) {
-      contributionsCollection {
+      contributionsCollection(from:$from, to:$to) {
         contributionCalendar {
           totalContributions
           weeks {
@@ -192,41 +193,83 @@ async function fetchContributionsGraphQL(
     }
   }`;
 
-  const res = await fetch("https://api.github.com/graphql", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${GITHUB_TOKEN}`,
-    },
-    body: JSON.stringify({ query, variables: { username } }),
-  });
+  // Determine year ranges to fetch
+  const now = new Date();
+  const startYear = since ? new Date(since).getFullYear() : now.getFullYear();
+  const endYear = now.getFullYear();
 
-  updateRateLimit(res.headers);
+  const allWeeks: GraphQLContributionWeek[] = [];
+  let totalContributions = 0;
 
-  if (!res.ok) throw new Error(`GraphQL error: ${res.status}`);
+  for (let year = startYear; year <= endYear; year++) {
+    const from = new Date(Math.max(
+      new Date(`${year}-01-01T00:00:00Z`).getTime(),
+      since ? new Date(since).getTime() : 0,
+    )).toISOString();
+    const to = new Date(Math.min(
+      new Date(`${year}-12-31T23:59:59Z`).getTime(),
+      now.getTime(),
+    )).toISOString();
 
-  const json = await res.json();
-  if (json.errors) throw new Error(json.errors[0]?.message ?? "GraphQL error");
+    const res = await fetch("https://api.github.com/graphql", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${GITHUB_TOKEN}`,
+      },
+      body: JSON.stringify({ query, variables: { username, from, to } }),
+    });
 
-  const calendar =
-    json.data.user.contributionsCollection.contributionCalendar;
-  const maxCount = Math.max(
-    ...calendar.weeks.flatMap((w: GraphQLContributionWeek) =>
-      w.contributionDays.map((d: GraphQLContributionDay) => d.contributionCount),
-    ),
-    1,
+    updateRateLimit(res.headers);
+
+    if (!res.ok) throw new Error(`GraphQL error: ${res.status}`);
+
+    const json = await res.json();
+    if (json.errors) throw new Error(json.errors[0]?.message ?? "GraphQL error");
+
+    const calendar =
+      json.data.user.contributionsCollection.contributionCalendar;
+    totalContributions += calendar.totalContributions;
+    allWeeks.push(...calendar.weeks);
+  }
+
+  // Deduplicate days (year boundaries can overlap) and rebuild weeks
+  const dayMap = new Map<string, { date: string; count: number }>();
+  for (const w of allWeeks) {
+    for (const d of w.contributionDays) {
+      const existing = dayMap.get(d.date);
+      if (!existing || d.contributionCount > existing.count) {
+        dayMap.set(d.date, { date: d.date, count: d.contributionCount });
+      }
+    }
+  }
+
+  const sortedDays = [...dayMap.values()].sort(
+    (a, b) => a.date.localeCompare(b.date),
   );
 
-  return {
-    totalContributions: calendar.totalContributions,
-    weeks: calendar.weeks.map((w: GraphQLContributionWeek) => ({
-      days: w.contributionDays.map((d: GraphQLContributionDay) => ({
-        date: d.date,
-        count: d.contributionCount,
-        level: assignLevel(d.contributionCount, maxCount),
-      })),
-    })),
-  };
+  const maxCount = Math.max(...sortedDays.map((d) => d.count), 1);
+
+  // Re-group into 7-day weeks starting from Sunday
+  const weeks: { days: HeatmapDay[] }[] = [];
+  let currentWeek: HeatmapDay[] = [];
+
+  for (const day of sortedDays) {
+    currentWeek.push({
+      date: day.date,
+      count: day.count,
+      level: assignLevel(day.count, maxCount),
+    });
+    if (currentWeek.length === 7) {
+      weeks.push({ days: currentWeek });
+      currentWeek = [];
+    }
+  }
+  if (currentWeek.length > 0) {
+    weeks.push({ days: currentWeek });
+  }
+
+  return { totalContributions, weeks };
 }
 
 async function fetchContributionsREST(
@@ -295,11 +338,12 @@ async function fetchContributionsREST(
 
 export async function fetchContributions(
   username: string = GITHUB_USERNAME,
+  since?: string,
 ): Promise<ContributionMatrix> {
-  // Prefer GraphQL (full year data) when token is available
+  // Prefer GraphQL (full history) when token is available
   if (GITHUB_TOKEN) {
     try {
-      return await fetchContributionsGraphQL(username);
+      return await fetchContributionsGraphQL(username, since);
     } catch {
       // Fall back to REST
     }

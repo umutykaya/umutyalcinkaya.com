@@ -46,6 +46,9 @@ amplify/.env*
 amplify/mock-data
 amplify/.graphqlconfig.yml
 
+# GitHub instructions (keep workflows)
+.github/*.md
+
 # OS files
 .DS_Store
 .AppleDouble

@@ -29,8 +29,9 @@ const GitHub = () => {
   });
 
   const contribQuery = useQuery<ContributionMatrix>({
-    queryKey: ["github-contributions"],
-    queryFn: () => fetchContributions(),
+    queryKey: ["github-contributions", userQuery.data?.created_at],
+    queryFn: () => fetchContributions(undefined, userQuery.data?.created_at),
+    enabled: !!userQuery.data,
     staleTime: 1000 * 60 * 30,
   });
 
