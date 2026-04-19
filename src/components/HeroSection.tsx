@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import cartoonProfile from "@/assets/cartoon_profile.png";
 
-const roles = ["Platform Engineer", "Cloud Architect", "DevOps"];
+const roles = ["Platform Engineer", "Cloud Architect", "DevOps", "Full Stack Developer"];
 
 const HeroSection = () => {
   const { t } = useTranslation();
