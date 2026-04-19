@@ -16,10 +16,37 @@ import { Link } from "react-router-dom";
 
 const experience = [
   {
+    title: "Full Stack Engineer",
+    company: "Allianz Insurance",
+    period: "November 2025 – February 2026",
+    location: "Cologne, Germany (Remote)",
+    bullets: [
+      "Building GenAI self-service Resilience Platform where chaos engineering and disaster recovery scenarios triggered.",
+      "Design and conceptualize knowledge graph.",
+      "Rapidly prototyped client needs.",
+      "Fullstack platform implementation of React, Django and Secure API practises.",
+      "Backend crafted with Singleton pattern Neo4J, and MongoDB reconciliation.",
+      "Technology stack enriched further using AWS Bedrock, Azure CosmosDB, MongoDB, AWS EKS, IBM Context Forge (MCP Server), Terraform and TypeScript.",
+    ],
+  },
+  {
+    title: "Platform Engineer",
+    company: "Keytrade Bank",
+    period: "July 2025 – October 2025",
+    location: "Brussels, Belgium (Hybrid)",
+    bullets: [
+      "Participate in workshops and conduct questionnaires at the client office in Brussels, Belgium.",
+      "Prepare business, technical, risk compliance, and security requirements documents.",
+      "Plan deliverables and contribute to the future state of implementation by evaluating current state architecture.",
+      "Detect modern architectural needs, explain gaps to achieve excellence through comprehensive analysis.",
+      "Define Azure services to be used such as Databricks, Microsoft Fabrics, AI Foundry, Collate and Wherescape integration scenarios.",
+    ],
+  },
+  {
     title: "Platform Engineer",
     company: "Stichting Pensioen Funds",
-    period: "December 2024 – Present",
-    location: "Utrecht, Netherlands",
+    period: "December 2024 – June 2025",
+    location: "Utrecht, Netherlands (Remote)",
     bullets: [
       "Building and maintaining infrastructure modules with a DevOps approach.",
       "Delivering components such as Azure Front Door CDN and Application Gateway automation by constructing AVM Bicep modules.",
@@ -76,12 +103,26 @@ const experience = [
       "Orchestrated modules through Azure Data Factory.",
     ],
   },
+  {
+    title: "Cloud & Data Engineer",
+    company: "Miscellaneous experience",
+    period: "October 2018 – October 2021",
+    location: "Istanbul, Turkey & Amsterdam, Netherlands",
+    bullets: [
+      "Designed and maintained ETL pipelines using Python and SQL for data ingestion across structured and semi-structured sources.",
+      "Built and deployed REST APIs with Spring Boot and Java to serve internal data products.",
+      "Provisioned and managed cloud infrastructure on AWS and Azure, including EC2, S3, Lambda, and Azure Functions.",
+      "Automated deployment workflows using Docker, CI/CD pipelines, and shell scripting on Linux environments.",
+      "Administered relational and NoSQL databases, ensuring data quality and availability for downstream consumers.",
+      "Collaborated with cross-functional teams following Agile methodologies to deliver data-driven solutions.",
+    ],
+  },
 ];
 
 const skills = {
-  "Cloud & Infrastructure": ["AWS", "Azure", "Terraform", "Bicep", "Serverless"],
-  "Development & DevOps": ["CI/CD", "Kubernetes", "Docker", "Agile (Scrum, Kanban)", "ITILv4", "Azure DevOps"],
-  "Data & Other": ["Python", "SQL, NoSQL", "REST APIs", "Spring Boot, Java", "TypeScript", "Linux Administration"],
+  "Cloud & Infrastructure": ["AWS", "Azure", "Databricks", "GCP", "Terraform", "Bicep", "Serverless", "Azure Network"],
+  "Development & DevOps": ["CI/CD", "Biceps", "Azure Data Factory", "Kubernetes", "Docker", "Agile (Scrum, Kanban)", "ITILv4", "Azure DevOps"],
+  "Data & Other": ["Advanced Python, Django, Flask", "SQL, NoSQL", "Azure Keyvault", "REST APIs", "GO", "Spring Boot, Java", "TypeScript", "Linux Administration"],
 };
 
 const certifications = [
@@ -93,6 +134,7 @@ const languages = [
   { name: "Turkish", level: "Native" },
   { name: "English", level: "Full professional proficiency" },
   { name: "Spanish", level: "Daily, informal speaking proficiency" },
+  { name: "French", level: "Beginner, limited informal conversation proficiency" },
 ];
 
 const Resume = () => {
@@ -120,7 +162,7 @@ const Resume = () => {
                 Umut Yalcinkaya
               </h1>
               <p className="text-xl text-muted-foreground mb-4">
-                Platform Engineer{" "}
+                Full Stack Platform Engineer{" "}
                 <span className="text-foreground/40">·</span> 10+ Years of
                 Experience
               </p>
@@ -135,15 +177,15 @@ const Resume = () => {
             {/* Introduction */}
             <section className="mb-12 rounded-2xl border border-border/50 bg-card p-6">
               <p className="text-muted-foreground leading-relaxed">
-                As an experienced DevOps/Platform Engineer, I am passionate about
-                automation and the transformative potential it holds — pushing the
+                As an experienced Full Stack Platform Engineer, I am passionate about
+                automation and its transformative potential — pushing the
                 boundaries of what is possible and contributing to a future where
-                automation is integrated seamlessly into our lives, creating a more
+                automation is seamlessly integrated into our lives, creating a more
                 efficient, sustainable, and prosperous world. With a proactive
                 approach, I am always eager to initiate and lead potential projects.
-                I thrive as a team player, valuing collaboration and emphasizing the
-                collective efforts of the team. I am keen on leveraging the Agile
-                maturity level of a team to drive successful outcomes.
+                I thrive as a team player, valuing collaboration and emphasizing
+                collective team efforts. I am keen on leveraging a team's Agile
+                maturity level to drive successful outcomes.
               </p>
             </section>
 
@@ -239,12 +281,24 @@ const Resume = () => {
                   <GraduationCap size={20} className="text-accent" />
                   <h2 className="text-lg font-bold text-foreground">Education</h2>
                 </div>
-                <p className="text-sm font-medium text-foreground">
-                  BSc. Software Engineering
-                </p>
-                <p className="text-sm text-muted-foreground">
-                  Bahcesehir University, Istanbul — 2018
-                </p>
+                <div className="space-y-3">
+                  <div>
+                    <p className="text-sm font-medium text-foreground">
+                      MSc. Business Administration — EPMS
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      University of Amsterdam, Amsterdam Business School — Feb 2026 – Present
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-foreground">
+                      BSc. Software Engineering
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      Bahcesehir University, Istanbul — 2018
+                    </p>
+                  </div>
+                </div>
               </div>
 
               {/* Certifications */}

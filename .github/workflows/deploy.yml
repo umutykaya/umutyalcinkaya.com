@@ -1,0 +1,52 @@
+name: Deploy to AWS
+
+on:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Build & Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Generate .env file
+        run: |
+          cat <<EOF > .env
+          VITE_GITHUB_USERNAME=${{ secrets.VITE_GITHUB_USERNAME }}
+          VITE_GITHUB_URL=${{ secrets.VITE_GITHUB_URL }}
+          VITE_LINKEDIN_URL=${{ secrets.VITE_LINKEDIN_URL }}
+          VITE_TWITTER_URL=${{ secrets.VITE_TWITTER_URL }}
+          VITE_INSTAGRAM_URL=${{ secrets.VITE_INSTAGRAM_URL }}
+          VITE_YOUTUBE_VIDEO_URL=${{ secrets.VITE_YOUTUBE_VIDEO_URL }}
+          VITE_YOUTUBE_EMBED_URL=${{ secrets.VITE_YOUTUBE_EMBED_URL }}
+          VITE_WHATSAPP_NUMBER=${{ secrets.VITE_WHATSAPP_NUMBER }}
+          VITE_CONTACT_EMAIL=${{ secrets.VITE_CONTACT_EMAIL }}
+          VITE_GA_MEASUREMENT_ID=${{ secrets.VITE_GA_MEASUREMENT_ID }}
+          EOF
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-2
+
+      - name: Deploy
+        run: |
+          chmod +x scripts/deploy.sh
+          ./scripts/deploy.sh
