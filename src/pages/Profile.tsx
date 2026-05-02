@@ -17,10 +17,11 @@ const Profile = () => {
   if (!user) return null;
 
   return (
-    <div className="min-h-screen bg-background pt-24 px-6">
-      <div className="max-w-lg mx-auto">
-        <BackToHome />
-        <h1 className="text-3xl font-bold text-foreground mb-8">{t("profile.title")}</h1>
+    <div className="min-h-screen bg-background">
+      <div className="pt-24 pb-16 px-6">
+        <div className="container mx-auto max-w-lg">
+          <BackToHome />
+          <h1 className="text-3xl font-bold text-foreground mb-8">{t("profile.title")}</h1>
 
         <div className="rounded-2xl border border-border/50 bg-card p-6 space-y-6">
           <h2 className="text-lg font-semibold text-foreground">{t("profile.personalInfo")}</h2>
@@ -61,6 +62,8 @@ const Profile = () => {
           <LogOut size={16} />
           {t("profile.signOut")}
         </button>
+        </div>
+        </div>
       </div>
     </div>
   );

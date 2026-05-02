@@ -59,8 +59,9 @@ const GitHub = () => {
     <div className="min-h-screen bg-background">
       <Navbar />
 
-      <main className="container mx-auto px-6 pt-28 pb-20">
-        <BackToHome />
+      <main className="pt-24 pb-16 px-6">
+        <div className="container mx-auto max-w-7xl">
+          <BackToHome />
         {/* Header */}
         <div className="flex items-end justify-between gap-4 flex-wrap mb-10">
           <div>
@@ -146,6 +147,7 @@ const GitHub = () => {
             dataUpdatedAt={reposQuery.dataUpdatedAt}
           />
         </section>
+        </div>
       </main>
     </div>
   );

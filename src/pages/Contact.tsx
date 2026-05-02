@@ -10,11 +10,11 @@ const Contact = () => {
       <AnimatedBackground />
       <div className="relative z-10">
         <Navbar />
-        <div className="pt-16">
-          <div className="container mx-auto px-6">
+        <div className="pt-24 pb-16 px-6">
+          <div className="container mx-auto max-w-3xl">
             <BackToHome />
+            <ContactSection />
           </div>
-          <ContactSection />
         </div>
         <Footer />
       </div>
