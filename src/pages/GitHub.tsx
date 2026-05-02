@@ -2,6 +2,7 @@ import { useTranslation } from "react-i18next";
 import { useQuery } from "@tanstack/react-query";
 import { Github, RefreshCw } from "lucide-react";
 import Navbar from "@/components/Navbar";
+import BackToHome from "@/components/BackToHome";
 import GitHubProfileCard from "@/components/github/GitHubProfileCard";
 import ContributionHeatmap from "@/components/github/ContributionHeatmap";
 import ActivityOverview from "@/components/github/ActivityOverview";
@@ -59,6 +60,7 @@ const GitHub = () => {
       <Navbar />
 
       <main className="container mx-auto px-6 pt-28 pb-20">
+        <BackToHome />
         {/* Header */}
         <div className="flex items-end justify-between gap-4 flex-wrap mb-10">
           <div>

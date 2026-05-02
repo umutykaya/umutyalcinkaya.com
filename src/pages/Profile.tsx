@@ -2,6 +2,7 @@ import { useTranslation } from "react-i18next";
 import { useAuth } from "@/contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { User, Mail, Shield, LogOut } from "lucide-react";
+import BackToHome from "@/components/BackToHome";
 
 const Profile = () => {
   const { t } = useTranslation();
@@ -18,6 +19,7 @@ const Profile = () => {
   return (
     <div className="min-h-screen bg-background pt-24 px-6">
       <div className="max-w-lg mx-auto">
+        <BackToHome />
         <h1 className="text-3xl font-bold text-foreground mb-8">{t("profile.title")}</h1>
 
         <div className="rounded-2xl border border-border/50 bg-card p-6 space-y-6">

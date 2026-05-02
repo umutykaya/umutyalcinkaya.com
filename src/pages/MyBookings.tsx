@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useAuth } from "@/contexts/AuthContext";
 import { listUserBookings, listAllSlots } from "@/services/appointmentService";
 import BookingCard from "@/components/appointments/BookingCard";
+import BackToHome from "@/components/BackToHome";
 import type { Booking, Slot } from "@/types/appointment";
 import Navbar from "@/components/Navbar";
 
@@ -24,6 +25,7 @@ const MyBookings = () => {
       <Navbar />
       <div className="pt-24 pb-16 px-6">
         <div className="container mx-auto max-w-3xl">
+          <BackToHome />
           <div className="mb-8">
             <p className="text-sm font-mono text-accent mb-3">// {t("nav.myBookings")}</p>
             <h1 className="text-3xl sm:text-4xl font-bold text-foreground">

@@ -9,10 +9,9 @@ import {
   Phone,
   MapPin,
   Calendar,
-  ArrowLeft,
   Download,
 } from "lucide-react";
-import { Link } from "react-router-dom";
+import BackToHome from "@/components/BackToHome";
 
 const experience = [
   {
@@ -146,14 +145,7 @@ const Resume = () => {
 
         <div className="pt-24 pb-16 px-6">
           <div className="container mx-auto max-w-4xl">
-            {/* Back link */}
-            <Link
-              to="/"
-              className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-8"
-            >
-              <ArrowLeft size={16} />
-              Back to Home
-            </Link>
+            <BackToHome />
 
             {/* Header */}
             <header className="mb-12">

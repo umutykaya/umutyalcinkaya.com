@@ -4,6 +4,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { listAvailableSlots, createBooking } from "@/services/appointmentService";
 import SlotCalendar from "@/components/appointments/SlotCalendar";
 import BookingForm from "@/components/appointments/BookingForm";
+import BackToHome from "@/components/BackToHome";
 import type { Slot } from "@/types/appointment";
 import { toast } from "sonner";
 import Navbar from "@/components/Navbar";
@@ -43,6 +44,7 @@ const Appointments = () => {
       <Navbar />
       <div className="pt-24 pb-16 px-6">
         <div className="container mx-auto max-w-4xl">
+          <BackToHome />
           <div className="mb-8">
             <p className="text-sm font-mono text-accent mb-3">// {t("nav.appointments")}</p>
             <h1 className="text-3xl sm:text-4xl font-bold text-foreground">{t("appointments.title")}</h1>

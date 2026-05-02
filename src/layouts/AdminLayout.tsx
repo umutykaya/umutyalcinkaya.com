@@ -2,6 +2,7 @@ import { Link, Outlet, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { LayoutDashboard, CalendarDays, BookOpen, RefreshCw } from "lucide-react";
 import Navbar from "@/components/Navbar";
+import BackToHome from "@/components/BackToHome";
 
 const navItems = [
   { key: "dashboard", path: "/admin", icon: LayoutDashboard },
@@ -58,6 +59,7 @@ const AdminLayout = () => {
         </div>
 
         <main className="flex-1 p-6 pb-24 lg:pb-6">
+          <BackToHome />
           <Outlet />
         </main>
       </div>
