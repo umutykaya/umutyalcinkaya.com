@@ -10,8 +10,6 @@ import CookieConsentBanner from "@/components/CookieConsentBanner";
 import ScrollToTop from "@/components/ScrollToTop";
 import Index from "./pages/Index.tsx";
 import NotFound from "./pages/NotFound.tsx";
-import Login from "./pages/Login.tsx";
-import Register from "./pages/Register.tsx";
 import Profile from "./pages/Profile.tsx";
 import Appointments from "./pages/Appointments.tsx";
 import MyBookings from "./pages/MyBookings.tsx";
@@ -41,8 +39,6 @@ const App = () => (
               <Route path="/resume" element={<Resume />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/github" element={<GitHub />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
               <Route
                 path="/profile"
                 element={

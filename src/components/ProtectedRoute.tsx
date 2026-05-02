@@ -20,7 +20,7 @@ const ProtectedRoute = ({ children, requiredGroup }: ProtectedRouteProps) => {
   }
 
   if (!user) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/" replace />;
   }
 
   if (requiredGroup && !user.groups.includes(requiredGroup)) {

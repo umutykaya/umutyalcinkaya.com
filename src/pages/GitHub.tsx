@@ -2,6 +2,7 @@ import { useTranslation } from "react-i18next";
 import { useQuery } from "@tanstack/react-query";
 import { Github, RefreshCw } from "lucide-react";
 import Navbar from "@/components/Navbar";
+import AnimatedBackground from "@/components/AnimatedBackground";
 import BackToHome from "@/components/BackToHome";
 import GitHubProfileCard from "@/components/github/GitHubProfileCard";
 import ContributionHeatmap from "@/components/github/ContributionHeatmap";
@@ -56,7 +57,9 @@ const GitHub = () => {
     orgsQuery.isError;
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background relative">
+      <AnimatedBackground />
+      <div className="relative z-10">
       <Navbar />
 
       <main className="pt-24 pb-16 px-6">
@@ -149,6 +152,7 @@ const GitHub = () => {
         </section>
         </div>
       </main>
+      </div>
     </div>
   );
 };
