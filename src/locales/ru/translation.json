@@ -213,6 +213,13 @@
       "empty": "Репозитории не найдены.",
       "lastFetched": "Получено"
     },
+    "organizations": {
+      "title": "Вклад в организации",
+      "org": "организация",
+      "orgs": "организации",
+      "contributionsLastYear": "коммитов за год",
+      "topRepos": "Основные репозитории"
+    },
     "rateLimit": {
       "resetsAt": "Сброс в"
     },

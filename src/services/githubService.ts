@@ -1,6 +1,9 @@
 import type {
   GitHubUser,
   GitHubRepo,
+  GitHubOrg,
+  OrgContribution,
+  OrgRepoContribution,
   ContributionMatrix,
   HeatmapDay,
   ComplexityTier,
@@ -316,4 +319,222 @@ export async function fetchContributions(
     }
   }
   return fetchContributionsREST(username);
+}
+
+// ── Organization Contributions ────────────────────────────────────
+
+export async function fetchUserOrgs(
+  username: string = GITHUB_USERNAME,
+): Promise<GitHubOrg[]> {
+  const res = await ghFetch(`${GITHUB_API}/users/${username}/orgs?per_page=100`);
+  return res.json();
+}
+
+interface GraphQLRepoContributionEntry {
+  contributions: { totalCount: number };
+  repository: {
+    name: string;
+    url: string;
+    isPrivate: boolean;
+    owner: {
+      __typename: string;
+      login: string;
+      avatarUrl: string;
+      url: string;
+      description?: string | null;
+    };
+  };
+}
+
+interface GraphQLOrgNode {
+  login: string;
+  name: string | null;
+  avatarUrl: string;
+  description: string | null;
+  url: string;
+}
+
+async function fetchOrgContributionsGraphQL(
+  username: string,
+): Promise<OrgContribution[]> {
+  const now = new Date();
+  const oneYearAgo = new Date(now);
+  oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
+
+  const repoFragment = `
+    contributions { totalCount }
+    repository {
+      name
+      url
+      isPrivate
+      owner {
+        __typename
+        login
+        avatarUrl
+        url
+        ... on Organization { description }
+      }
+    }`;
+
+  const query = `query($username:String!, $from:DateTime, $to:DateTime) {
+    user(login:$username) {
+      organizations(first: 50) {
+        nodes { login name avatarUrl description url }
+      }
+      contributionsCollection(from:$from, to:$to) {
+        commitContributionsByRepository(maxRepositories: 100) { ${repoFragment} }
+        pullRequestContributionsByRepository(maxRepositories: 100) { ${repoFragment} }
+        issueContributionsByRepository(maxRepositories: 100) { ${repoFragment} }
+        pullRequestReviewContributionsByRepository(maxRepositories: 100) { ${repoFragment} }
+      }
+    }
+  }`;
+
+  const res = await fetch("https://api.github.com/graphql", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${GITHUB_TOKEN}`,
+    },
+    body: JSON.stringify({
+      query,
+      variables: {
+        username,
+        from: oneYearAgo.toISOString(),
+        to: now.toISOString(),
+      },
+    }),
+  });
+
+  updateRateLimit(res.headers);
+  if (!res.ok) throw new Error(`GraphQL error: ${res.status}`);
+
+  const json = await res.json();
+  if (json.errors) throw new Error(json.errors[0]?.message ?? "GraphQL error");
+
+  // Seed orgs with the user's known org memberships.
+  const orgNodes: GraphQLOrgNode[] = json.data.user.organizations.nodes ?? [];
+  const orgByLogin = new Map<string, GitHubOrg>();
+  orgNodes.forEach((o) => {
+    orgByLogin.set(o.login, {
+      login: o.login,
+      id: 0,
+      avatar_url: o.avatarUrl,
+      description: o.description,
+      url: o.url,
+    });
+  });
+
+  const collection = json.data.user.contributionsCollection;
+  const allEntries: GraphQLRepoContributionEntry[] = [
+    ...(collection.commitContributionsByRepository ?? []),
+    ...(collection.pullRequestContributionsByRepository ?? []),
+    ...(collection.issueContributionsByRepository ?? []),
+    ...(collection.pullRequestReviewContributionsByRepository ?? []),
+  ];
+
+  // Aggregate per (owner, repo) summing across all contribution types.
+  const repoTotals = new Map<
+    string,
+    {
+      ownerLogin: string;
+      ownerType: string;
+      ownerAvatar: string;
+      ownerUrl: string;
+      ownerDescription: string | null;
+      name: string;
+      url: string;
+      total: number;
+      isPrivate: boolean;
+    }
+  >();
+
+  for (const entry of allEntries) {
+    const owner = entry.repository.owner;
+    if (owner.login.toLowerCase() === username.toLowerCase()) continue;
+    const key = `${owner.login}/${entry.repository.name}`;
+    const existing = repoTotals.get(key);
+    if (existing) {
+      existing.total += entry.contributions.totalCount;
+    } else {
+      repoTotals.set(key, {
+        ownerLogin: owner.login,
+        ownerType: owner.__typename,
+        ownerAvatar: owner.avatarUrl,
+        ownerUrl: owner.url,
+        ownerDescription: owner.description ?? null,
+        name: entry.repository.name,
+        url: entry.repository.url,
+        total: entry.contributions.totalCount,
+        isPrivate: entry.repository.isPrivate,
+      });
+    }
+  }
+
+  // Group repos by org owner. Only include Organization-owned repos.
+  const grouped = new Map<string, OrgContribution>();
+  for (const r of repoTotals.values()) {
+    if (r.isPrivate) continue;
+    if (r.ownerType !== "Organization") continue;
+
+    const org: GitHubOrg = orgByLogin.get(r.ownerLogin) ?? {
+      login: r.ownerLogin,
+      id: 0,
+      avatar_url: r.ownerAvatar,
+      description: r.ownerDescription,
+      url: r.ownerUrl,
+    };
+    // Make sure we have a canonical entry in orgByLogin for later merge.
+    if (!orgByLogin.has(r.ownerLogin)) orgByLogin.set(r.ownerLogin, org);
+
+    const repo: OrgRepoContribution = {
+      name: r.name,
+      url: r.url,
+      contributions: r.total,
+    };
+
+    const existing = grouped.get(r.ownerLogin);
+    if (existing) {
+      existing.totalContributions += repo.contributions;
+      existing.repos.push(repo);
+    } else {
+      grouped.set(r.ownerLogin, {
+        org,
+        totalContributions: repo.contributions,
+        repos: [repo],
+      });
+    }
+  }
+
+  // Include orgs the user is a public member of even if no contributions in window.
+  orgByLogin.forEach((org, login) => {
+    if (!grouped.has(login)) {
+      grouped.set(login, { org, totalContributions: 0, repos: [] });
+    }
+  });
+
+  return Array.from(grouped.values())
+    .map((g) => ({
+      ...g,
+      repos: g.repos.sort((a, b) => b.contributions - a.contributions),
+    }))
+    .sort((a, b) => b.totalContributions - a.totalContributions);
+}
+
+export async function fetchOrgContributions(
+  username: string = GITHUB_USERNAME,
+): Promise<OrgContribution[]> {
+  if (GITHUB_TOKEN) {
+    try {
+      return await fetchOrgContributionsGraphQL(username);
+    } catch {
+      // Fall back to REST (orgs only, no contribution counts)
+    }
+  }
+  const orgs = await fetchUserOrgs(username);
+  return orgs.map((org) => ({
+    org,
+    totalContributions: 0,
+    repos: [],
+  }));
 }

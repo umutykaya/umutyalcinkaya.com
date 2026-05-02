@@ -1,6 +1,6 @@
 {
   "aws_project_region": "eu-west-2",
-  "aws_content_delivery_bucket": "umutykaya-20260412161350-hostingbucket-dev",
+  "aws_content_delivery_bucket": "umutyalcinkayacom-20260426190020-hostingbucket-dev",
   "aws_content_delivery_bucket_region": "eu-west-2",
-  "aws_content_delivery_url": "https://dj12v0dmvw7pz.cloudfront.net"
+  "aws_content_delivery_url": "https://d1mvdnthoxymfx.cloudfront.net"
 }

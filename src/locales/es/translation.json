@@ -213,6 +213,13 @@
       "empty": "No se encontraron repositorios.",
       "lastFetched": "Obtenido"
     },
+    "organizations": {
+      "title": "Contribuciones a Organizaciones",
+      "org": "organización",
+      "orgs": "organizaciones",
+      "contributionsLastYear": "commits en el último año",
+      "topRepos": "Repos destacados"
+    },
     "rateLimit": {
       "resetsAt": "Se reinicia a las"
     },

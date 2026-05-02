@@ -60,3 +60,23 @@ export interface RateLimitInfo {
 
 export type SortField = "complexity_score" | "stargazers_count" | "size" | "forks_count" | "name";
 export type SortDirection = "asc" | "desc";
+
+export interface GitHubOrg {
+  login: string;
+  id: number;
+  avatar_url: string;
+  description: string | null;
+  url: string;
+}
+
+export interface OrgRepoContribution {
+  name: string;
+  url: string;
+  contributions: number;
+}
+
+export interface OrgContribution {
+  org: GitHubOrg;
+  totalContributions: number;
+  repos: OrgRepoContribution[];
+}

@@ -213,6 +213,13 @@
       "empty": "Aucun dépôt trouvé.",
       "lastFetched": "Récupéré"
     },
+    "organizations": {
+      "title": "Contributions aux Organisations",
+      "org": "organisation",
+      "orgs": "organisations",
+      "contributionsLastYear": "commits sur l'année",
+      "topRepos": "Dépôts principaux"
+    },
     "rateLimit": {
       "resetsAt": "Réinitialisation à"
     },

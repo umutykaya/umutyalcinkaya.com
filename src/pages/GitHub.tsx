@@ -6,13 +6,20 @@ import GitHubProfileCard from "@/components/github/GitHubProfileCard";
 import ContributionHeatmap from "@/components/github/ContributionHeatmap";
 import ActivityOverview from "@/components/github/ActivityOverview";
 import ComplexReposTable from "@/components/github/ComplexReposTable";
+import OrganizationContributions from "@/components/github/OrganizationContributions";
 import RateLimitIndicator from "@/components/github/RateLimitIndicator";
 import {
   fetchGitHubUser,
   fetchEnrichedRepos,
   fetchContributions,
+  fetchOrgContributions,
 } from "@/services/githubService";
-import type { GitHubUser, GitHubRepo, ContributionMatrix } from "@/types/github";
+import type {
+  GitHubUser,
+  GitHubRepo,
+  ContributionMatrix,
+  OrgContribution,
+} from "@/types/github";
 
 const GitHub = () => {
   const { t } = useTranslation();
@@ -35,7 +42,17 @@ const GitHub = () => {
     staleTime: 1000 * 60 * 30,
   });
 
-  const hasError = userQuery.isError || reposQuery.isError || contribQuery.isError;
+  const orgsQuery = useQuery<OrgContribution[]>({
+    queryKey: ["github-org-contributions"],
+    queryFn: () => fetchOrgContributions(),
+    staleTime: 1000 * 60 * 30,
+  });
+
+  const hasError =
+    userQuery.isError ||
+    reposQuery.isError ||
+    contribQuery.isError ||
+    orgsQuery.isError;
 
   return (
     <div className="min-h-screen bg-background">
@@ -77,6 +94,7 @@ const GitHub = () => {
                 userQuery.refetch();
                 reposQuery.refetch();
                 contribQuery.refetch();
+                orgsQuery.refetch();
               }}
               className="flex items-center gap-1.5 text-sm px-3 py-1.5 rounded-lg bg-destructive/10 text-destructive hover:bg-destructive/20 transition-colors"
             >
@@ -107,6 +125,14 @@ const GitHub = () => {
           <ActivityOverview
             data={contribQuery.data}
             isLoading={contribQuery.isLoading}
+          />
+        </section>
+
+        {/* Organization Contributions */}
+        <section className="mb-8">
+          <OrganizationContributions
+            data={orgsQuery.data}
+            isLoading={orgsQuery.isLoading}
           />
         </section>
 

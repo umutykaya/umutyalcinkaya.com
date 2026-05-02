@@ -213,6 +213,13 @@
       "empty": "Depo bulunamadı.",
       "lastFetched": "Alındı"
     },
+    "organizations": {
+      "title": "Organizasyon Katkıları",
+      "org": "organizasyon",
+      "orgs": "organizasyon",
+      "contributionsLastYear": "son bir yıldaki commit",
+      "topRepos": "Öne çıkan depolar"
+    },
     "rateLimit": {
       "resetsAt": "Sıfırlanma zamanı"
     },
