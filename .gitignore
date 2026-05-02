@@ -3,16 +3,34 @@ node_modules/
 package-lock.json
 yarn.lock
 bun.lockb
+pnpm-lock.yaml
+pnpm-debug.log
+.pnpm-store/
+.yarn/cache
+.yarn/install-state.gz
+jspm_packages/
 
 # Build outputs
 dist/
+dist-ssr/
 build/
+out/
+.output/
 *.tsbuildinfo
+tsconfig.tsbuildinfo
+*.local
 
 # Environment variables
 .env
 .env.local
+.env.development
+.env.development.local
+.env.test
+.env.test.local
+.env.production
+.env.production.local
 .env.*.local
+*.env.bak
 
 # IDE & Editor
 .vscode/
@@ -35,10 +53,45 @@ lerna-debug.log*
 # Testing
 coverage/
 .nyc_output/
+*.lcov
+test-results/
+playwright-report/
+playwright/.cache/
+.vitest-cache/
+.vitest/
+
+# Caches
+.eslintcache
+.stylelintcache
+.parcel-cache/
+.cache/
+.turbo/
+.rollup.cache/
+.swc/
 
 # Vite
 .vite/
-dist/
+
+# Framework / hosting metadata
+.next/
+.nuxt/
+.svelte-kit/
+.astro/
+.docusaurus/
+.vercel/
+.netlify/
+.firebase/
+.serverless/
+.wrangler/
+
+# Temp / scratch
+tmp/
+.tmp/
+.temp/
+.history/
+*.pid
+*.seed
+*.pid.lock
 
 # Amplify
 amplify/#current-cloud-backend/
@@ -59,6 +112,20 @@ amplify/.graphqlconfig.yml
 *.log
 .cache/
 node_modules
+*.tgz
+*.tar.gz
+*.zip
+
+# AI / agent workspace state
+.copilot/
+.aider*
+.cursor/
+.continue/
+.claude/
+.goose/
+.windsurf/
+.codeium/
+CLAUDE.local.md
 
 #amplify-do-not-edit-begin
 amplify/\#current-cloud-backend

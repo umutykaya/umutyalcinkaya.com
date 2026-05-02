@@ -43,14 +43,17 @@ const ActivityOverview = ({ data, isLoading }: ActivityOverviewProps) => {
     });
 
     const allDays = data.weeks.flatMap((w) => w.days);
-    const busiestDay = allDays.reduce(
+    const todayKey = new Date().toISOString().slice(0, 10);
+    const pastDays = allDays.filter((d) => d.date <= todayKey);
+
+    const busiestDay = pastDays.reduce(
       (max, d) => (d.count > max.count ? d : max),
-      allDays[0],
+      pastDays[0] ?? allDays[0],
     );
 
-    // Current streak
+    // Current streak: walk past days descending, count contiguous days with contributions
     let streak = 0;
-    const sortedDays = [...allDays].sort(
+    const sortedDays = [...pastDays].sort(
       (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
     );
     for (const day of sortedDays) {
@@ -145,43 +148,46 @@ const ActivityOverview = ({ data, isLoading }: ActivityOverviewProps) => {
               <linearGradient id="contribGradient" x1="0" y1="0" x2="0" y2="1">
                 <stop
                   offset="5%"
-                  stopColor="var(--accent)"
+                  stopColor="hsl(var(--accent))"
                   stopOpacity={0.3}
                 />
                 <stop
                   offset="95%"
-                  stopColor="var(--accent)"
+                  stopColor="hsl(var(--accent))"
                   stopOpacity={0}
                 />
               </linearGradient>
             </defs>
             <CartesianGrid
               strokeDasharray="3 3"
-              stroke="var(--border)"
+              stroke="hsl(var(--border))"
               opacity={0.5}
             />
             <XAxis
               dataKey="week"
-              tick={{ fontSize: 11, fill: "var(--muted-foreground)" }}
+              tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }}
               tickLine={false}
               axisLine={false}
               interval="preserveStartEnd"
             />
             <YAxis
-              tick={{ fontSize: 11, fill: "var(--muted-foreground)" }}
+              tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }}
               tickLine={false}
               axisLine={false}
               allowDecimals={false}
             />
             <Tooltip
               contentStyle={{
-                backgroundColor: "var(--card)",
-                border: "1px solid var(--border)",
+                backgroundColor: "hsl(var(--card))",
+                border: "1px solid hsl(var(--border))",
                 borderRadius: "8px",
                 fontSize: "12px",
-                color: "var(--foreground)",
+                color: "hsl(var(--foreground))",
               }}
-              labelStyle={{ color: "var(--muted-foreground)", marginBottom: 4 }}
+              labelStyle={{
+                color: "hsl(var(--muted-foreground))",
+                marginBottom: 4,
+              }}
               formatter={(value: number) => [
                 value,
                 t("github.activity.contributions"),
@@ -190,7 +196,7 @@ const ActivityOverview = ({ data, isLoading }: ActivityOverviewProps) => {
             <Area
               type="monotone"
               dataKey="contributions"
-              stroke="var(--accent)"
+              stroke="hsl(var(--accent))"
               strokeWidth={2}
               fill="url(#contribGradient)"
             />

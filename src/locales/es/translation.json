@@ -25,6 +25,8 @@
   "work": {
     "label": "// Trabajos Seleccionados",
     "title": "Proyectos",
+    "intro": "Una instantánea en vivo de los repositorios que construyo y mantengo en mi cuenta personal y en las organizaciones a las que contribuyo. Las tarjetas se ordenan por la misma puntuación de complejidad que aparece en el panel de GitHub: allí encontrarás el desglose completo, el mapa de calor de contribuciones y la actividad por organización.",
+    "viewDashboard": "Ver panel de GitHub",
     "viewGitHub": "Ver todo en GitHub",
     "fetchError": "No se pudieron cargar los proyectos. Inténtelo de nuevo más tarde."
   },

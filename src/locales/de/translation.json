@@ -25,6 +25,8 @@
   "work": {
     "label": "// Ausgewählte Arbeiten",
     "title": "Projekte",
+    "intro": "Ein Live-Auszug der Repositories, die ich über mein persönliches Konto und die Organisationen, zu denen ich beitrage, entwickle und pflege. Die Karten sind nach demselben Komplexitätsscore wie im GitHub-Dashboard sortiert — dort finden Sie die vollständige Aufschlüsselung, Beitrags-Heatmap und Aktivität je Organisation.",
+    "viewDashboard": "GitHub-Dashboard ansehen",
     "viewGitHub": "Alle auf GitHub ansehen",
     "fetchError": "Projekte konnten nicht geladen werden. Bitte versuchen Sie es später erneut."
   },

@@ -25,6 +25,8 @@
   "work": {
     "label": "// Travaux Sélectionnés",
     "title": "Projets",
+    "intro": "Un aperçu en direct des dépôts que je développe et maintiens sur mon compte personnel et au sein des organisations auxquelles je contribue. Les cartes sont classées selon le même score de complexité que le tableau de bord GitHub — retrouvez-y l'analyse complète, la heatmap de contributions et l'activité par organisation.",
+    "viewDashboard": "Voir le tableau de bord GitHub",
     "viewGitHub": "Voir tout sur GitHub",
     "fetchError": "Impossible de charger les projets. Veuillez réessayer plus tard."
   },

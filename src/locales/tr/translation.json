@@ -25,6 +25,8 @@
   "work": {
     "label": "// Seçili Çalışmalar",
     "title": "Projeler",
+    "intro": "Kişisel hesabımda ve katkı sağladığım organizasyonlarda geliştirip sürdürdüğüm depoların canlı bir özeti. Kartlar GitHub panosundakiyle aynı karmaşıklık skoruna göre sıralanır — ayrıntılı döküm, katkı ısı haritası ve organizasyon bazında aktiviteyi orada inceleyebilirsiniz.",
+    "viewDashboard": "GitHub panosunu görüntüle",
     "viewGitHub": "Tümünü GitHub'da gör",
     "fetchError": "Projeler yüklenemedi. Lütfen daha sonra tekrar deneyin."
   },

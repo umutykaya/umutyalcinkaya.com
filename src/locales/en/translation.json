@@ -25,6 +25,8 @@
   "work": {
     "label": "// Selected Work",
     "title": "Projects",
+    "intro": "A live snapshot of the repositories I build and maintain across my personal account and the organizations I contribute to. Cards are ranked by the same complexity score used on the GitHub dashboard — explore the full breakdown, contribution heatmap, and per-org activity there.",
+    "viewDashboard": "View GitHub dashboard",
     "viewGitHub": "View all on GitHub",
     "fetchError": "Could not load projects. Please try again later."
   },

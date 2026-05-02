@@ -117,20 +117,78 @@ async function fetchAllRepos(
   return allRepos;
 }
 
+async function fetchOrgPublicRepos(orgLogin: string): Promise<GitHubRepo[]> {
+  const repos: GitHubRepo[] = [];
+  let page = 1;
+  while (true) {
+    try {
+      const res = await ghFetch(
+        `${GITHUB_API}/orgs/${orgLogin}/repos?per_page=100&page=${page}&type=public&sort=pushed`,
+      );
+      const batch: GitHubRepo[] = await res.json();
+      if (!Array.isArray(batch) || batch.length === 0) break;
+      repos.push(...batch);
+      if (batch.length < 100) break;
+      page++;
+    } catch {
+      break;
+    }
+  }
+  return repos;
+}
+
+async function fetchAllOrgRepos(username: string): Promise<GitHubRepo[]> {
+  // Discover every org the user is a member of OR has contributed to.
+  const orgLogins = new Set<string>();
+  try {
+    const orgContributions = await fetchOrgContributions(username);
+    for (const oc of orgContributions) orgLogins.add(oc.org.login);
+  } catch {
+    // ignore
+  }
+  try {
+    const memberOrgs = await fetchUserOrgs(username);
+    for (const o of memberOrgs) orgLogins.add(o.login);
+  } catch {
+    // ignore
+  }
+
+  if (orgLogins.size === 0) return [];
+
+  // Fetch each org's public repos in parallel.
+  const lists = await Promise.all(
+    Array.from(orgLogins).map((login) => fetchOrgPublicRepos(login)),
+  );
+  return lists.flat();
+}
+
 export async function fetchEnrichedRepos(
   username: string = GITHUB_USERNAME,
 ): Promise<GitHubRepo[]> {
-  const repos = await fetchAllRepos(username);
-  const filtered = repos.filter((r) => !r.fork && !r.archived);
+  const [ownRepos, orgRepos] = await Promise.all([
+    fetchAllRepos(username),
+    fetchAllOrgRepos(username),
+  ]);
+
+  // Deduplicate by id (a fork in your account could shadow an org repo).
+  const byId = new Map<number, GitHubRepo>();
+  [...ownRepos, ...orgRepos].forEach((r) => {
+    if (!byId.has(r.id)) byId.set(r.id, r);
+  });
+
+  const filtered = Array.from(byId.values()).filter(
+    (r) => !r.fork && !r.archived,
+  );
 
   // Fetch languages in parallel (batches of 10 to avoid rate limit spikes)
   const batchSize = 10;
   for (let i = 0; i < filtered.length; i += batchSize) {
     const batch = filtered.slice(i, i + batchSize);
     const results = await Promise.all(
-      batch.map((r) =>
-        fetchRepoLanguages(username, r.name).catch(() => ({})),
-      ),
+      batch.map((r) => {
+        const [owner, name] = r.full_name.split("/");
+        return fetchRepoLanguages(owner, name).catch(() => ({}));
+      }),
     );
     batch.forEach((r, idx) => {
       r.languages = results[idx];

@@ -209,7 +209,21 @@ const ComplexReposTable = ({
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-2 min-w-0">
                         <span className="font-medium text-foreground truncate">
-                          {repo.name}
+                          {repo.full_name?.split("/")[0] &&
+                          repo.full_name.split("/")[0].toLowerCase() !==
+                            (
+                              import.meta.env.VITE_GITHUB_USERNAME ||
+                              "umutykaya"
+                            ).toLowerCase() ? (
+                            <>
+                              <span className="text-muted-foreground font-normal">
+                                {repo.full_name.split("/")[0]}/
+                              </span>
+                              {repo.name}
+                            </>
+                          ) : (
+                            repo.name
+                          )}
                         </span>
                         <a
                           href={repo.html_url}
