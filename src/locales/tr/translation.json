@@ -213,7 +213,9 @@
       "openIssues": "Açık sorunlar",
       "languages": "Diller",
       "empty": "Depo bulunamadı.",
-      "lastFetched": "Alındı"
+      "lastFetched": "Alındı",
+      "starredTitle": "Yıldızlanan Depolar",
+      "starredEmpty": "Yıldızlanan depo yok."
     },
     "organizations": {
       "title": "Organizasyon Katkıları",

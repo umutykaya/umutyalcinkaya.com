@@ -213,7 +213,9 @@
       "openIssues": "Открытые issues",
       "languages": "Языки",
       "empty": "Репозитории не найдены.",
-      "lastFetched": "Получено"
+      "lastFetched": "Получено",
+      "starredTitle": "Избранные репозитории",
+      "starredEmpty": "Нет избранных репозиториев."
     },
     "organizations": {
       "title": "Вклад в организации",

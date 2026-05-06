@@ -25,6 +25,8 @@ interface ComplexReposTableProps {
   canDeleteRepo?: boolean;
   onEditRepo?: (repo: GitHubRepo) => void;
   onDeleteRepo?: (repo: GitHubRepo) => Promise<void>;
+  title?: string;
+  emptyText?: string;
 }
 
 const LANGUAGE_COLORS: Record<string, string> = {
@@ -66,6 +68,8 @@ const ComplexReposTable = ({
   canDeleteRepo,
   onEditRepo,
   onDeleteRepo,
+  title,
+  emptyText,
 }: ComplexReposTableProps) => {
   const { t } = useTranslation();
   const [sortField, setSortField] = useState<SortField>("complexity_score");
@@ -148,7 +152,9 @@ const ComplexReposTable = ({
     return (
       <div className="rounded-2xl border border-border/50 bg-card p-12 text-center">
         <AlertCircle className="mx-auto mb-3 text-muted-foreground" size={32} />
-        <p className="text-muted-foreground">{t("github.repos.empty")}</p>
+        <p className="text-muted-foreground">
+          {emptyText ?? t("github.repos.empty")}
+        </p>
       </div>
     );
   }
@@ -157,7 +163,7 @@ const ComplexReposTable = ({
     <div className="rounded-2xl border border-border/50 bg-card overflow-hidden">
       <div className="flex items-center justify-between p-4 border-b border-border/30">
         <h3 className="text-sm font-medium text-foreground">
-          {t("github.repos.title")}{" "}
+          {title ?? t("github.repos.title")}{" "}
           <span className="text-muted-foreground tabular-nums">
             ({repos.length})
           </span>

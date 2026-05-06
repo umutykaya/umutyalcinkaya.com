@@ -213,7 +213,9 @@
       "openIssues": "Issues abiertos",
       "languages": "Lenguajes",
       "empty": "No se encontraron repositorios.",
-      "lastFetched": "Obtenido"
+      "lastFetched": "Obtenido",
+      "starredTitle": "Repositorios destacados",
+      "starredEmpty": "No hay repositorios destacados."
     },
     "organizations": {
       "title": "Contribuciones a Organizaciones",

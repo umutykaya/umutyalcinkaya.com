@@ -213,7 +213,9 @@
       "openIssues": "Open issues",
       "languages": "Languages",
       "empty": "No repositories found.",
-      "lastFetched": "Fetched"
+      "lastFetched": "Fetched",
+      "starredTitle": "Starred Repositories",
+      "starredEmpty": "No starred repositories."
     },
     "organizations": {
       "title": "Organization Contributions",

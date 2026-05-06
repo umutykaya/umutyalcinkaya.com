@@ -12,18 +12,13 @@ import { updateRateLimit } from "@/lib/rateLimit";
 
 const GITHUB_USERNAME = import.meta.env.VITE_GITHUB_USERNAME || "umutykaya";
 const GITHUB_API = "https://api.github.com";
-const GITHUB_TOKEN = import.meta.env.VITE_GITHUB_TOKEN || "";
 
 export type { GitHubRepo };
 
 function authHeaders(): Record<string, string> {
-  const headers: Record<string, string> = {
+  return {
     Accept: "application/vnd.github.v3+json",
   };
-  if (GITHUB_TOKEN) {
-    headers.Authorization = `Bearer ${GITHUB_TOKEN}`;
-  }
-  return headers;
 }
 
 async function ghFetch(url: string): Promise<Response> {
@@ -66,6 +61,54 @@ export async function fetchRepoLanguages(
   return res.json();
 }
 
+// ── Starred Repos (separate dashboard) ────────────────────────────
+
+export async function fetchStarredRepos(
+  username: string = GITHUB_USERNAME,
+  token?: string,
+): Promise<GitHubRepo[]> {
+  const headers = token
+    ? {
+        Accept: "application/vnd.github.v3+json",
+        Authorization: `Bearer ${token}`,
+      }
+    : authHeaders();
+
+  const all: GitHubRepo[] = [];
+  let page = 1;
+  while (true) {
+    // /user/starred uses the authenticated user when a token is supplied,
+    // /users/:user/starred is public-only.
+    const url = token
+      ? `${GITHUB_API}/user/starred?per_page=100&page=${page}&sort=updated`
+      : `${GITHUB_API}/users/${username}/starred?per_page=100&page=${page}&sort=updated`;
+    const res = await fetch(url, { headers });
+    updateRateLimit(res.headers);
+    if (!res.ok) {
+      throw new Error(`GitHub API error: ${res.status}`);
+    }
+    const batch: GitHubRepo[] = await res.json();
+    if (!Array.isArray(batch) || batch.length === 0) break;
+    all.push(...batch);
+    if (batch.length < 100) break;
+    page++;
+  }
+
+  // Skip private starred without token; do NOT fetch per-repo languages
+  // (1 call/repo would burn the 60/hr unauth rate limit). The primary
+  // `language` field is already on the list payload and is enough for tiering.
+  const filtered = all.filter((r) => token || !r.private);
+
+  filtered.forEach((r) => {
+    r.complexity_score = calculateComplexityScore(r);
+    r.complexity_tier = getComplexityTier(r.complexity_score);
+  });
+
+  return filtered.sort(
+    (a, b) => (b.stargazers_count ?? 0) - (a.stargazers_count ?? 0),
+  );
+}
+
 // ── Complexity Score ──────────────────────────────────────────────
 
 export function calculateComplexityScore(repo: GitHubRepo): number {
@@ -101,76 +144,158 @@ export function getComplexityTier(score: number): ComplexityTier {
 
 async function fetchAllRepos(
   username: string = GITHUB_USERNAME,
+  token?: string,
 ): Promise<GitHubRepo[]> {
   const allRepos: GitHubRepo[] = [];
   let page = 1;
+  // When a token is supplied, hit /user/repos so we also see private repos
+  // we own. Otherwise fall back to the public-only /users/:user/repos endpoint.
   while (true) {
-    const res = await ghFetch(
-      `${GITHUB_API}/users/${username}/repos?sort=pushed&per_page=100&page=${page}&type=owner`,
-    );
+    const url = token
+      ? `${GITHUB_API}/user/repos?affiliation=owner&visibility=all&sort=pushed&per_page=100&page=${page}`
+      : `${GITHUB_API}/users/${username}/repos?sort=pushed&per_page=100&page=${page}&type=owner`;
+    const res = await fetch(url, {
+      headers: token
+        ? {
+            Accept: "application/vnd.github.v3+json",
+            Authorization: `Bearer ${token}`,
+          }
+        : authHeaders(),
+    });
+    updateRateLimit(res.headers);
+    if (!res.ok) {
+      if (token && (res.status === 401 || res.status === 403)) {
+        throw new Error(
+          `Failed to load owned repos with admin token (${res.status}). Ensure the PAT has the \`repo\` scope.`,
+        );
+      }
+      throw new Error(`GitHub API error: ${res.status}`);
+    }
     const repos: GitHubRepo[] = await res.json();
-    if (repos.length === 0) break;
-    allRepos.push(...repos);
+    if (!Array.isArray(repos) || repos.length === 0) break;
+    // /user/repos with affiliation=owner can still surface repos owned by an
+    // org if the user has admin access; restrict strictly to the user's login.
+    const owned = repos.filter(
+      (r) =>
+        r.full_name.split("/")[0].toLowerCase() === username.toLowerCase(),
+    );
+    allRepos.push(...owned);
     if (repos.length < 100) break;
     page++;
   }
   return allRepos;
 }
 
-async function fetchOrgPublicRepos(orgLogin: string): Promise<GitHubRepo[]> {
-  const repos: GitHubRepo[] = [];
-  let page = 1;
-  while (true) {
-    try {
-      const res = await ghFetch(
-        `${GITHUB_API}/orgs/${orgLogin}/repos?per_page=100&page=${page}&type=public&sort=pushed`,
-      );
-      const batch: GitHubRepo[] = await res.json();
-      if (!Array.isArray(batch) || batch.length === 0) break;
-      repos.push(...batch);
-      if (batch.length < 100) break;
-      page++;
-    } catch {
-      break;
-    }
-  }
-  return repos;
+interface ContributedOrgRepoRef {
+  owner: string;
+  name: string;
+  isPrivate: boolean;
 }
 
-async function fetchAllOrgRepos(username: string): Promise<GitHubRepo[]> {
-  // Discover every org the user is a member of OR has contributed to.
-  const orgLogins = new Set<string>();
-  try {
-    const orgContributions = await fetchOrgContributions(username);
-    for (const oc of orgContributions) orgLogins.add(oc.org.login);
-  } catch {
-    // ignore
-  }
-  try {
-    const memberOrgs = await fetchUserOrgs(username);
-    for (const o of memberOrgs) orgLogins.add(o.login);
-  } catch {
-    // ignore
+// Returns the set of org-owned repos the user has actually contributed to in
+// the last year (commits, PRs, issues, reviews). Visitor flow uses REST events
+// as a fallback (public contributions only). With an admin token we use
+// GraphQL which also includes private contributions.
+async function fetchContributedOrgRepoRefs(
+  username: string,
+  token?: string,
+): Promise<ContributedOrgRepoRef[]> {
+  if (token) {
+    try {
+      const orgs = await fetchOrgContributionsGraphQL(username, token);
+      const refs: ContributedOrgRepoRef[] = [];
+      for (const oc of orgs) {
+        for (const r of oc.repos) {
+          // OrgRepoContribution.url is like https://github.com/<owner>/<name>
+          const m = r.url.match(/github\.com\/([^/]+)\/([^/]+)/);
+          if (!m) continue;
+          refs.push({
+            owner: m[1],
+            name: m[2],
+            isPrivate: false, // overwritten below using GraphQL data
+          });
+        }
+      }
+      return refs;
+    } catch {
+      // fall through to REST
+    }
   }
 
-  if (orgLogins.size === 0) return [];
+  // REST fallback — public events only.
+  try {
+    const res = await ghFetch(
+      `${GITHUB_API}/users/${username}/events/public?per_page=100`,
+    );
+    const events: { repo?: { name: string } }[] = await res.json();
+    const seen = new Map<string, ContributedOrgRepoRef>();
+    for (const ev of events) {
+      const fullName = ev.repo?.name;
+      if (!fullName) continue;
+      const [owner, name] = fullName.split("/");
+      if (!owner || !name) continue;
+      if (owner.toLowerCase() === username.toLowerCase()) continue;
+      const key = `${owner}/${name}`.toLowerCase();
+      if (!seen.has(key)) seen.set(key, { owner, name, isPrivate: false });
+    }
+    return Array.from(seen.values());
+  } catch {
+    return [];
+  }
+}
 
-  // Fetch each org's public repos in parallel.
-  const lists = await Promise.all(
-    Array.from(orgLogins).map((login) => fetchOrgPublicRepos(login)),
-  );
-  return lists.flat();
+async function fetchRepoDetails(
+  owner: string,
+  name: string,
+  token?: string,
+): Promise<GitHubRepo | null> {
+  try {
+    const res = await fetch(`${GITHUB_API}/repos/${owner}/${name}`, {
+      headers: token
+        ? {
+            Accept: "application/vnd.github.v3+json",
+            Authorization: `Bearer ${token}`,
+          }
+        : authHeaders(),
+    });
+    updateRateLimit(res.headers);
+    if (!res.ok) return null;
+    return (await res.json()) as GitHubRepo;
+  } catch {
+    return null;
+  }
 }
 
 export async function fetchEnrichedRepos(
   username: string = GITHUB_USERNAME,
+  token?: string,
 ): Promise<GitHubRepo[]> {
-  const [ownRepos, orgRepos] = await Promise.all([
-    fetchAllRepos(username),
-    fetchAllOrgRepos(username),
+  const [ownRepos, contributedRefs] = await Promise.all([
+    fetchAllRepos(username, token),
+    fetchContributedOrgRepoRefs(username, token),
   ]);
 
-  // Deduplicate by id (a fork in your account could shadow an org repo).
+  // Resolve full repo metadata for each org-owned repo the user contributed
+  // to. Skip refs the user actually owns (already in ownRepos).
+  const refsToFetch = contributedRefs.filter(
+    (r) => r.owner.toLowerCase() !== username.toLowerCase(),
+  );
+  const orgRepos: GitHubRepo[] = [];
+  const detailBatchSize = 10;
+  for (let i = 0; i < refsToFetch.length; i += detailBatchSize) {
+    const batch = refsToFetch.slice(i, i + detailBatchSize);
+    const results = await Promise.all(
+      batch.map((r) => fetchRepoDetails(r.owner, r.name, token)),
+    );
+    for (const repo of results) {
+      // Without a token we never see private repos — drop them.
+      if (!repo) continue;
+      if (!token && repo.private) continue;
+      orgRepos.push(repo);
+    }
+  }
+
+  // Deduplicate by id.
   const byId = new Map<number, GitHubRepo>();
   [...ownRepos, ...orgRepos].forEach((r) => {
     if (!byId.has(r.id)) byId.set(r.id, r);
@@ -180,14 +305,32 @@ export async function fetchEnrichedRepos(
     (r) => !r.fork && !r.archived,
   );
 
-  // Fetch languages in parallel (batches of 10 to avoid rate limit spikes)
+  // Fetch languages in parallel (batches of 10 to avoid rate limit spikes).
+  // Pass the token so private repo languages are accessible.
   const batchSize = 10;
   for (let i = 0; i < filtered.length; i += batchSize) {
     const batch = filtered.slice(i, i + batchSize);
     const results = await Promise.all(
-      batch.map((r) => {
+      batch.map(async (r) => {
         const [owner, name] = r.full_name.split("/");
-        return fetchRepoLanguages(owner, name).catch(() => ({}));
+        try {
+          const langRes = await fetch(
+            `${GITHUB_API}/repos/${owner}/${name}/languages`,
+            {
+              headers: token
+                ? {
+                    Accept: "application/vnd.github.v3+json",
+                    Authorization: `Bearer ${token}`,
+                  }
+                : authHeaders(),
+            },
+          );
+          updateRateLimit(langRes.headers);
+          if (!langRes.ok) return {};
+          return (await langRes.json()) as Record<string, number>;
+        } catch {
+          return {};
+        }
       }),
     );
     batch.forEach((r, idx) => {
@@ -235,6 +378,7 @@ interface GitHubEvent {
 
 async function fetchContributionsGraphQL(
   username: string,
+  token: string,
 ): Promise<ContributionMatrix> {
   const now = new Date();
   const sixMonthsAgo = new Date(now);
@@ -261,7 +405,7 @@ async function fetchContributionsGraphQL(
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${GITHUB_TOKEN}`,
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
       query,
@@ -367,11 +511,12 @@ async function fetchContributionsREST(
 
 export async function fetchContributions(
   username: string = GITHUB_USERNAME,
+  token?: string,
 ): Promise<ContributionMatrix> {
-  // Prefer GraphQL (6-month window) when token is available
-  if (GITHUB_TOKEN) {
+  // Prefer GraphQL (6-month window) when an admin token is supplied
+  if (token) {
     try {
-      return await fetchContributionsGraphQL(username);
+      return await fetchContributionsGraphQL(username, token);
     } catch {
       // Fall back to REST
     }
@@ -414,6 +559,7 @@ interface GraphQLOrgNode {
 
 async function fetchOrgContributionsGraphQL(
   username: string,
+  token: string,
 ): Promise<OrgContribution[]> {
   const now = new Date();
   const oneYearAgo = new Date(now);
@@ -452,7 +598,7 @@ async function fetchOrgContributionsGraphQL(
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${GITHUB_TOKEN}`,
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
       query,
@@ -581,10 +727,11 @@ async function fetchOrgContributionsGraphQL(
 
 export async function fetchOrgContributions(
   username: string = GITHUB_USERNAME,
+  token?: string,
 ): Promise<OrgContribution[]> {
-  if (GITHUB_TOKEN) {
+  if (token) {
     try {
-      return await fetchOrgContributionsGraphQL(username);
+      return await fetchOrgContributionsGraphQL(username, token);
     } catch {
       // Fall back to REST (orgs only, no contribution counts)
     }
@@ -595,81 +742,6 @@ export async function fetchOrgContributions(
     totalContributions: 0,
     repos: [],
   }));
-}
-
-// ── Private Repos (admin token required) ──────────────────────────
-
-export async function fetchPrivateRepos(token: string): Promise<GitHubRepo[]> {
-  const headers = {
-    Accept: "application/vnd.github.v3+json",
-    Authorization: `Bearer ${token}`,
-  };
-
-  const allRepos: GitHubRepo[] = [];
-  let page = 1;
-  while (true) {
-    // visibility=all + affiliation=owner,... so admin sees every repo they
-    // can access (private personal repos AND private org repos).
-    const res = await fetch(
-      `${GITHUB_API}/user/repos?visibility=all&affiliation=owner,collaborator,organization_member&per_page=100&page=${page}&sort=pushed`,
-      { headers },
-    );
-    updateRateLimit(res.headers);
-    if (res.status === 401 || res.status === 403) {
-      throw new Error(
-        `Failed to load repositories with admin token (${res.status}). Ensure the PAT has the \`repo\` scope.`,
-      );
-    }
-    if (!res.ok) {
-      throw new Error(`GitHub API error: ${res.status}`);
-    }
-    const batch: GitHubRepo[] = await res.json();
-    if (!Array.isArray(batch) || batch.length === 0) break;
-    allRepos.push(...batch);
-    if (batch.length < 100) break;
-    page++;
-  }
-
-  // Keep only private repos here — public repos are already loaded via
-  // fetchEnrichedRepos and merged in the page component. This avoids
-  // duplicate language fetches and keeps the public list cache-hot.
-  const filtered = allRepos.filter(
-    (r) => r.private && !r.fork && !r.archived,
-  );
-
-  // Fetch languages using the admin token (private repos need auth)
-  const batchSize = 10;
-  for (let i = 0; i < filtered.length; i += batchSize) {
-    const batch = filtered.slice(i, i + batchSize);
-    const results = await Promise.all(
-      batch.map(async (r) => {
-        const [owner, name] = r.full_name.split("/");
-        try {
-          const langRes = await fetch(
-            `${GITHUB_API}/repos/${owner}/${name}/languages`,
-            { headers },
-          );
-          updateRateLimit(langRes.headers);
-          if (!langRes.ok) return {};
-          return langRes.json() as Promise<Record<string, number>>;
-        } catch {
-          return {};
-        }
-      }),
-    );
-    batch.forEach((r, idx) => {
-      r.languages = results[idx];
-    });
-  }
-
-  filtered.forEach((r) => {
-    r.complexity_score = calculateComplexityScore(r);
-    r.complexity_tier = getComplexityTier(r.complexity_score);
-  });
-
-  return filtered.sort(
-    (a, b) => (b.complexity_score ?? 0) - (a.complexity_score ?? 0),
-  );
 }
 
 // ── Admin: JWT Authentication ─────────────────────────────────────

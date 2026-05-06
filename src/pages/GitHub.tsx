@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Github, RefreshCw } from "lucide-react";
@@ -17,7 +17,7 @@ import type { AdminEditTarget, AdminSaveResult } from "@/components/github/GitHu
 import {
   fetchGitHubUser,
   fetchEnrichedRepos,
-  fetchPrivateRepos,
+  fetchStarredRepos,
   fetchContributions,
   fetchOrgContributions,
   deleteRepo,
@@ -70,11 +70,7 @@ const GitHub = () => {
       );
     } else if (result.type === "repo") {
       queryClient.setQueryData<GitHubRepo[]>(
-        ["github-enriched-repos"],
-        (prev) => applyRepoUpdate(prev, result),
-      );
-      queryClient.setQueryData<GitHubRepo[]>(
-        ["github-private-repos", adminToken],
+        ["github-enriched-repos", adminToken],
         (prev) => applyRepoUpdate(prev, result),
       );
     }
@@ -84,13 +80,8 @@ const GitHub = () => {
     if (!adminToken) return;
     const [owner] = repo.full_name.split("/");
     await deleteRepo(adminToken, owner, repo.name);
-    // Optimistically remove from both caches
     queryClient.setQueryData<GitHubRepo[]>(
-      ["github-enriched-repos"],
-      (prev) => prev?.filter((r) => r.id !== repo.id) ?? [],
-    );
-    queryClient.setQueryData<GitHubRepo[]>(
-      ["github-private-repos", adminToken],
+      ["github-enriched-repos", adminToken],
       (prev) => prev?.filter((r) => r.id !== repo.id) ?? [],
     );
   };
@@ -102,48 +93,35 @@ const GitHub = () => {
   });
 
   const reposQuery = useQuery<GitHubRepo[]>({
-    queryKey: ["github-enriched-repos"],
-    queryFn: () => fetchEnrichedRepos(),
+    queryKey: ["github-enriched-repos", adminToken],
+    queryFn: () => fetchEnrichedRepos(undefined, adminToken ?? undefined),
     staleTime: 1000 * 60 * 5,
   });
 
-  const privateReposQuery = useQuery<GitHubRepo[]>({
-    queryKey: ["github-private-repos", adminToken],
-    queryFn: () => fetchPrivateRepos(adminToken!),
-    enabled: !!adminToken,
-    staleTime: 1000 * 60 * 5,
+  const starredQuery = useQuery<GitHubRepo[]>({
+    queryKey: ["github-starred-repos", adminToken],
+    queryFn: () => fetchStarredRepos(undefined, adminToken ?? undefined),
+    staleTime: 1000 * 60 * 10,
   });
-
-  const allRepos = useMemo(() => {
-    const pub = reposQuery.data ?? [];
-    const priv = privateReposQuery.data ?? [];
-    const byId = new Map<number, GitHubRepo>();
-    [...pub, ...priv].forEach((r) => {
-      if (!byId.has(r.id)) byId.set(r.id, r);
-    });
-    return Array.from(byId.values()).sort(
-      (a, b) => (b.complexity_score ?? 0) - (a.complexity_score ?? 0),
-    );
-  }, [reposQuery.data, privateReposQuery.data]);
 
   const contribQuery = useQuery<ContributionMatrix>({
-    queryKey: ["github-contributions"],
-    queryFn: () => fetchContributions(),
+    queryKey: ["github-contributions", adminToken],
+    queryFn: () => fetchContributions(undefined, adminToken ?? undefined),
     staleTime: 1000 * 60 * 30,
   });
 
   const orgsQuery = useQuery<OrgContribution[]>({
-    queryKey: ["github-org-contributions"],
-    queryFn: () => fetchOrgContributions(),
+    queryKey: ["github-org-contributions", adminToken],
+    queryFn: () => fetchOrgContributions(undefined, adminToken ?? undefined),
     staleTime: 1000 * 60 * 30,
   });
 
   const hasError =
     userQuery.isError ||
     reposQuery.isError ||
+    starredQuery.isError ||
     contribQuery.isError ||
-    orgsQuery.isError ||
-    privateReposQuery.isError;
+    orgsQuery.isError;
 
   return (
     <div className="min-h-screen bg-background relative">
@@ -193,9 +171,9 @@ const GitHub = () => {
               onClick={() => {
                 userQuery.refetch();
                 reposQuery.refetch();
+                starredQuery.refetch();
                 contribQuery.refetch();
                 orgsQuery.refetch();
-                if (adminToken) privateReposQuery.refetch();
               }}
               className="flex items-center gap-1.5 text-sm px-3 py-1.5 rounded-lg bg-destructive/10 text-destructive hover:bg-destructive/20 transition-colors"
             >
@@ -245,13 +223,24 @@ const GitHub = () => {
         {/* Complex Repos Table */}
         <section>
           <ComplexReposTable
-            repos={allRepos}
+            repos={reposQuery.data}
             isLoading={reposQuery.isLoading}
             dataUpdatedAt={reposQuery.dataUpdatedAt}
             isAdmin={!!adminToken}
             canDeleteRepo={adminScopes.includes("delete_repo")}
             onEditRepo={(repo) => setEditTarget({ type: "repo", repo })}
             onDeleteRepo={handleDeleteRepo}
+          />
+        </section>
+
+        {/* Starred Repositories */}
+        <section className="mt-8">
+          <ComplexReposTable
+            repos={starredQuery.data}
+            isLoading={starredQuery.isLoading}
+            dataUpdatedAt={starredQuery.dataUpdatedAt}
+            title={t("github.repos.starredTitle")}
+            emptyText={t("github.repos.starredEmpty")}
           />
         </section>
 

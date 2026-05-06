@@ -213,7 +213,9 @@
       "openIssues": "Offene Issues",
       "languages": "Sprachen",
       "empty": "Keine Repositories gefunden.",
-      "lastFetched": "Abgerufen"
+      "lastFetched": "Abgerufen",
+      "starredTitle": "Markierte Repositories",
+      "starredEmpty": "Keine markierten Repositories."
     },
     "organizations": {
       "title": "Beiträge in Organisationen",
