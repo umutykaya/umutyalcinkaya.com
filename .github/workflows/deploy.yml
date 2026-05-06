@@ -36,6 +36,7 @@ jobs:
           echo "VITE_WHATSAPP_NUMBER=${{ secrets.VITE_WHATSAPP_NUMBER }}" >> .env
           echo "VITE_CONTACT_EMAIL=${{ secrets.VITE_CONTACT_EMAIL }}" >> .env
           echo "VITE_GA_MEASUREMENT_ID=${{ secrets.VITE_GA_MEASUREMENT_ID }}" >> .env
+          echo "VITE_GITHUB_TOKEN=${{ secrets.VITE_GITHUB_TOKEN }}" >> .env
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v6

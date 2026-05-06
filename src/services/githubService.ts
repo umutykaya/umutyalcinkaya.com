@@ -11,6 +11,7 @@ import type {
 import { updateRateLimit } from "@/lib/rateLimit";
 
 const GITHUB_USERNAME = import.meta.env.VITE_GITHUB_USERNAME || "umutykaya";
+const GITHUB_TOKEN = import.meta.env.VITE_GITHUB_TOKEN || null;
 const GITHUB_API = "https://api.github.com";
 
 export type { GitHubRepo };
@@ -18,6 +19,7 @@ export type { GitHubRepo };
 function authHeaders(): Record<string, string> {
   return {
     Accept: "application/vnd.github.v3+json",
+    ...(GITHUB_TOKEN && { Authorization: `Bearer ${GITHUB_TOKEN}` }),
   };
 }
 
