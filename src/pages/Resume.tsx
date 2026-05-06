@@ -35,7 +35,7 @@ const experience: Job[] = [
   {
     title: "Senior Software Engineer",
     company: "Capgemini B.V.",
-    period: "October 2021 – Currently",
+    period: "October 2021 – May 2026",
     location: "Utrecht, Netherlands",
     summary:
       "Consultancy experience in custom AI agents, data engineering, data management and governance. Mainly provide tangible solutions related to data pipelines. Harvesting data lineage for regulatory purposes as part of financial services BENELUX.",
