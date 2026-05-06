@@ -26,11 +26,15 @@ interface EditRepoTarget {
 
 export type AdminEditTarget = EditProfileTarget | EditRepoTarget;
 
+export type AdminSaveResult =
+  | { type: "profile"; bio: string }
+  | { type: "repo"; repoId: number; name: string; description: string; homepage: string };
+
 interface GitHubAdminEditModalProps {
   target: AdminEditTarget | null;
   adminToken: string;
   onClose: () => void;
-  onSaved: (target: AdminEditTarget) => void;
+  onSaved: (result: AdminSaveResult) => void;
 }
 
 const GitHubAdminEditModal = ({
@@ -41,6 +45,7 @@ const GitHubAdminEditModal = ({
 }: GitHubAdminEditModalProps) => {
   const [bio, setBio] = useState("");
   const [repoName, setRepoName] = useState("");
+  const [repoNameError, setRepoNameError] = useState<string | null>(null);
   const [repoDesc, setRepoDesc] = useState("");
   const [repoHomepage, setRepoHomepage] = useState("");
 
@@ -53,6 +58,7 @@ const GitHubAdminEditModal = ({
     if (!target) return;
     setError(null);
     setSaved(false);
+    setRepoNameError(null);
     if (target.type === "profile") {
       setBio(target.user.bio ?? "");
     } else {
@@ -62,9 +68,28 @@ const GitHubAdminEditModal = ({
     }
   }, [target]);
 
+  const REPO_NAME_RE = /^[a-zA-Z0-9._-]+$/;
+
+  const validateRepoName = (v: string): string | null => {
+    if (!v.trim()) return "Name cannot be empty.";
+    if (!REPO_NAME_RE.test(v))
+      return "Only letters, numbers, hyphens (-), underscores (_), and dots (.) are allowed.";
+    return null;
+  };
+
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!target) return;
+
+    // Client-side validation for repo name
+    if (target.type === "repo") {
+      const nameErr = validateRepoName(repoName);
+      if (nameErr) {
+        setRepoNameError(nameErr);
+        return;
+      }
+      setRepoNameError(null);
+    }
 
     setIsSaving(true);
     setError(null);
@@ -72,19 +97,32 @@ const GitHubAdminEditModal = ({
     try {
       if (target.type === "profile") {
         await updateUserProfile(adminToken, { bio: bio || null });
+        setSaved(true);
+        setTimeout(() => {
+          onSaved({ type: "profile", bio });
+          setSaved(false);
+        }, 800);
       } else {
         const [owner] = target.repo.full_name.split("/");
+        // Only send name if it actually changed to avoid unnecessary renames
+        const nameChanged = repoName !== target.repo.name;
         await updateRepo(adminToken, owner, target.repo.name, {
-          name: repoName || undefined,
+          ...(nameChanged ? { name: repoName } : {}),
           description: repoDesc || null,
           homepage: repoHomepage || null,
         });
+        setSaved(true);
+        setTimeout(() => {
+          onSaved({
+            type: "repo",
+            repoId: target.repo.id,
+            name: repoName,
+            description: repoDesc,
+            homepage: repoHomepage,
+          });
+          setSaved(false);
+        }, 800);
       }
-      setSaved(true);
-      setTimeout(() => {
-        onSaved(target);
-        setSaved(false);
-      }, 800);
     } catch (err) {
       setError(
         err instanceof Error ? err.message : "Save failed. Please try again.",
@@ -140,10 +178,20 @@ const GitHubAdminEditModal = ({
                 <input
                   type="text"
                   value={repoName}
-                  onChange={(e) => setRepoName(e.target.value)}
+                  onChange={(e) => {
+                    setRepoName(e.target.value);
+                    setRepoNameError(validateRepoName(e.target.value));
+                  }}
                   placeholder="my-awesome-repo"
-                  className="w-full px-3 py-2 rounded-lg border border-border/50 bg-background text-sm font-mono text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent/40 transition"
+                  className={`w-full px-3 py-2 rounded-lg border bg-background text-sm font-mono text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 transition ${
+                    repoNameError
+                      ? "border-destructive/60 focus:ring-destructive/30"
+                      : "border-border/50 focus:ring-accent/40 focus:border-accent/40"
+                  }`}
                 />
+                {repoNameError && (
+                  <p className="text-xs text-destructive mt-1">{repoNameError}</p>
+                )}
               </Field>
               <Field label="Description">
                 <textarea

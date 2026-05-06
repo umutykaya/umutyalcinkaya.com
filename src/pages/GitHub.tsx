@@ -13,7 +13,7 @@ import OrganizationContributions from "@/components/github/OrganizationContribut
 import RateLimitIndicator from "@/components/github/RateLimitIndicator";
 import GitHubAdminAuth from "@/components/github/GitHubAdminAuth";
 import GitHubAdminEditModal from "@/components/github/GitHubAdminEditModal";
-import type { AdminEditTarget } from "@/components/github/GitHubAdminEditModal";
+import type { AdminEditTarget, AdminSaveResult } from "@/components/github/GitHubAdminEditModal";
 import {
   fetchGitHubUser,
   fetchEnrichedRepos,
@@ -48,11 +48,29 @@ const GitHub = () => {
     setEditTarget(null);
   };
 
-  const handleSaved = (_target: AdminEditTarget) => {
+  const handleSaved = (result: AdminSaveResult) => {
     setEditTarget(null);
-    // Refetch affected data so the UI updates immediately
-    queryClient.invalidateQueries({ queryKey: ["github-user"] });
-    queryClient.invalidateQueries({ queryKey: ["github-enriched-repos"] });
+    if (result.type === "profile") {
+      queryClient.setQueryData<GitHubUser>(["github-user"], (prev) =>
+        prev ? { ...prev, bio: result.bio || null } : prev,
+      );
+    } else if (result.type === "repo") {
+      queryClient.setQueryData<GitHubRepo[]>(
+        ["github-enriched-repos"],
+        (prev) =>
+          prev?.map((r) =>
+            r.id === result.repoId
+              ? {
+                  ...r,
+                  name: result.name,
+                  full_name: r.full_name.replace(/\/[^/]+$/, `/${result.name}`),
+                  description: result.description || null,
+                  homepage: result.homepage || null,
+                }
+              : r,
+          ) ?? [],
+      );
+    }
   };
 
   const handleDeleteRepo = async (repo: GitHubRepo) => {

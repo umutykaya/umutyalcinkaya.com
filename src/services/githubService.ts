@@ -605,18 +605,38 @@ export interface AdminAuthResult {
 }
 
 export async function verifyAdminToken(token: string): Promise<AdminAuthResult> {
-  const res = await fetch(`${GITHUB_API}/user`, {
+  // Try Bearer first (fine-grained PATs + classic PATs), fall back to token prefix
+  let res = await fetch(`${GITHUB_API}/user`, {
     headers: {
       Accept: "application/vnd.github.v3+json",
       Authorization: `Bearer ${token}`,
     },
   });
+  if (res.status === 401) {
+    // Some older classic PATs require `token ` prefix
+    res = await fetch(`${GITHUB_API}/user`, {
+      headers: {
+        Accept: "application/vnd.github.v3+json",
+        Authorization: `token ${token}`,
+      },
+    });
+  }
+  if (res.status === 401) {
+    throw new Error(
+      "Invalid or expired token. Make sure you're using a valid GitHub PAT (classic or fine-grained) with the \`user\` / \`repo\` scopes.",
+    );
+  }
+  if (res.status === 403) {
+    throw new Error(
+      "Token lacks the required permissions. Ensure the PAT has \`user\` (read) scope.",
+    );
+  }
   if (!res.ok) throw new Error(`Authentication failed: ${res.status}`);
   const scopeHeader = res.headers.get("x-oauth-scopes") ?? "";
+  // Fine-grained PATs don't return x-oauth-scopes; treat them as fully capable
   const scopes = scopeHeader
-    .split(",")
-    .map((s) => s.trim())
-    .filter(Boolean);
+    ? scopeHeader.split(",").map((s) => s.trim()).filter(Boolean)
+    : ["repo", "user", "delete_repo"]; // assume all granted for fine-grained tokens
   const user: GitHubUser = await res.json();
   return { user, scopes };
 }
