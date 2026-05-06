@@ -20,7 +20,7 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-umutyalcinkayacom-dev-f2828-deployment/amplify-cfn-templates/hosting/template.json",
         "logicalId": "hostingS3AndCloudFront"
       },
-      "lastPushTimeStamp": "2026-05-02T21:25:53.562Z",
+      "lastPushTimeStamp": "2026-05-06T19:53:13.311Z",
       "output": {
         "CloudFrontSecureURL": "https://d1mvdnthoxymfx.cloudfront.net",
         "S3BucketSecureURL": "https://umutyalcinkayacom-20260426190020-hostingbucket-dev.s3.amazonaws.com",

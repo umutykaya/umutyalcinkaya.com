@@ -28,7 +28,16 @@ const ActivityOverview = ({ data, isLoading }: ActivityOverviewProps) => {
   const { weeklyData, stats } = useMemo(() => {
     if (!data?.weeks.length) return { weeklyData: [], stats: null };
 
-    const weeklyData: WeeklyDataPoint[] = data.weeks.map((week) => {
+    const startOf2026 = new Date("2026-01-01T00:00:00").getTime();
+
+    // Only include weeks where the last day is on/after Jan 1, 2026
+    const weeksFrom2026 = data.weeks.filter((week) => {
+      const lastDay = week.days[week.days.length - 1];
+      if (!lastDay) return false;
+      return new Date(lastDay.date + "T00:00:00").getTime() >= startOf2026;
+    });
+
+    const weeklyData: WeeklyDataPoint[] = weeksFrom2026.map((week) => {
       const firstDay = week.days[0];
       const total = week.days.reduce((sum, d) => sum + d.count, 0);
       return {
@@ -42,7 +51,11 @@ const ActivityOverview = ({ data, isLoading }: ActivityOverviewProps) => {
       };
     });
 
-    const allDays = data.weeks.flatMap((w) => w.days);
+    const allDays = weeksFrom2026
+      .flatMap((w) => w.days)
+      .filter(
+        (d) => new Date(d.date + "T00:00:00").getTime() >= startOf2026,
+      );
     const busiestDay = allDays.reduce(
       (max, d) => (d.count > max.count ? d : max),
       allDays[0],
@@ -58,8 +71,9 @@ const ActivityOverview = ({ data, isLoading }: ActivityOverviewProps) => {
       else break;
     }
 
+    const totalContributions = allDays.reduce((s, d) => s + d.count, 0);
     const totalWeeks = weeklyData.length || 1;
-    const avgPerWeek = Math.round(data.totalContributions / totalWeeks);
+    const avgPerWeek = Math.round(totalContributions / totalWeeks);
 
     return {
       weeklyData,
@@ -145,43 +159,43 @@ const ActivityOverview = ({ data, isLoading }: ActivityOverviewProps) => {
               <linearGradient id="contribGradient" x1="0" y1="0" x2="0" y2="1">
                 <stop
                   offset="5%"
-                  stopColor="var(--accent)"
+                  stopColor="hsl(var(--accent))"
                   stopOpacity={0.3}
                 />
                 <stop
                   offset="95%"
-                  stopColor="var(--accent)"
+                  stopColor="hsl(var(--accent))"
                   stopOpacity={0}
                 />
               </linearGradient>
             </defs>
             <CartesianGrid
               strokeDasharray="3 3"
-              stroke="var(--border)"
+              stroke="hsl(var(--border))"
               opacity={0.5}
             />
             <XAxis
               dataKey="week"
-              tick={{ fontSize: 11, fill: "var(--muted-foreground)" }}
+              tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }}
               tickLine={false}
               axisLine={false}
               interval="preserveStartEnd"
             />
             <YAxis
-              tick={{ fontSize: 11, fill: "var(--muted-foreground)" }}
+              tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }}
               tickLine={false}
               axisLine={false}
               allowDecimals={false}
             />
             <Tooltip
               contentStyle={{
-                backgroundColor: "var(--card)",
-                border: "1px solid var(--border)",
+                backgroundColor: "hsl(var(--card))",
+                border: "1px solid hsl(var(--border))",
                 borderRadius: "8px",
                 fontSize: "12px",
-                color: "var(--foreground)",
+                color: "hsl(var(--foreground))",
               }}
-              labelStyle={{ color: "var(--muted-foreground)", marginBottom: 4 }}
+              labelStyle={{ color: "hsl(var(--muted-foreground))", marginBottom: 4 }}
               formatter={(value: number) => [
                 value,
                 t("github.activity.contributions"),
@@ -190,7 +204,7 @@ const ActivityOverview = ({ data, isLoading }: ActivityOverviewProps) => {
             <Area
               type="monotone"
               dataKey="contributions"
-              stroke="var(--accent)"
+              stroke="hsl(var(--accent))"
               strokeWidth={2}
               fill="url(#contribGradient)"
             />

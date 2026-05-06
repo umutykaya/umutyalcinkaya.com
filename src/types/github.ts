@@ -32,6 +32,11 @@ export interface GitHubRepo {
   pushed_at: string;
   updated_at: string;
   languages?: Record<string, number>;
+  owner?: {
+    login: string;
+    type: "User" | "Organization";
+    avatar_url: string;
+  };
   complexity_score?: number;
   complexity_tier?: ComplexityTier;
 }

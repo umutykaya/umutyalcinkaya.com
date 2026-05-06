@@ -17,7 +17,6 @@ import type { AdminEditTarget, AdminSaveResult } from "@/components/github/GitHu
 import {
   fetchGitHubUser,
   fetchEnrichedRepos,
-  fetchStarredRepos,
   fetchContributions,
   fetchOrgContributions,
   deleteRepo,
@@ -98,12 +97,6 @@ const GitHub = () => {
     staleTime: 1000 * 60 * 5,
   });
 
-  const starredQuery = useQuery<GitHubRepo[]>({
-    queryKey: ["github-starred-repos", adminToken],
-    queryFn: () => fetchStarredRepos(undefined, adminToken ?? undefined),
-    staleTime: 1000 * 60 * 10,
-  });
-
   const contribQuery = useQuery<ContributionMatrix>({
     queryKey: ["github-contributions", adminToken],
     queryFn: () => fetchContributions(undefined, adminToken ?? undefined),
@@ -119,7 +112,6 @@ const GitHub = () => {
   const hasError =
     userQuery.isError ||
     reposQuery.isError ||
-    starredQuery.isError ||
     contribQuery.isError ||
     orgsQuery.isError;
 
@@ -171,7 +163,6 @@ const GitHub = () => {
               onClick={() => {
                 userQuery.refetch();
                 reposQuery.refetch();
-                starredQuery.refetch();
                 contribQuery.refetch();
                 orgsQuery.refetch();
               }}
@@ -230,17 +221,6 @@ const GitHub = () => {
             canDeleteRepo={adminScopes.includes("delete_repo")}
             onEditRepo={(repo) => setEditTarget({ type: "repo", repo })}
             onDeleteRepo={handleDeleteRepo}
-          />
-        </section>
-
-        {/* Starred Repositories */}
-        <section className="mt-8">
-          <ComplexReposTable
-            repos={starredQuery.data}
-            isLoading={starredQuery.isLoading}
-            dataUpdatedAt={starredQuery.dataUpdatedAt}
-            title={t("github.repos.starredTitle")}
-            emptyText={t("github.repos.starredEmpty")}
           />
         </section>
 

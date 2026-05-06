@@ -268,13 +268,47 @@ async function fetchRepoDetails(
   }
 }
 
+async function fetchStarredRepoIds(
+  username: string,
+  token?: string,
+): Promise<Set<number>> {
+  const ids = new Set<number>();
+  let page = 1;
+  try {
+    while (true) {
+      const url = token
+        ? `${GITHUB_API}/user/starred?per_page=100&page=${page}`
+        : `${GITHUB_API}/users/${username}/starred?per_page=100&page=${page}`;
+      const res = await fetch(url, {
+        headers: token
+          ? {
+              Accept: "application/vnd.github.v3+json",
+              Authorization: `Bearer ${token}`,
+            }
+          : authHeaders(),
+      });
+      updateRateLimit(res.headers);
+      if (!res.ok) break;
+      const batch: { id: number }[] = await res.json();
+      if (!Array.isArray(batch) || batch.length === 0) break;
+      batch.forEach((r) => ids.add(r.id));
+      if (batch.length < 100) break;
+      page++;
+    }
+  } catch {
+    // ignore — fall back to no exclusion
+  }
+  return ids;
+}
+
 export async function fetchEnrichedRepos(
   username: string = GITHUB_USERNAME,
   token?: string,
 ): Promise<GitHubRepo[]> {
-  const [ownRepos, contributedRefs] = await Promise.all([
+  const [ownRepos, contributedRefs, starredIds] = await Promise.all([
     fetchAllRepos(username, token),
     fetchContributedOrgRepoRefs(username, token),
+    fetchStarredRepoIds(username, token),
   ]);
 
   // Resolve full repo metadata for each org-owned repo the user contributed
@@ -293,6 +327,8 @@ export async function fetchEnrichedRepos(
       // Without a token we never see private repos — drop them.
       if (!repo) continue;
       if (!token && repo.private) continue;
+      // Only include repos owned by an Organization (not personal user repos).
+      if (repo.owner?.type !== "Organization") continue;
       orgRepos.push(repo);
     }
   }
@@ -304,7 +340,7 @@ export async function fetchEnrichedRepos(
   });
 
   const filtered = Array.from(byId.values()).filter(
-    (r) => !r.fork && !r.archived,
+    (r) => !r.fork && !r.archived && !starredIds.has(r.id),
   );
 
   // Fetch languages in parallel (batches of 10 to avoid rate limit spikes).
@@ -515,10 +551,13 @@ export async function fetchContributions(
   username: string = GITHUB_USERNAME,
   token?: string,
 ): Promise<ContributionMatrix> {
-  // Prefer GraphQL (6-month window) when an admin token is supplied
-  if (token) {
+  // Prefer GraphQL when any token is available (admin token from UI, or the
+  // default env token). GraphQL returns private contributions when the token
+  // belongs to the queried user.
+  const effectiveToken = token ?? GITHUB_TOKEN ?? undefined;
+  if (effectiveToken) {
     try {
-      return await fetchContributionsGraphQL(username, token);
+      return await fetchContributionsGraphQL(username, effectiveToken);
     } catch {
       // Fall back to REST
     }
