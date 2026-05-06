@@ -13,127 +13,170 @@ import {
 } from "lucide-react";
 import BackToHome from "@/components/BackToHome";
 
-const experience = [
+type Assignment = {
+  title: string;
+  client: string;
+  period: string;
+  location: string;
+  bullets: string[];
+};
+
+type Job = {
+  title: string;
+  company: string;
+  period: string;
+  location: string;
+  summary?: string;
+  bullets?: string[];
+  assignments?: Assignment[];
+};
+
+const experience: Job[] = [
   {
-    title: "Full Stack Engineer",
-    company: "Allianz Insurance",
-    period: "November 2025 – February 2026",
-    location: "Cologne, Germany (Remote)",
-    bullets: [
-      "Building GenAI self-service Resilience Platform where chaos engineering and disaster recovery scenarios triggered.",
-      "Design and conceptualize knowledge graph.",
-      "Rapidly prototyped client needs.",
-      "Fullstack platform implementation of React, Django and Secure API practises.",
-      "Backend crafted with Singleton pattern Neo4J, and MongoDB reconciliation.",
-      "Technology stack enriched further using AWS Bedrock, Azure CosmosDB, MongoDB, AWS EKS, IBM Context Forge (MCP Server), Terraform and TypeScript.",
-    ],
-  },
-  {
-    title: "Platform Engineer",
-    company: "Keytrade Bank",
-    period: "July 2025 – October 2025",
-    location: "Brussels, Belgium (Hybrid)",
-    bullets: [
-      "Participate in workshops and conduct questionnaires at the client office in Brussels, Belgium.",
-      "Prepare business, technical, risk compliance, and security requirements documents.",
-      "Plan deliverables and contribute to the future state of implementation by evaluating current state architecture.",
-      "Detect modern architectural needs, explain gaps to achieve excellence through comprehensive analysis.",
-      "Define Azure services to be used such as Databricks, Microsoft Fabrics, AI Foundry, Collate and Wherescape integration scenarios.",
-    ],
-  },
-  {
-    title: "Platform Engineer",
-    company: "Stichting Pensioen Funds",
-    period: "December 2024 – June 2025",
-    location: "Utrecht, Netherlands (Remote)",
-    bullets: [
-      "Building and maintaining infrastructure modules with a DevOps approach.",
-      "Delivering components such as Azure Front Door CDN and Application Gateway automation by constructing AVM Bicep modules.",
-      "Contributing to solution architecture and modernization of a governmental pension funds platform.",
-    ],
-  },
-  {
-    title: "Platform Engineer",
-    company: "Allianz Insurance",
-    period: "September 2024 – December 2024",
-    location: "Paris, France (Remote)",
-    bullets: [
-      "Built a newly created account and platform comprising multi-regional, multi-account deployments using AWS Deployment Framework (ADF).",
-      "Contributed to an open-source project to adapt decommissioned AWS services (CodeCommit, Cloud9).",
-      "Implemented a Disaster Recovery Plan and provided a strategic roadmap.",
-      "Adopted an automation-first approach to minimize manual provisioning of platform resources.",
-      "Implemented CDK TypeScript-based infrastructure to cover the majority of administrative needs.",
-      "Architected and guided project stakeholders to successfully migrate to a microservice approach.",
-    ],
-  },
-  {
-    title: "Platform Engineer",
-    company: "ABN AMRO Bank N.V.",
-    period: "July 2023 – September 2024",
-    location: "Amsterdam, Netherlands",
-    bullets: [
-      "Conducted impact analysis of current infrastructure components including WAF, GuardDuty, and risk controls.",
-      "Facilitated adoption and migration of environments from AWS to Azure, including cloud-to-cloud and on-premises-to-cloud transitions.",
-      "Created cloud-native applications and built reusable components.",
-      "Developed an application onboarding service written in Go.",
-      "Provided incident support and maintained the development tooling platform (SonarQube, Nexus Lifecycle, Twistlock).",
-    ],
-  },
-  {
-    title: "Platform Engineer",
-    company: "ABN AMRO Clearing Bank",
-    period: "October 2022 – June 2023",
-    location: "Amsterdam, Netherlands",
-    bullets: [
-      "Managed the creation and configuration of customized Amazon Machine Images for EC2 instances, streamlining deployment within AWS.",
-      "Designed and implemented event-driven architectures using custom constructs, enabling scalable and efficient real-time systems.",
-      "Collaborated closely with the security team to ensure effective patch management for cloud infrastructure.",
-    ],
-  },
-  {
-    title: "Data Engineer",
-    company: "ABN AMRO Bank N.V.",
-    period: "October 2021 – October 2022",
-    location: "Amsterdam, Netherlands",
-    bullets: [
-      "Integrated structured and semi-structured data sources to maintain data lineage graphs in Azure Databricks.",
-      "Persisted data in SQL Server and shared it with a central team via ADLS (Azure Data Lake Storage).",
-      "Managed application lifecycle using ARM Templates and CI/CD pipelines in Azure DevOps.",
-      "Orchestrated modules through Azure Data Factory.",
-    ],
-  },
-  {
-    title: "Cloud & Data Engineer",
-    company: "Miscellaneous experience",
-    period: "October 2018 – October 2021",
-    location: "Istanbul, Turkey & Amsterdam, Netherlands",
-    bullets: [
-      "Designed and maintained ETL pipelines using Python and SQL for data ingestion across structured and semi-structured sources.",
-      "Built and deployed REST APIs with Spring Boot and Java to serve internal data products.",
-      "Provisioned and managed cloud infrastructure on AWS and Azure, including EC2, S3, Lambda, and Azure Functions.",
-      "Automated deployment workflows using Docker, CI/CD pipelines, and shell scripting on Linux environments.",
-      "Administered relational and NoSQL databases, ensuring data quality and availability for downstream consumers.",
-      "Collaborated with cross-functional teams following Agile methodologies to deliver data-driven solutions.",
+    title: "Senior Software Engineer",
+    company: "Capgemini B.V.",
+    period: "October 2021 – Currently",
+    location: "Utrecht, Netherlands",
+    summary:
+      "Consultancy experience in custom AI agents, data engineering, data management and governance. Mainly provide tangible solutions related to data pipelines. Harvesting data lineage for regulatory purposes as part of financial services BENELUX.",
+    assignments: [
+      {
+        title: "Full Stack Engineer",
+        client: "Allianz Insurance",
+        period: "November 2025 – February 2026",
+        location: "Cologne, Germany",
+        bullets: [
+          "Built a GenAI self-service Resilience Platform with chaos and disaster recovery scenarios, using Singleton pattern, Neo4J & MongoDB reconciliation, Secure API and Django practices.",
+          "Designed and conceptualized knowledge graphs with embedded programming.",
+          "Tech Stack: AWS Bedrock, Azure CosmosDB, MongoDB, EKS, Helm, IBM Context Forge (MCP Server), Terraform, TypeScript.",
+        ],
+      },
+      {
+        title: "Data Platform Engineer",
+        client: "Keytrade Bank",
+        period: "July 2025 – October 2025",
+        location: "Brussels, Belgium",
+        bullets: [
+          "Participated in and conducted workshops at client office in Belgium.",
+          "Prepared business, technical, risk compliance & security requirements documents.",
+          "Assessed current state architecture and identified gaps through comprehensive analysis of modern architectural needs.",
+        ],
+      },
+      {
+        title: "Solution Engineer",
+        client: "Stichting Pensioen Funds",
+        period: "December 2024 – June 2025",
+        location: "Utrecht, Netherlands",
+        bullets: [
+          "Built and maintained infrastructure modules with a DevOps approach.",
+          "Delivered Azure Frontdoor CDN and Application Gateway automation via AVM Bicep modules.",
+          "Contributed to solution architecture and modernization of a governmental pension funds platform.",
+        ],
+      },
+      {
+        title: "Solution Engineer",
+        client: "Allianz Insurance",
+        period: "September 2024 – December 2024",
+        location: "Paris, France",
+        bullets: [
+          "Built a multi-regional, multi-account platform leveraging AWS Deployment Framework (ADF).",
+          "Implemented a Disaster Recovery Plan and provided a strategic roadmap.",
+          "Adopted automation-first approach using CDK TypeScript-based infrastructure.",
+        ],
+      },
+      {
+        title: "Platform Integration Engineer",
+        client: "ABN AMRO Bank N.V.",
+        period: "July 2023 – September 2024",
+        location: "Amsterdam, Netherlands",
+        bullets: [
+          "Conducted impact analysis of infrastructure components including WAF, GuardDuty, and risk controls.",
+          "Developed an application onboarding service written in GO.",
+          "Maintained development tooling platform: SonarQube, Nexus Lifecycle, Twistlock.",
+        ],
+      },
+      {
+        title: "Platform Integration Engineer",
+        client: "ABN AMRO Clearing Bank",
+        period: "October 2022 – June 2023",
+        location: "Amsterdam, Netherlands",
+        bullets: [
+          "Managed AMI Bakery Process for customized EC2 machine images, ensuring integration with SonarQube and Nexus.",
+          "Designed and implemented event-driven architectures using custom constructs.",
+        ],
+      },
+      {
+        title: "Data Engineer",
+        client: "ABN AMRO Bank N.V.",
+        period: "October 2021 – October 2022",
+        location: "Amsterdam, Netherlands",
+        bullets: [
+          "Integrated structured and semi-structured data sources to maintain data lineage graphs in Azure Databricks.",
+          "Persisted data in SQL Server and shared with central team via ADLS (Azure Data Lake Storage).",
+        ],
+      },
     ],
   },
 ];
 
 const skills = {
-  "Cloud & Infrastructure": ["AWS", "Azure", "Databricks", "GCP", "Terraform", "Bicep", "Serverless", "Azure Network"],
-  "Development & DevOps": ["CI/CD", "Biceps", "Azure Data Factory", "Kubernetes", "Docker", "Agile (Scrum, Kanban)", "ITILv4", "Azure DevOps"],
-  "Data & Other": ["Advanced Python, Django, Flask", "SQL, NoSQL", "Azure Keyvault", "REST APIs", "GO", "Spring Boot, Java", "TypeScript", "Linux Administration"],
+  "Cloud & Infrastructure": [
+    "AWS",
+    "Azure",
+    "GCP",
+    "Kubernetes",
+    "Terraform",
+    "Biceps",
+    "Helm",
+    "EKS",
+  ],
+  "Languages & Frameworks": [
+    "TypeScript",
+    "GO",
+    "Advanced Python",
+    "Django",
+    "Flask",
+    "PowerShell",
+    "CDK",
+  ],
+  "Data & Databases": [
+    "Azure Databricks",
+    "Azure Data Factory",
+    "MongoDB",
+    "Neo4J",
+    "Azure CosmosDB",
+    "SQL Server",
+    "ADLS",
+  ],
+  "Security & DevOps": [
+    "Azure DevOps Pipelines",
+    "Azure KeyVault",
+    "Azure Cloud Monitoring",
+    "Azure Network",
+    "WAF",
+    "GuardDuty",
+  ],
+  "AI / GenAI": [
+    "AWS Bedrock",
+    "IBM Context Forge (MCP Server)",
+    "GenAI Platform Engineering",
+  ],
 };
 
 const certifications = [
   { name: "AZ-900", description: "Microsoft Azure Fundamentals" },
   { name: "AWS SAA-C03", description: "AWS Certified Solutions Architect – Associate" },
+  { name: "ITILv4", description: "" },
+  { name: "Gen AI Campus", description: "GEN AI Training Track | FS CCA Europe" },
+  { name: "Microsoft GenAI", description: "Certification & Credentials" },
 ];
 
 const languages = [
   { name: "Turkish", level: "Native" },
-  { name: "English", level: "Full professional proficiency" },
-  { name: "Spanish", level: "Daily, informal speaking proficiency" },
-  { name: "French", level: "Beginner, limited informal conversation proficiency" },
+  { name: "English", level: "Full Professional Proficiency" },
+  { name: "Spanish", level: "Daily, Informal Speaking" },
+  { name: "French", level: "Beginner" },
+  { name: "Dutch", level: "Beginner" },
 ];
 
 const Resume = () => {
@@ -169,15 +212,16 @@ const Resume = () => {
             {/* Introduction */}
             <section className="mb-12 rounded-2xl border border-border/50 bg-card p-6">
               <p className="text-muted-foreground leading-relaxed">
-                As an experienced Full Stack Platform Engineer, I am passionate about
-                automation and its transformative potential — pushing the
-                boundaries of what is possible and contributing to a future where
-                automation is seamlessly integrated into our lives, creating a more
-                efficient, sustainable, and prosperous world. With a proactive
-                approach, I am always eager to initiate and lead potential projects.
-                I thrive as a team player, valuing collaboration and emphasizing
-                collective team efforts. I am keen on leveraging a team's Agile
-                maturity level to drive successful outcomes.
+                With significant experience as a Full Stack Platform Engineer, I
+                am passionate about automation and its transformative potential.
+                I aim to push the boundaries of what can be accomplished and
+                contribute to a future where automation is seamlessly woven into
+                daily life, driving efficiency, sustainability, and growth.
+                Proactively, I am prepared to launch and lead innovative
+                projects. I thrive in collaborative settings, valuing teamwork
+                and the collective contributions of all members. Furthermore, I
+                prioritize leveraging a team's Agile maturity to deliver
+                successful outcomes.
               </p>
             </section>
 
@@ -215,17 +259,66 @@ const Resume = () => {
                           </span>
                         </div>
                       </div>
-                      <ul className="space-y-2">
-                        {job.bullets.map((b, j) => (
-                          <li
-                            key={j}
-                            className="flex items-start gap-2 text-sm text-muted-foreground"
-                          >
-                            <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-accent/60 shrink-0" />
-                            {b}
-                          </li>
-                        ))}
-                      </ul>
+                      {job.summary && (
+                        <p className="text-sm text-muted-foreground mb-4">
+                          {job.summary}
+                        </p>
+                      )}
+                      {job.bullets && (
+                        <ul className="space-y-2">
+                          {job.bullets.map((b, j) => (
+                            <li
+                              key={j}
+                              className="flex items-start gap-2 text-sm text-muted-foreground"
+                            >
+                              <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-accent/60 shrink-0" />
+                              {b}
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                      {job.assignments && (
+                        <div className="mt-4 space-y-4 border-l-2 border-border/40 pl-4">
+                          {job.assignments.map((a, k) => (
+                            <div
+                              key={k}
+                              className="rounded-xl border border-border/40 bg-background/40 p-4"
+                            >
+                              <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-1 mb-2">
+                                <div>
+                                  <h3 className="text-lg font-semibold text-foreground">
+                                    {a.title}
+                                  </h3>
+                                  <p className="text-sm text-accent">
+                                    {a.client}
+                                  </p>
+                                </div>
+                                <div className="flex flex-col sm:items-end gap-0.5 text-xs text-muted-foreground shrink-0">
+                                  <span className="flex items-center gap-1">
+                                    <Calendar size={12} />
+                                    {a.period}
+                                  </span>
+                                  <span className="flex items-center gap-1">
+                                    <MapPin size={12} />
+                                    {a.location}
+                                  </span>
+                                </div>
+                              </div>
+                              <ul className="space-y-1.5">
+                                {a.bullets.map((b, j) => (
+                                  <li
+                                    key={j}
+                                    className="flex items-start gap-2 text-sm text-muted-foreground"
+                                  >
+                                    <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-accent/60 shrink-0" />
+                                    {b}
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          ))}
+                        </div>
+                      )}
                     </div>
                   </div>
                 ))}
@@ -241,7 +334,7 @@ const Resume = () => {
                 </h2>
               </div>
 
-              <div className="grid sm:grid-cols-3 gap-4">
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {Object.entries(skills).map(([category, items]) => (
                   <div
                     key={category}
@@ -276,18 +369,21 @@ const Resume = () => {
                 <div className="space-y-3">
                   <div>
                     <p className="text-sm font-medium text-foreground">
-                      MSc. Business Administration — EPMS
+                      MSc. of Business Administration
                     </p>
                     <p className="text-sm text-muted-foreground">
-                      University of Amsterdam, Amsterdam Business School — Feb 2026 – Present
+                      Executive Program Management Studies (EPMS) — AI and
+                      Innovation Track · University of Amsterdam, Netherlands ·
+                      2026
                     </p>
                   </div>
                   <div>
                     <p className="text-sm font-medium text-foreground">
-                      BSc. Software Engineering
+                      BSc. of Software Engineering
                     </p>
                     <p className="text-sm text-muted-foreground">
-                      Bahcesehir University, Istanbul — 2018
+                      Executive Faculty of Engineering and Natural Sciences ·
+                      Bahcesehir University, Turkey · 2018
                     </p>
                   </div>
                 </div>
