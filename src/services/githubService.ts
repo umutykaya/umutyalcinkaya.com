@@ -596,3 +596,77 @@ export async function fetchOrgContributions(
     repos: [],
   }));
 }
+
+// ── Admin: JWT Authentication ─────────────────────────────────────
+
+export interface AdminAuthResult {
+  user: GitHubUser;
+  scopes: string[];
+}
+
+export async function verifyAdminToken(token: string): Promise<AdminAuthResult> {
+  const res = await fetch(`${GITHUB_API}/user`, {
+    headers: {
+      Accept: "application/vnd.github.v3+json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  if (!res.ok) throw new Error(`Authentication failed: ${res.status}`);
+  const scopeHeader = res.headers.get("x-oauth-scopes") ?? "";
+  const scopes = scopeHeader
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean);
+  const user: GitHubUser = await res.json();
+  return { user, scopes };
+}
+
+export async function updateUserProfile(
+  token: string,
+  data: { bio?: string | null },
+): Promise<void> {
+  const res = await fetch(`${GITHUB_API}/user`, {
+    method: "PATCH",
+    headers: {
+      Accept: "application/vnd.github.v3+json",
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+  if (!res.ok) throw new Error(`Profile update failed: ${res.status}`);
+}
+
+export async function updateRepo(
+  token: string,
+  owner: string,
+  repo: string,
+  data: { name?: string; description?: string | null; homepage?: string | null },
+): Promise<void> {
+  const res = await fetch(`${GITHUB_API}/repos/${owner}/${repo}`, {
+    method: "PATCH",
+    headers: {
+      Accept: "application/vnd.github.v3+json",
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+  if (!res.ok) throw new Error(`Repo update failed: ${res.status}`);
+}
+
+export async function deleteRepo(
+  token: string,
+  owner: string,
+  repo: string,
+): Promise<void> {
+  const res = await fetch(`${GITHUB_API}/repos/${owner}/${repo}`, {
+    method: "DELETE",
+    headers: {
+      Accept: "application/vnd.github.v3+json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  // 204 No Content is success
+  if (!res.ok) throw new Error(`Repo delete failed: ${res.status}`);
+}

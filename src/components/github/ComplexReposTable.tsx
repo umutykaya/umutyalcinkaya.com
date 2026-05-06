@@ -8,6 +8,9 @@ import {
   ArrowUpDown,
   AlertCircle,
   ExternalLink,
+  Pencil,
+  Trash2,
+  Loader2,
 } from "lucide-react";
 import type { GitHubRepo, SortField, SortDirection } from "@/types/github";
 import ComplexityBadge from "./ComplexityBadge";
@@ -17,6 +20,10 @@ interface ComplexReposTableProps {
   repos: GitHubRepo[] | undefined;
   isLoading: boolean;
   dataUpdatedAt: number;
+  isAdmin?: boolean;
+  canDeleteRepo?: boolean;
+  onEditRepo?: (repo: GitHubRepo) => void;
+  onDeleteRepo?: (repo: GitHubRepo) => Promise<void>;
 }
 
 const LANGUAGE_COLORS: Record<string, string> = {
@@ -54,11 +61,17 @@ const ComplexReposTable = ({
   repos,
   isLoading,
   dataUpdatedAt,
+  isAdmin,
+  canDeleteRepo,
+  onEditRepo,
+  onDeleteRepo,
 }: ComplexReposTableProps) => {
   const { t } = useTranslation();
   const [sortField, setSortField] = useState<SortField>("complexity_score");
   const [sortDir, setSortDir] = useState<SortDirection>("desc");
   const [expandedId, setExpandedId] = useState<number | null>(null);
+  const [pendingDeleteId, setPendingDeleteId] = useState<number | null>(null);
+  const [deletingId, setDeletingId] = useState<number | null>(null);
 
   const handleSort = (field: SortField) => {
     if (sortField === field) {
@@ -190,6 +203,7 @@ const ComplexReposTable = ({
                 </SortButton>
               </th>
               <th className="w-10 px-2" />
+              {isAdmin && <th className="w-12 px-2" />}
             </tr>
           </thead>
           {sorted.map((repo) => {
@@ -288,10 +302,73 @@ const ComplexReposTable = ({
                         <ChevronDown size={14} />
                       )}
                     </td>
+                    {isAdmin && (
+                      <td className="px-2 py-3">
+                        {pendingDeleteId === repo.id ? (
+                          <div className="flex items-center gap-1">
+                            <button
+                              onClick={async (e) => {
+                                e.stopPropagation();
+                                setDeletingId(repo.id);
+                                setPendingDeleteId(null);
+                                await onDeleteRepo?.(repo);
+                                setDeletingId(null);
+                              }}
+                              title="Confirm delete"
+                              className="flex items-center justify-center w-7 h-7 rounded-md border border-destructive/50 bg-destructive/10 text-destructive hover:bg-destructive/20 transition-colors text-xs font-medium"
+                            >
+                              {deletingId === repo.id ? (
+                                <Loader2 size={11} className="animate-spin" />
+                              ) : (
+                                "Yes"
+                              )}
+                            </button>
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setPendingDeleteId(null);
+                              }}
+                              title="Cancel delete"
+                              className="flex items-center justify-center w-7 h-7 rounded-md border border-border/50 bg-secondary text-muted-foreground hover:text-foreground transition-colors text-xs"
+                            >
+                              ✕
+                            </button>
+                          </div>
+                        ) : (
+                          <div className="flex items-center gap-1">
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                onEditRepo?.(repo);
+                              }}
+                              title="Edit repository"
+                              className="flex items-center justify-center w-7 h-7 rounded-md border border-accent/30 bg-accent/10 text-accent hover:bg-accent/20 transition-colors"
+                            >
+                              <Pencil size={11} />
+                            </button>
+                            <button
+                              disabled={!canDeleteRepo}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setPendingDeleteId(repo.id);
+                              }}
+                              title={
+                                canDeleteRepo
+                                  ? "Delete repository"
+                                  : "Requires delete_repo scope on your PAT"
+                              }
+                              className="flex items-center justify-center w-7 h-7 rounded-md border border-destructive/30 bg-destructive/10 text-destructive hover:bg-destructive/20 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+                            >
+                              <Trash2 size={11} />
+                            </button>
+                          </div>
+                        )}
+                      </td>
+                    )}
                   </tr>
                   {isExpanded && repo.languages && (
                     <tr className="bg-secondary/20">
-                      <td colSpan={7} className="px-4 py-4">
+                      <td colSpan={isAdmin ? 8 : 7} className="px-4 py-4">
                         <div className="max-w-2xl">
                           <div className="flex flex-wrap gap-4 mb-3 text-xs text-muted-foreground">
                             <span>

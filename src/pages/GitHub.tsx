@@ -1,5 +1,6 @@
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Github, RefreshCw } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import AnimatedBackground from "@/components/AnimatedBackground";
@@ -10,11 +11,15 @@ import ActivityOverview from "@/components/github/ActivityOverview";
 import ComplexReposTable from "@/components/github/ComplexReposTable";
 import OrganizationContributions from "@/components/github/OrganizationContributions";
 import RateLimitIndicator from "@/components/github/RateLimitIndicator";
+import GitHubAdminAuth from "@/components/github/GitHubAdminAuth";
+import GitHubAdminEditModal from "@/components/github/GitHubAdminEditModal";
+import type { AdminEditTarget } from "@/components/github/GitHubAdminEditModal";
 import {
   fetchGitHubUser,
   fetchEnrichedRepos,
   fetchContributions,
   fetchOrgContributions,
+  deleteRepo,
 } from "@/services/githubService";
 import type {
   GitHubUser,
@@ -25,6 +30,41 @@ import type {
 
 const GitHub = () => {
   const { t } = useTranslation();
+  const queryClient = useQueryClient();
+
+  // ── Admin state ──────────────────────────────────────────────────
+  const [adminToken, setAdminToken] = useState<string | null>(null);
+  const [adminScopes, setAdminScopes] = useState<string[]>([]);
+  const [editTarget, setEditTarget] = useState<AdminEditTarget | null>(null);
+
+  const handleAuthenticated = (_token: string, result: { user: GitHubUser; scopes: string[] }) => {
+    setAdminToken(_token);
+    setAdminScopes(result.scopes);
+  };
+
+  const handleLogout = () => {
+    setAdminToken(null);
+    setAdminScopes([]);
+    setEditTarget(null);
+  };
+
+  const handleSaved = (_target: AdminEditTarget) => {
+    setEditTarget(null);
+    // Refetch affected data so the UI updates immediately
+    queryClient.invalidateQueries({ queryKey: ["github-user"] });
+    queryClient.invalidateQueries({ queryKey: ["github-enriched-repos"] });
+  };
+
+  const handleDeleteRepo = async (repo: GitHubRepo) => {
+    if (!adminToken) return;
+    const [owner] = repo.full_name.split("/");
+    await deleteRepo(adminToken, owner, repo.name);
+    // Optimistically remove from cache without a full refetch
+    queryClient.setQueryData<GitHubRepo[]>(
+      ["github-enriched-repos"],
+      (prev) => prev?.filter((r) => r.id !== repo.id) ?? [],
+    );
+  };
 
   const userQuery = useQuery<GitHubUser>({
     queryKey: ["github-user"],
@@ -77,6 +117,11 @@ const GitHub = () => {
           </div>
           <div className="flex items-center gap-3">
             <RateLimitIndicator />
+            <GitHubAdminAuth
+              isAuthenticated={!!adminToken}
+              onAuthenticated={handleAuthenticated}
+              onLogout={handleLogout}
+            />
             <a
               href={`https://github.com/${import.meta.env.VITE_GITHUB_USERNAME || "umutykaya"}`}
               target="_blank"
@@ -115,6 +160,11 @@ const GitHub = () => {
           <GitHubProfileCard
             user={userQuery.data}
             isLoading={userQuery.isLoading}
+            isAdmin={!!adminToken}
+            onEditProfile={() =>
+              userQuery.data &&
+              setEditTarget({ type: "profile", user: userQuery.data })
+            }
           />
         </section>
 
@@ -148,8 +198,22 @@ const GitHub = () => {
             repos={reposQuery.data}
             isLoading={reposQuery.isLoading}
             dataUpdatedAt={reposQuery.dataUpdatedAt}
+            isAdmin={!!adminToken}
+            canDeleteRepo={adminScopes.includes("delete_repo")}
+            onEditRepo={(repo) => setEditTarget({ type: "repo", repo })}
+            onDeleteRepo={handleDeleteRepo}
           />
         </section>
+
+        {/* Admin edit modal */}
+        {adminToken && (
+          <GitHubAdminEditModal
+            target={editTarget}
+            adminToken={adminToken}
+            onClose={() => setEditTarget(null)}
+            onSaved={handleSaved}
+          />
+        )}
         </div>
       </main>
       </div>

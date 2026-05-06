@@ -1,13 +1,15 @@
 import { useTranslation } from "react-i18next";
-import { MapPin, Users, BookOpen, ExternalLink } from "lucide-react";
+import { MapPin, Users, BookOpen, ExternalLink, Pencil } from "lucide-react";
 import type { GitHubUser } from "@/types/github";
 
 interface GitHubProfileCardProps {
   user: GitHubUser | undefined;
   isLoading: boolean;
+  isAdmin?: boolean;
+  onEditProfile?: () => void;
 }
 
-const GitHubProfileCard = ({ user, isLoading }: GitHubProfileCardProps) => {
+const GitHubProfileCard = ({ user, isLoading, isAdmin, onEditProfile }: GitHubProfileCardProps) => {
   const { t } = useTranslation();
 
   if (isLoading) {
@@ -46,10 +48,25 @@ const GitHubProfileCard = ({ user, isLoading }: GitHubProfileCardProps) => {
           >
             <ExternalLink size={14} />
           </a>
+          {isAdmin && (
+            <button
+              onClick={onEditProfile}
+              title="Edit profile description"
+              className="ml-auto flex items-center gap-1.5 text-xs px-2 py-1 rounded-md border border-accent/40 bg-accent/10 text-accent hover:bg-accent/20 transition-colors"
+            >
+              <Pencil size={11} />
+              Edit Bio
+            </button>
+          )}
         </div>
 
         {user.bio && (
           <p className="text-sm text-muted-foreground mb-3">{user.bio}</p>
+        )}
+        {!user.bio && isAdmin && (
+          <p className="text-sm text-muted-foreground/40 italic mb-3">
+            No bio set — click Edit Bio to add one.
+          </p>
         )}
 
         <div className="flex flex-wrap gap-4 text-xs text-muted-foreground">
