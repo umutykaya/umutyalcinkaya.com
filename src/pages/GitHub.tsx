@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Github, RefreshCw } from "lucide-react";
@@ -17,6 +17,7 @@ import type { AdminEditTarget, AdminSaveResult } from "@/components/github/GitHu
 import {
   fetchGitHubUser,
   fetchEnrichedRepos,
+  fetchPrivateRepos,
   fetchContributions,
   fetchOrgContributions,
   deleteRepo,
@@ -48,6 +49,19 @@ const GitHub = () => {
     setEditTarget(null);
   };
 
+  const applyRepoUpdate = (prev: GitHubRepo[] | undefined, result: Extract<AdminSaveResult, { type: "repo" }>) =>
+    prev?.map((r) =>
+      r.id === result.repoId
+        ? {
+            ...r,
+            name: result.name,
+            full_name: r.full_name.replace(/\/[^/]+$/, `/${result.name}`),
+            description: result.description || null,
+            homepage: result.homepage || null,
+          }
+        : r,
+    ) ?? [];
+
   const handleSaved = (result: AdminSaveResult) => {
     setEditTarget(null);
     if (result.type === "profile") {
@@ -57,18 +71,11 @@ const GitHub = () => {
     } else if (result.type === "repo") {
       queryClient.setQueryData<GitHubRepo[]>(
         ["github-enriched-repos"],
-        (prev) =>
-          prev?.map((r) =>
-            r.id === result.repoId
-              ? {
-                  ...r,
-                  name: result.name,
-                  full_name: r.full_name.replace(/\/[^/]+$/, `/${result.name}`),
-                  description: result.description || null,
-                  homepage: result.homepage || null,
-                }
-              : r,
-          ) ?? [],
+        (prev) => applyRepoUpdate(prev, result),
+      );
+      queryClient.setQueryData<GitHubRepo[]>(
+        ["github-private-repos", adminToken],
+        (prev) => applyRepoUpdate(prev, result),
       );
     }
   };
@@ -77,9 +84,13 @@ const GitHub = () => {
     if (!adminToken) return;
     const [owner] = repo.full_name.split("/");
     await deleteRepo(adminToken, owner, repo.name);
-    // Optimistically remove from cache without a full refetch
+    // Optimistically remove from both caches
     queryClient.setQueryData<GitHubRepo[]>(
       ["github-enriched-repos"],
+      (prev) => prev?.filter((r) => r.id !== repo.id) ?? [],
+    );
+    queryClient.setQueryData<GitHubRepo[]>(
+      ["github-private-repos", adminToken],
       (prev) => prev?.filter((r) => r.id !== repo.id) ?? [],
     );
   };
@@ -95,6 +106,25 @@ const GitHub = () => {
     queryFn: () => fetchEnrichedRepos(),
     staleTime: 1000 * 60 * 5,
   });
+
+  const privateReposQuery = useQuery<GitHubRepo[]>({
+    queryKey: ["github-private-repos", adminToken],
+    queryFn: () => fetchPrivateRepos(adminToken!),
+    enabled: !!adminToken,
+    staleTime: 1000 * 60 * 5,
+  });
+
+  const allRepos = useMemo(() => {
+    const pub = reposQuery.data ?? [];
+    const priv = privateReposQuery.data ?? [];
+    const byId = new Map<number, GitHubRepo>();
+    [...pub, ...priv].forEach((r) => {
+      if (!byId.has(r.id)) byId.set(r.id, r);
+    });
+    return Array.from(byId.values()).sort(
+      (a, b) => (b.complexity_score ?? 0) - (a.complexity_score ?? 0),
+    );
+  }, [reposQuery.data, privateReposQuery.data]);
 
   const contribQuery = useQuery<ContributionMatrix>({
     queryKey: ["github-contributions"],
@@ -112,7 +142,8 @@ const GitHub = () => {
     userQuery.isError ||
     reposQuery.isError ||
     contribQuery.isError ||
-    orgsQuery.isError;
+    orgsQuery.isError ||
+    privateReposQuery.isError;
 
   return (
     <div className="min-h-screen bg-background relative">
@@ -164,6 +195,7 @@ const GitHub = () => {
                 reposQuery.refetch();
                 contribQuery.refetch();
                 orgsQuery.refetch();
+                if (adminToken) privateReposQuery.refetch();
               }}
               className="flex items-center gap-1.5 text-sm px-3 py-1.5 rounded-lg bg-destructive/10 text-destructive hover:bg-destructive/20 transition-colors"
             >
@@ -213,7 +245,7 @@ const GitHub = () => {
         {/* Complex Repos Table */}
         <section>
           <ComplexReposTable
-            repos={reposQuery.data}
+            repos={allRepos}
             isLoading={reposQuery.isLoading}
             dataUpdatedAt={reposQuery.dataUpdatedAt}
             isAdmin={!!adminToken}

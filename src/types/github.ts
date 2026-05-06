@@ -28,6 +28,7 @@ export interface GitHubRepo {
   topics: string[];
   fork: boolean;
   archived: boolean;
+  private?: boolean;
   pushed_at: string;
   updated_at: string;
   languages?: Record<string, number>;

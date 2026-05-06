@@ -597,6 +597,81 @@ export async function fetchOrgContributions(
   }));
 }
 
+// ── Private Repos (admin token required) ──────────────────────────
+
+export async function fetchPrivateRepos(token: string): Promise<GitHubRepo[]> {
+  const headers = {
+    Accept: "application/vnd.github.v3+json",
+    Authorization: `Bearer ${token}`,
+  };
+
+  const allRepos: GitHubRepo[] = [];
+  let page = 1;
+  while (true) {
+    // visibility=all + affiliation=owner,... so admin sees every repo they
+    // can access (private personal repos AND private org repos).
+    const res = await fetch(
+      `${GITHUB_API}/user/repos?visibility=all&affiliation=owner,collaborator,organization_member&per_page=100&page=${page}&sort=pushed`,
+      { headers },
+    );
+    updateRateLimit(res.headers);
+    if (res.status === 401 || res.status === 403) {
+      throw new Error(
+        `Failed to load repositories with admin token (${res.status}). Ensure the PAT has the \`repo\` scope.`,
+      );
+    }
+    if (!res.ok) {
+      throw new Error(`GitHub API error: ${res.status}`);
+    }
+    const batch: GitHubRepo[] = await res.json();
+    if (!Array.isArray(batch) || batch.length === 0) break;
+    allRepos.push(...batch);
+    if (batch.length < 100) break;
+    page++;
+  }
+
+  // Keep only private repos here — public repos are already loaded via
+  // fetchEnrichedRepos and merged in the page component. This avoids
+  // duplicate language fetches and keeps the public list cache-hot.
+  const filtered = allRepos.filter(
+    (r) => r.private && !r.fork && !r.archived,
+  );
+
+  // Fetch languages using the admin token (private repos need auth)
+  const batchSize = 10;
+  for (let i = 0; i < filtered.length; i += batchSize) {
+    const batch = filtered.slice(i, i + batchSize);
+    const results = await Promise.all(
+      batch.map(async (r) => {
+        const [owner, name] = r.full_name.split("/");
+        try {
+          const langRes = await fetch(
+            `${GITHUB_API}/repos/${owner}/${name}/languages`,
+            { headers },
+          );
+          updateRateLimit(langRes.headers);
+          if (!langRes.ok) return {};
+          return langRes.json() as Promise<Record<string, number>>;
+        } catch {
+          return {};
+        }
+      }),
+    );
+    batch.forEach((r, idx) => {
+      r.languages = results[idx];
+    });
+  }
+
+  filtered.forEach((r) => {
+    r.complexity_score = calculateComplexityScore(r);
+    r.complexity_tier = getComplexityTier(r.complexity_score);
+  });
+
+  return filtered.sort(
+    (a, b) => (b.complexity_score ?? 0) - (a.complexity_score ?? 0),
+  );
+}
+
 // ── Admin: JWT Authentication ─────────────────────────────────────
 
 export interface AdminAuthResult {

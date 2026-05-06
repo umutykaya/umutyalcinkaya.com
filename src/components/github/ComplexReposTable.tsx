@@ -11,6 +11,7 @@ import {
   Pencil,
   Trash2,
   Loader2,
+  Lock,
 } from "lucide-react";
 import type { GitHubRepo, SortField, SortDirection } from "@/types/github";
 import ComplexityBadge from "./ComplexityBadge";
@@ -222,6 +223,9 @@ const ComplexReposTable = ({
                   >
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-2 min-w-0">
+                        {repo.private && (
+                          <Lock size={11} className="shrink-0 text-muted-foreground/60" />
+                        )}
                         <span className="font-medium text-foreground truncate">
                           {repo.full_name?.split("/")[0] &&
                           repo.full_name.split("/")[0].toLowerCase() !==
