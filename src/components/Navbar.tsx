@@ -16,7 +16,7 @@ const Navbar = () => {
   const navLinks = [
     { label: t("nav.work"), href: "/#work" },
     { label: t("nav.about"), href: "/#about" },
-    { label: t("nav.resume"), href: "/resume" },
+    // { label: t("nav.resume"), href: "/resume" },
     { label: t("nav.github"), href: "/github" },
     { label: t("nav.contact"), href: "/contact" },
   ];
