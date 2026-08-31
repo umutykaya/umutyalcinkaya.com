@@ -18,7 +18,7 @@ import Dashboard from "./pages/admin/Dashboard.tsx";
 import ManageSlots from "./pages/admin/ManageSlots.tsx";
 import ManageBookings from "./pages/admin/ManageBookings.tsx";
 import CalendarSync from "./pages/admin/CalendarSync.tsx";
-import Resume from "./pages/Resume.tsx";
+// import Resume from "./pages/Resume.tsx";
 import Contact from "./pages/Contact.tsx";
 import GitHub from "./pages/GitHub.tsx";
 
@@ -36,7 +36,7 @@ const App = () => (
             <ScrollToTop />
             <Routes>
               <Route path="/" element={<Index />} />
-              <Route path="/resume" element={<Resume />} />
+              {/* <Route path="/resume" element={<Resume />} /> */}
               <Route path="/contact" element={<Contact />} />
               <Route path="/github" element={<GitHub />} />
               <Route

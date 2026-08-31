@@ -22,7 +22,7 @@ const AboutSection = () => {
               <p>{t("about.bio2")}</p>
             </div>
 
-            <div className="flex flex-wrap gap-3 mt-8">
+            {/* <div className="flex flex-wrap gap-3 mt-8">
               {stack.map((tech) => (
                 <span
                   key={tech}
@@ -40,7 +40,7 @@ const AboutSection = () => {
               {t("nav.resume")}
               <ArrowRight size={14} />
             </Link>
-          </div>
+          </div> */}
 
           <div className="rounded-2xl border border-border/50 bg-card p-4 sm:p-6">
             <div className="flex flex-wrap items-start justify-between gap-4 mb-4">
