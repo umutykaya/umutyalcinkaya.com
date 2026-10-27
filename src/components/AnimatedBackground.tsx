@@ -1,9 +1,29 @@
-const AnimatedBackground = () => {
+import { lazy, Suspense } from "react";
+
+// three.js is heavy — load it in its own chunk after first paint
+const KusamaTorus = lazy(() => import("./KusamaTorus"));
+
+type AnimatedBackgroundProps = {
+  // Only the home page shows the torus; other pages get the static layers
+  showTorus?: boolean;
+};
+
+const AnimatedBackground = ({ showTorus = false }: AnimatedBackgroundProps) => {
   return (
     <div
       className="fixed inset-0 z-0 pointer-events-none overflow-hidden animated-bg"
       aria-hidden="true"
     >
+      {/* Layer 0: Rotating wireframe torus (three.js) */}
+      {showTorus ? (
+        <Suspense fallback={null}>
+          <KusamaTorus />
+        </Suspense>
+      ) : (
+        // Other pages: lightweight CSS polka-dot field instead of three.js
+        <div className="absolute inset-0 kusama-dots" />
+      )}
+
       {/* Layer 1: Static noise grain via SVG feTurbulence filter */}
       <svg
         xmlns="http://www.w3.org/2000/svg"

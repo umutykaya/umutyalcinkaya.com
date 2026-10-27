@@ -12,7 +12,8 @@
     "myBookings": "My Bookings",
     "admin": "Admin",
     "resume": "Resume",
-    "github": "GitHub"
+    "github": "GitHub",
+    "apps": "Apps"
   },
   "hero": {
     "badge": "Available for new projects",
@@ -22,11 +23,19 @@
     "viewWork": "View Work",
     "aboutMe": "About Me"
   },
+  "apps": {
+    "label": "// Live Apps",
+    "title": "Portfolio",
+    "intro": "Products I've designed, built and run end to end — from infrastructure to interface.",
+    "visit": "Visit app",
+    "live": "Live"
+  },
   "work": {
     "label": "// Selected Work",
     "title": "Projects",
     "intro": "A live snapshot of the repositories I build and maintain across my personal account and the organizations I contribute to. Cards are ranked by the same complexity score used on the GitHub dashboard — explore the full breakdown, contribution heatmap, and per-org activity there.",
     "viewDashboard": "View GitHub dashboard",
+    "dashboardHint": "Contribution heatmap, activity trends, org contributions and complexity rankings, all in one place.",
     "viewGitHub": "View all on GitHub",
     "fetchError": "Could not load projects. Please try again later."
   },

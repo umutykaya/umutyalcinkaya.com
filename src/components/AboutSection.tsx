@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
+import { FileText } from "lucide-react";
 
 const stack = ["AWS", "Azure", "Terraform", "Kubernetes", "TypeScript", "Python", "Go", "React"];
 
@@ -35,10 +35,10 @@ const AboutSection = () => {
 
             <Link
               to="/resume"
-              className="inline-flex items-center gap-2 mt-8 text-sm text-accent hover:underline"
+              className="inline-flex items-center gap-2 mt-8 px-5 py-2.5 rounded-lg bg-accent text-accent-foreground text-sm font-medium hover:bg-accent/90 hover:-translate-y-0.5 transition-all"
             >
+              <FileText size={16} />
               {t("nav.resume")}
-              <ArrowRight size={14} />
             </Link>
           </div>
 

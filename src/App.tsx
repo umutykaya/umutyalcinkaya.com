@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -18,9 +18,8 @@ import Dashboard from "./pages/admin/Dashboard.tsx";
 import ManageSlots from "./pages/admin/ManageSlots.tsx";
 import ManageBookings from "./pages/admin/ManageBookings.tsx";
 import CalendarSync from "./pages/admin/CalendarSync.tsx";
-import Resume from "./pages/Resume.tsx";
-import Contact from "./pages/Contact.tsx";
 import GitHub from "./pages/GitHub.tsx";
+import Resume from "./pages/Resume.tsx";
 
 const queryClient = new QueryClient();
 
@@ -37,7 +36,7 @@ const App = () => (
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/resume" element={<Resume />} />
-              <Route path="/contact" element={<Contact />} />
+              <Route path="/contact" element={<Navigate to="/#contact" replace />} />
               <Route path="/github" element={<GitHub />} />
               <Route
                 path="/profile"

@@ -12,7 +12,8 @@
     "myBookings": "Mes Réservations",
     "admin": "Administration",
     "resume": "CV",
-    "github": "GitHub"
+    "github": "GitHub",
+    "apps": "Applications"
   },
   "hero": {
     "badge": "Disponible pour de nouveaux projets",
@@ -22,11 +23,19 @@
     "viewWork": "Voir les Projets",
     "aboutMe": "À Propos"
   },
+  "apps": {
+    "label": "// Applications en ligne",
+    "title": "Portfolio",
+    "intro": "Des produits que j'ai conçus, développés et exploités de bout en bout, de l'infrastructure à l'interface.",
+    "visit": "Voir l'application",
+    "live": "En ligne"
+  },
   "work": {
     "label": "// Travaux Sélectionnés",
     "title": "Projets",
     "intro": "Un aperçu en direct des dépôts que je développe et maintiens sur mon compte personnel et au sein des organisations auxquelles je contribue. Les cartes sont classées selon le même score de complexité que le tableau de bord GitHub — retrouvez-y l'analyse complète, la heatmap de contributions et l'activité par organisation.",
     "viewDashboard": "Voir le tableau de bord GitHub",
+    "dashboardHint": "Carte des contributions, tendances d'activité, contributions aux organisations et classement de complexité, au même endroit.",
     "viewGitHub": "Voir tout sur GitHub",
     "fetchError": "Impossible de charger les projets. Veuillez réessayer plus tard."
   },

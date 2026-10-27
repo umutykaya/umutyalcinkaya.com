@@ -6,10 +6,8 @@ import {
   GraduationCap,
   Award,
   Globe,
-  Phone,
   MapPin,
   Calendar,
-  Download,
 } from "lucide-react";
 import BackToHome from "@/components/BackToHome";
 
@@ -33,89 +31,79 @@ type Job = {
 
 const experience: Job[] = [
   {
+    title: "Senior Cloud & Data Platform Engineer",
+    company: "Capgemini B.V.",
+    period: "February 2023 – May 2026",
+    location: "Utrecht, Netherlands",
+    bullets: [
+      "Designed and delivered self-service cloud and resilience platforms for insurance clients, automating manual, approval-heavy processes into secure, role-based workflows.",
+      "Delivered Azure Frontdoor CDN and Application Gateway automation via AVM Bicep modules.",
+      "Developed an application onboarding service written in Python (GO for performance-critical paths), automating team provisioning and access management at scale. Maintained development tooling platform (SonarQube, Nexus Lifecycle, Twistlock).",
+      "Contributed to automatic account creation using service SDKs such as AWS Organizations, CodePipeline and CodeBuild via CDK TypeScript.",
+      "Built an Elevated Privileges feature into the platform, granting temporary admin access for a set period using AWS Systems Manager Documents.",
+      "Own and administer the company's cloud account, allocating usage and cost across teams, reconciling and expensing invoices by team/project.",
+      "Set up CloudWatch alarms to monitor cloud spend and resource usage, enabling early alerts on anomalies and cost overruns.",
+    ],
+  },
+  {
     title: "Senior Software Engineer",
     company: "Capgemini B.V.",
-    period: "October 2021 – May 2026",
+    period: "October 2021 – February 2023",
     location: "Utrecht, Netherlands",
-    summary:
-      "Consultancy experience in custom AI agents, data engineering, data management and governance. Mainly provide tangible solutions related to data pipelines. Harvesting data lineage for regulatory purposes as part of financial services BENELUX.",
-    assignments: [
-      {
-        title: "Full Stack Engineer",
-        client: "Allianz Insurance",
-        period: "November 2025 – February 2026",
-        location: "Cologne, Germany",
-        bullets: [
-          "Built a GenAI self-service Resilience Platform with chaos and disaster recovery scenarios, using Singleton pattern, Neo4J & MongoDB reconciliation, Secure API and Django practices.",
-          "Designed and conceptualized knowledge graphs with embedded programming.",
-          "Tech Stack: AWS Bedrock, Azure CosmosDB, MongoDB, EKS, Helm, IBM Context Forge (MCP Server), Terraform, TypeScript.",
-        ],
-      },
-      {
-        title: "Data Platform Engineer",
-        client: "Keytrade Bank",
-        period: "July 2025 – October 2025",
-        location: "Brussels, Belgium",
-        bullets: [
-          "Participated in and conducted workshops at client office in Belgium.",
-          "Prepared business, technical, risk compliance & security requirements documents.",
-          "Assessed current state architecture and identified gaps through comprehensive analysis of modern architectural needs.",
-        ],
-      },
-      {
-        title: "Solution Engineer",
-        client: "Stichting Pensioen Funds",
-        period: "December 2024 – June 2025",
-        location: "Utrecht, Netherlands",
-        bullets: [
-          "Built and maintained infrastructure modules with a DevOps approach.",
-          "Delivered Azure Frontdoor CDN and Application Gateway automation via AVM Bicep modules.",
-          "Contributed to solution architecture and modernization of a governmental pension funds platform.",
-        ],
-      },
-      {
-        title: "Solution Engineer",
-        client: "Allianz Insurance",
-        period: "September 2024 – December 2024",
-        location: "Paris, France",
-        bullets: [
-          "Built a multi-regional, multi-account platform leveraging AWS Deployment Framework (ADF).",
-          "Implemented a Disaster Recovery Plan and provided a strategic roadmap.",
-          "Adopted automation-first approach using CDK TypeScript-based infrastructure.",
-        ],
-      },
-      {
-        title: "Platform Integration Engineer",
-        client: "ABN AMRO Bank N.V.",
-        period: "July 2023 – September 2024",
-        location: "Amsterdam, Netherlands",
-        bullets: [
-          "Conducted impact analysis of infrastructure components including WAF, GuardDuty, and risk controls.",
-          "Developed an application onboarding service written in GO.",
-          "Maintained development tooling platform: SonarQube, Nexus Lifecycle, Twistlock.",
-        ],
-      },
-      {
-        title: "Platform Integration Engineer",
-        client: "ABN AMRO Clearing Bank",
-        period: "October 2022 – June 2023",
-        location: "Amsterdam, Netherlands",
-        bullets: [
-          "Managed AMI Bakery Process for customized EC2 machine images, ensuring integration with SonarQube and Nexus.",
-          "Designed and implemented event-driven architectures using custom constructs.",
-        ],
-      },
-      {
-        title: "Data Engineer",
-        client: "ABN AMRO Bank N.V.",
-        period: "October 2021 – October 2022",
-        location: "Amsterdam, Netherlands",
-        bullets: [
-          "Integrated structured and semi-structured data sources to maintain data lineage graphs in Azure Databricks.",
-          "Persisted data in SQL Server and shared with central team via ADLS (Azure Data Lake Storage).",
-        ],
-      },
+    bullets: [
+      "Built Python-based ETL pipelines in Azure Databricks (PySpark) to integrate structured and semi-structured data, persisting processed outputs in SQL Server and sharing them with the central team via ADLS, while maintaining data lineage graphs.",
+      "Delivered multi-region cloud infrastructure and disaster-recovery capabilities for insurance and financial-services clients across AWS and Azure environments.",
+      "Conducted architecture assessments and platform modernization initiatives for banking and public-sector clients, including infrastructure-as-code delivery and security automation.",
+      "Managed AMI Bakery Process for customized EC2 machine images using Python-based automation, ensuring integration with SonarQube and Nexus quality gates.",
     ],
+  },
+  {
+    title: "Cloud Engineer",
+    company: "Commencis",
+    period: "June 2020 – August 2021",
+    location: "Istanbul, Turkey",
+    summary:
+      "Python-first automation of cloud services for MLOps and DataOps workflows. Redshift DWH management. Data wrangling with ETL tools.",
+    bullets: [
+      "Serverless frameworks such as CloudFormation and CDK for provisioning infrastructure components.",
+      "Contributed to SOWs and HLD documents. Assessed risk factors.",
+      "Athena and QuickSight dashboard analysis. Cloud Intelligence dashboard.",
+      "Monthly and weekly cost reporting dashboard using Python Lambda functions.",
+      "EMR cluster automation and performance optimization.",
+      "SQS, S3 event subscription models.",
+      "ECS Fargate, ELB container workloads migration. Bitbucket, Bamboo for CI/CD.",
+    ],
+  },
+  {
+    title: "Data Engineer",
+    company: "NTT Data Business Solutions",
+    period: "November 2018 – June 2020",
+    location: "Istanbul, Turkey",
+    summary:
+      "Contributed to several initiatives and partnerships such as BSH chatbot, Mercedes Benz chatbot (NLP pipelines in Python) and Carrefour mask detection (computer vision, COVID-19).",
+  },
+];
+
+const competencies = [
+  {
+    name: "Cost Optimization",
+    description:
+      "Design and architecture of scalable, right-sized infrastructure and evaluates make/buy decisions with TCO awareness.",
+  },
+  {
+    name: "Production Readiness",
+    description:
+      "Designs platforms with reliability, observability, security, and operational excellence as first-class concerns.",
+  },
+  {
+    name: "Platform as a Product",
+    description:
+      "Treats internal platforms as products with developer experience, onboarding, and adoption as KPIs.",
+  },
+  {
+    name: "Mentoring & Leadership",
+    description:
+      "Uplifts team engineering standards through code reviews, documentation, and hands-on coaching.",
   },
 ];
 
@@ -126,7 +114,7 @@ const skills = {
     "GCP",
     "Kubernetes",
     "Terraform",
-    "Biceps",
+    "Bicep",
     "Helm",
     "EKS",
   ],
@@ -135,7 +123,7 @@ const skills = {
     "GO",
     "Advanced Python",
     "Django",
-    "Flask",
+    "FastAPI",
     "PowerShell",
     "CDK",
   ],
@@ -156,27 +144,18 @@ const skills = {
     "WAF",
     "GuardDuty",
   ],
-  "AI / GenAI": [
-    "AWS Bedrock",
-    "IBM Context Forge (MCP Server)",
-    "GenAI Platform Engineering",
-  ],
 };
 
 const certifications = [
   { name: "AZ-900", description: "Microsoft Azure Fundamentals" },
+  { name: "AZ-104", description: "Azure Administrator Associate" },
   { name: "AWS SAA-C03", description: "AWS Certified Solutions Architect – Associate" },
   { name: "ITILv4", description: "" },
-  { name: "Gen AI Campus", description: "GEN AI Training Track | FS CCA Europe" },
-  { name: "Microsoft GenAI", description: "Certification & Credentials" },
 ];
 
 const languages = [
   { name: "Turkish", level: "Native" },
   { name: "English", level: "Full Professional Proficiency" },
-  { name: "Spanish", level: "Daily, Informal Speaking" },
-  { name: "French", level: "Beginner" },
-  { name: "Dutch", level: "Beginner" },
 ];
 
 const Resume = () => {
@@ -197,8 +176,8 @@ const Resume = () => {
                 Umut Yalcinkaya
               </h1>
               <p className="text-xl text-muted-foreground mb-4">
-                Full Stack Platform Engineer{" "}
-                <span className="text-foreground/40">·</span> 10+ Years of
+                Senior Platform Engineer{" "}
+                <span className="text-foreground/40">·</span> 8+ Years of
                 Experience
               </p>
               <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
@@ -212,16 +191,14 @@ const Resume = () => {
             {/* Introduction */}
             <section className="mb-12 rounded-2xl border border-border/50 bg-card p-6">
               <p className="text-muted-foreground leading-relaxed">
-                With significant experience as a Full Stack Platform Engineer, I
-                am passionate about automation and its transformative potential.
-                I aim to push the boundaries of what can be accomplished and
-                contribute to a future where automation is seamlessly woven into
-                daily life, driving efficiency, sustainability, and growth.
-                Proactively, I am prepared to launch and lead innovative
-                projects. I thrive in collaborative settings, valuing teamwork
-                and the collective contributions of all members. Furthermore, I
-                prioritize leveraging a team's Agile maturity to deliver
-                successful outcomes.
+                Senior Platform Engineer with 8+ years of experience designing
+                and operating cloud-native platforms, developer tooling
+                ecosystems, and infrastructure automation solutions across
+                banking, insurance, and public-sector environments. Proficient
+                in Python (Django, scripting, automation, data pipelines),
+                expert in multi-cloud infrastructure (AWS &amp; Azure),
+                Kubernetes-based workloads, infrastructure as code (Terraform,
+                Bicep, CDK), and CI/CD platform delivery.
               </p>
             </section>
 
@@ -325,6 +302,32 @@ const Resume = () => {
               </div>
             </section>
 
+            {/* Core Competencies */}
+            <section className="mb-12">
+              <div className="flex items-center gap-3 mb-6">
+                <Award size={20} className="text-accent" />
+                <h2 className="text-2xl font-bold text-foreground">
+                  Core Competencies
+                </h2>
+              </div>
+
+              <div className="grid sm:grid-cols-2 gap-4">
+                {competencies.map((c) => (
+                  <div
+                    key={c.name}
+                    className="rounded-2xl border border-border/50 bg-card p-5"
+                  >
+                    <h3 className="text-sm font-medium text-foreground mb-2">
+                      {c.name}
+                    </h3>
+                    <p className="text-sm text-muted-foreground">
+                      {c.description}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
             {/* Skills */}
             <section className="mb-12">
               <div className="flex items-center gap-3 mb-6">
@@ -369,16 +372,6 @@ const Resume = () => {
                 <div className="space-y-3">
                   <div>
                     <p className="text-sm font-medium text-foreground">
-                      MSc. of Business Administration
-                    </p>
-                    <p className="text-sm text-muted-foreground">
-                      Executive Program Management Studies (EPMS) — AI and
-                      Innovation Track · University of Amsterdam, Netherlands ·
-                      2026
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-foreground">
                       BSc. of Software Engineering
                     </p>
                     <p className="text-sm text-muted-foreground">
@@ -403,9 +396,11 @@ const Resume = () => {
                       <span className="font-medium text-foreground">
                         {c.name}
                       </span>{" "}
-                      <span className="text-muted-foreground">
-                        — {c.description}
-                      </span>
+                      {c.description && (
+                        <span className="text-muted-foreground">
+                          — {c.description}
+                        </span>
+                      )}
                     </li>
                   ))}
                 </ul>
