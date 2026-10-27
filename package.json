@@ -9,6 +9,8 @@
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview",
+    "tunnel": "cloudflared tunnel --config cloudflared/config.yml run",
+    "serve:screen": "./dev-screen.sh",
     "test": "vitest run",
     "test:watch": "vitest"
   },

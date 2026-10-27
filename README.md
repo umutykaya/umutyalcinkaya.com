@@ -43,6 +43,27 @@ Optional:
 INVALIDATE_PATHS='/index.html' ./scripts/amplify-publish-invalidate.sh
 ```
 
+### Cloudflare Tunnel
+
+The site can also be served from this machine through the `umutyalcinkaya-com` Cloudflare Tunnel (config in `cloudflared/config.yml`). The tunnel credentials live in `~/.cloudflared/` and are not committed.
+
+It runs in a detached screen session (one window for the build + `vite preview` on :4173, one for the tunnel), so it keeps running after you close the terminal:
+
+```bash
+bun run serve:screen          # start
+./dev-screen.sh restart       # rebuild and restart after changes
+screen -r umutyalcinkaya      # attach (Ctrl-a n / p to switch windows, Ctrl-a d to detach)
+screen -S umutyalcinkaya -X quit   # stop
+```
+
+DNS: `umutyalcinkaya.com` and `www` are proxied CNAMEs to `dc2f1284-01d6-473b-9518-ffc729b09a7f.cfargotunnel.com`.
+
+The default `~/.cloudflared/cert.pem` belongs to another zone, so route DNS with the umutyalcinkaya.com origin cert and the project config:
+
+```bash
+cloudflared tunnel --config cloudflared/config.yml --origincert ~/.cloudflared/cert-umutyalcinkaya.pem route dns umutyalcinkaya-com <hostname>
+```
+
 ### Custom Domain Setup
 
 Custom domain association is managed outside this repo in Amplify Hosting or the AWS console. For an existing Gen 1 app, keep the current backend resources and update the attached custom domain instead of trying to rename generated stack or bucket names in the repository.

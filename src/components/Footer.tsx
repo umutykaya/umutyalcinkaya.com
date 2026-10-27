@@ -18,7 +18,7 @@ const Footer = () => {
         <div className="flex flex-col items-center gap-8">
           {/* Social icons */}
           <div className="flex items-center gap-4">
-            {socials.map(({ icon: Icon, label, href }) => {
+            {socials.filter(({ href }) => href).map(({ icon: Icon, label, href }) => {
               const isExternal = href.startsWith("http");
               return (
                 <a

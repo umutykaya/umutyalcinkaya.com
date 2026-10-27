@@ -1,0 +1,11 @@
+# Cloudflare Tunnel for umutyalcinkaya.com
+# Run with: bun run tunnel  (serves the `vite preview` build on port 4173)
+tunnel: dc2f1284-01d6-473b-9518-ffc729b09a7f
+credentials-file: ~/.cloudflared/dc2f1284-01d6-473b-9518-ffc729b09a7f.json
+
+ingress:
+  - hostname: umutyalcinkaya.com
+    service: http://localhost:4173
+  - hostname: www.umutyalcinkaya.com
+    service: http://localhost:4173
+  - service: http_status:404

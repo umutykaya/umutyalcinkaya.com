@@ -11,6 +11,11 @@ export default defineConfig(({ mode }) => ({
       overlay: false,
     },
   },
+  preview: {
+    port: 4173,
+    strictPort: true,
+    allowedHosts: ["umutyalcinkaya.com", "www.umutyalcinkaya.com"],
+  },
   plugins: [react()],
   resolve: {
     alias: {
