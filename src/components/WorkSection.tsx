@@ -62,19 +62,27 @@ const WorkSection = () => {
           </a>
         </div>
 
-        <div className="mb-12">
-          <Link
-            to="/github"
-            className="group inline-flex items-center gap-2 text-sm font-medium text-accent hover:text-foreground transition-colors"
-          >
-            <BarChart3 size={16} />
-            <span>{t("work.viewDashboard")}</span>
-            <ArrowUpRight
-              size={14}
-              className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-            />
-          </Link>
-        </div>
+        <Link
+          to="/github"
+          className="group relative mb-12 flex items-center gap-4 sm:gap-6 rounded-2xl border border-accent/40 bg-accent/5 p-5 sm:p-6 overflow-hidden transition-all hover:border-accent hover:bg-accent/10 hover:-translate-y-0.5 hover:shadow-[0_0_40px_-12px_hsl(var(--accent))]"
+        >
+          <div className="absolute -right-16 -top-16 w-48 h-48 rounded-full bg-accent/20 blur-3xl pointer-events-none" />
+          <div className="relative shrink-0 w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-accent text-accent-foreground flex items-center justify-center">
+            <BarChart3 size={24} />
+          </div>
+          <div className="relative flex-1 min-w-0">
+            <p className="text-lg sm:text-xl font-semibold text-foreground">
+              {t("work.viewDashboard")}
+            </p>
+            <p className="text-sm text-muted-foreground mt-1">
+              {t("work.dashboardHint")}
+            </p>
+          </div>
+          <ArrowUpRight
+            size={22}
+            className="relative shrink-0 text-accent transition-transform group-hover:-translate-y-1 group-hover:translate-x-1"
+          />
+        </Link>
 
         {isLoading && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

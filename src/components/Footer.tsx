@@ -6,7 +6,7 @@ const socials = [
   { icon: Linkedin, label: "LinkedIn", href: import.meta.env.VITE_LINKEDIN_URL },
   { icon: Twitter, label: "X / Twitter", href: import.meta.env.VITE_TWITTER_URL },
   { icon: Instagram, label: "Instagram", href: import.meta.env.VITE_INSTAGRAM_URL },
-  { icon: Mail, label: "Email", href: "/contact" },
+  { icon: Mail, label: "Email", href: "/#contact" },
 ];
 
 const Footer = () => {

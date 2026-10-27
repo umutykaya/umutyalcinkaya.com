@@ -12,7 +12,8 @@
     "myBookings": "Meine Buchungen",
     "admin": "Verwaltung",
     "resume": "Lebenslauf",
-    "github": "GitHub"
+    "github": "GitHub",
+    "apps": "Apps"
   },
   "hero": {
     "badge": "Verfügbar für neue Projekte",
@@ -22,11 +23,19 @@
     "viewWork": "Arbeiten ansehen",
     "aboutMe": "Über mich"
   },
+  "apps": {
+    "label": "// Live-Apps",
+    "title": "Portfolio",
+    "intro": "Produkte, die ich von der Infrastruktur bis zur Oberfläche entworfen, gebaut und betrieben habe.",
+    "visit": "App öffnen",
+    "live": "Live"
+  },
   "work": {
     "label": "// Ausgewählte Arbeiten",
     "title": "Projekte",
     "intro": "Ein Live-Auszug der Repositories, die ich über mein persönliches Konto und die Organisationen, zu denen ich beitrage, entwickle und pflege. Die Karten sind nach demselben Komplexitätsscore wie im GitHub-Dashboard sortiert — dort finden Sie die vollständige Aufschlüsselung, Beitrags-Heatmap und Aktivität je Organisation.",
     "viewDashboard": "GitHub-Dashboard ansehen",
+    "dashboardHint": "Beitrags-Heatmap, Aktivitätstrends, Organisationsbeiträge und Komplexitätsranking an einem Ort.",
     "viewGitHub": "Alle auf GitHub ansehen",
     "fetchError": "Projekte konnten nicht geladen werden. Bitte versuchen Sie es später erneut."
   },
