@@ -2,6 +2,7 @@ import { useTranslation } from "react-i18next";
 import { ArrowUpRight } from "lucide-react";
 import mealPlannerShot from "@/assets/apps/mealplanner.jpg";
 import noteablyShot from "@/assets/apps/noteably.jpg";
+import skiResortFinderShot from "@/assets/apps/skiresortfinder.jpg";
 
 type PortfolioApp = {
   name: string;
@@ -31,6 +32,15 @@ const apps: PortfolioApp[] = [
       "A lightweight Django note board running on my own Mac mini M4 and served to the internet. Post a note from any device and see it appear instantly, end to end on hardware I run myself.",
     image: noteablyShot,
     features: ["Django", "Self-hosted on Mac mini M4", "Post from any device", "Lightweight & fast"],
+  },
+  {
+    name: "Ski Resort Finder",
+    url: "https://skiresortfinder.mountwavegroup.com",
+    tagline: "Find your next powder day.",
+    description:
+      "A mobile-first app for discovering ski resorts worldwide. See where it dumped overnight, browse top-rated resorts with base and summit snow depths, search by resort or country, filter, and compare resorts side by side.",
+    image: skiResortFinderShot,
+    features: ["Expo / React Native Web", "Fresh snow last 24 h", "Search & filters", "Resort comparison", "Favorites"],
   },
 ];
 
