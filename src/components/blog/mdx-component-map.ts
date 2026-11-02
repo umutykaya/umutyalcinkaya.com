@@ -5,4 +5,5 @@ export const blogMdxComponents = {
   img: LazyImage,
   pre: CodeBlock,
   aside: Callout,
+  Callout,
 };

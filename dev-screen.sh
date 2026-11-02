@@ -55,8 +55,9 @@ TUNNEL_CMD="cd $DIR && bun run tunnel; exec bash"
 
 # Window 0 builds the site. Only when that succeeds does it open window 1 for
 # the tunnel ($STY makes screen -X target this session) and then serve the
-# build. 'exec bash' keeps each window open after its command ends, so errors
-# stay readable.
+# build. `bun run build` runs the prebuild feed generator and blog prerenderer.
+# 'exec bash' keeps each window open after its command ends, so errors stay
+# readable.
 screen -dmS "$SESSION" -t web bash -c "cd $DIR && bun run build && screen -X screen -t tunnel bash -c $(printf %q "$TUNNEL_CMD") && bun run preview; exec bash"
 
 echo "Started. Attach with: screen -r $SESSION"

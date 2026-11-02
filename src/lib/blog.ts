@@ -14,6 +14,14 @@ function parseScalar(value: string): string {
   return trimmed;
 }
 
+function isValidPostDate(value: unknown): value is string {
+  if (typeof value !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+    return false;
+  }
+  const date = new Date(`${value}T00:00:00.000Z`);
+  return Number.isFinite(date.getTime()) && date.toISOString().slice(0, 10) === value;
+}
+
 export function parsePost(slug: string, source: string): BlogPost {
   const match = FRONTMATTER_PATTERN.exec(source);
   if (!match) {
@@ -61,11 +69,7 @@ export function parsePost(slug: string, source: string): BlogPost {
   if (typeof title !== "string" || !title) {
     throw new Error(`Post "${slug}" is missing a title.`);
   }
-  if (
-    typeof date !== "string" ||
-    !/^\d{4}-\d{2}-\d{2}$/.test(date) ||
-    new Date(`${date}T00:00:00.000Z`).toISOString().slice(0, 10) !== date
-  ) {
+  if (!isValidPostDate(date)) {
     throw new Error(`Post "${slug}" must have a valid date in YYYY-MM-DD format.`);
   }
   if (typeof summary !== "string" || !summary) {
@@ -86,7 +90,7 @@ export function parsePost(slug: string, source: string): BlogPost {
     summary,
     tags,
     ...(draftValue === "true" ? { draft: true } : {}),
-    ...(typeof values.lang === "string" ? { lang: values.lang } : {}),
+    lang: typeof values.lang === "string" ? values.lang : "en",
   };
 
   return {

@@ -1,6 +1,6 @@
 # umutyalcinkaya.com
 
-Personal website built with React, TypeScript, Vite, and Tailwind CSS. Hosted on AWS Amplify.
+Personal site built with React, TypeScript, Vite, Tailwind CSS, and Bun. The production build is served from this repository's `dist/` directory on a Mac mini through a Cloudflare Tunnel.
 
 ## Getting Started
 
@@ -9,61 +9,76 @@ bun install
 bun run dev
 ```
 
+The local Vite development server runs on port `8080`. `bun run dev` includes draft posts for local preview.
+
 ## Scripts
 
-### `bun run dev`
-Start the local development server.
+| Command | Description |
+| --- | --- |
+| `bun run dev` | Start the local Vite server, including draft posts |
+| `bun run build` | Generate feeds, build the site, and prerender the blog |
+| `bun run preview` | Serve `dist/` locally on port `4173` |
+| `bun run test` | Run the Vitest suite |
+| `bun run lint` | Run ESLint |
+| `bun run serve:screen` | Build and start the preview server and tunnel in `screen` |
 
-### `bun run build`
-Build for production.
+## Writing a blog post
 
-### `bun run test`
-Run tests with Vitest.
+Create `src/content/posts/<slug>.mdx`. The file name becomes the URL slug:
 
-### `bun run lint`
-Lint with ESLint.
+```mdx
+---
+title: "A useful title"
+date: "2026-11-02"
+summary: "A short description for the post list and search previews."
+tags:
+  - engineering
+  - notes
+draft: true
+lang: en
+---
 
-## Deployment
+Write Markdown here. MDX supports GitHub-flavored Markdown, syntax-highlighted
+code fences, and images with alt text.
 
-The site is hosted on AWS Amplify with S3 + CloudFront.
-
-The repo and local project folder can be renamed safely, but the generated Amplify stack, bucket, and role names may continue to use the original project slug. That is expected for an existing Gen 1 environment and should not be hand-edited in generated files unless you plan a full backend migration.
-
-`amplify publish` updates the files behind the existing CloudFront distribution. It does not create a new CloudFront URL, and cached `index.html` responses can make a deployment look stale.
-
-Use the publish helper to deploy and invalidate CloudFront in one step:
-
-```bash
-./scripts/amplify-publish-invalidate.sh
+<Callout type="tip" title="A callout">
+  Callouts render as a semantic `aside`; choose `note`, `tip`, or `warning`.
+</Callout>
 ```
 
-Optional:
+`title`, `date` (`YYYY-MM-DD`), `summary`, and `tags` are required. `draft` defaults to `false`; `lang` defaults to `en`. The blog list shows newest posts first, calculates reading time at 200 words per minute, and supports tag links such as `/blog?tag=engineering`.
+
+To preview drafts, leave `draft: true` and run `bun run dev`; the development pre-script includes drafts in the generated index. To publish, set `draft: false` or remove the field, then run `./dev-screen.sh restart`. Production feed generation excludes drafts from the published index, RSS feed, sitemap, and prerendered pages.
+
+## Deployment: Mac mini and Cloudflare Tunnel
+
+There is one build and one deployment flow; the tunnel forwards requests to `vite preview` on port `4173`. `cloudflared/config.yml` maps the public hostnames to that local origin and ends with a 404 catch-all. Vite preview serves static files from `dist/`, including prerendered blog routes, with the SPA fallback for other client routes. Do not expose the Vite development server, `.env` files, tunnel credentials, or origin certificates.
+
+Start and manage the detached services:
 
 ```bash
-INVALIDATE_PATHS='/index.html' ./scripts/amplify-publish-invalidate.sh
+bun run serve:screen              # build, then start preview and tunnel
+./dev-screen.sh restart           # stop, regenerate feeds, rebuild, and restart
+screen -r umutyalcinkaya          # attach; Ctrl-a d detaches
+screen -S umutyalcinkaya -X quit  # stop the session
 ```
 
-### Cloudflare Tunnel
+`bun run build` runs the `prebuild` hook to refresh `public/rss.xml`, `public/sitemap.xml`, and the generated post index before Vite builds and prerenders `/blog` and `/blog/<slug>/index.html`. The prerendered directories let crawlers and social previews receive full HTML. Deep links are also handled by Vite preview's SPA fallback.
 
-The site can also be served from this machine through the `umutyalcinkaya-com` Cloudflare Tunnel (config in `cloudflared/config.yml`). The tunnel credentials live in `~/.cloudflared/` and are not committed.
+For an external uptime monitor, request `https://umutyalcinkaya.com/healthz.txt`; a healthy origin returns `200 OK` with `ok`.
 
-It runs in a detached screen session (one window for the build + `vite preview` on :4173, one for the tunnel), so it keeps running after you close the terminal:
+### Cloudflare caching
 
-```bash
-bun run serve:screen          # start
-./dev-screen.sh restart       # rebuild and restart after changes
-screen -r umutyalcinkaya      # attach (Ctrl-a n / p to switch windows, Ctrl-a d to detach)
-screen -S umutyalcinkaya -X quit   # stop
-```
+Vite preview serves HTML with `Cache-Control: no-cache`, so browsers and intermediaries revalidate it. The preview middleware marks other non-hashed paths `no-cache, max-age=0, must-revalidate`; hashed files under `/assets/` receive `public, max-age=31536000, immutable`. In Cloudflare, configure cache rules to respect these origin headers rather than overriding the HTML revalidation policy.
 
-DNS: `umutyalcinkaya.com` and `www` are proxied CNAMEs to `dc2f1284-01d6-473b-9518-ffc729b09a7f.cfargotunnel.com`.
+After publishing changed content, use **Cloudflare Dashboard → Caching → Purge Cache → Custom Purge** and purge:
 
-The default `~/.cloudflared/cert.pem` belongs to another zone, so route DNS with the umutyalcinkaya.com origin cert and the project config:
+- `https://umutyalcinkaya.com/rss.xml`
+- `https://umutyalcinkaya.com/sitemap.xml`
+- Each changed page, for example `https://umutyalcinkaya.com/blog/my-first-post` (and its trailing-slash URL if Cloudflare caches both forms)
 
-```bash
-cloudflared tunnel --config cloudflared/config.yml --origincert ~/.cloudflared/cert-umutyalcinkaya.pem route dns umutyalcinkaya-com <hostname>
-```
+The cache purge is also useful if a Cloudflare rule has cached HTML beyond its revalidation policy.
 
-### Custom Domain Setup
+### Optional `launchd` alternative
 
-Custom domain association is managed outside this repo in Amplify Hosting or the AWS console. For an existing Gen 1 app, keep the current backend resources and update the attached custom domain instead of trying to rename generated stack or bucket names in the repository.
+For automatic recovery after a reboot, a pair of user LaunchAgents could run `bun run preview` and `cloudflared tunnel --config cloudflared/config.yml run` with `RunAtLoad`, `KeepAlive`, the repository as `WorkingDirectory`, and logs under `~/Library/Logs`. No plist is installed; confirm before creating or loading one.

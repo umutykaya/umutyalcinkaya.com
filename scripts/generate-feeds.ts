@@ -32,10 +32,21 @@ function escapeXml(value: string): string {
 
 const latestDate = publishedPosts[0]?.date ?? new Date().toISOString().slice(0, 10);
 const postIndexPath = resolve(root, "src/content/post-index.json");
+const postBodiesPath = resolve(root, "src/content/post-bodies.ts");
 const rssPath = resolve(root, "public/rss.xml");
 const sitemapPath = resolve(root, "public/sitemap.xml");
 
 await writeFile(postIndexPath, `${JSON.stringify(posts, null, 2)}\n`);
+const bodyImports = posts
+  .map(
+    (post) =>
+      `  "/src/content/posts/${post.slug}.mdx": () => import("./posts/${post.slug}.mdx").then((module) => module.default),`,
+  )
+  .join("\n");
+await writeFile(
+  postBodiesPath,
+  `import type { BlogMdxModule } from "@/types/blog";\n\nexport const postBodies: Record<\n  string,\n  () => Promise<BlogMdxModule["default"]>\n> = {\n${bodyImports}\n};\n`,
+);
 
 const rssItems = publishedPosts
   .map((post) => {
