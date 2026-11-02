@@ -1,4 +1,5 @@
 import type { BlogFrontmatter, BlogPost } from "@/types/blog";
+import { computeReadingTime } from "./reading-time";
 
 const FRONTMATTER_PATTERN = /^---\r?\n([\s\S]*?)\r?\n---(?:\r?\n|$)/;
 
@@ -93,18 +94,6 @@ export function parsePost(slug: string, source: string): BlogPost {
     slug,
     readingTime: computeReadingTime(source.slice(match[0].length)),
   };
-}
-
-export function computeReadingTime(content: string): number {
-  const readableText = content
-    .replace(/```[\s\S]*?```/g, " ")
-    .replace(/`[^`]*`/g, " ")
-    .replace(/<[^>]*>/g, " ")
-    .replace(/!\[([^\]]*)\]\([^)]*\)/g, "$1")
-    .replace(/\[([^\]]+)\]\([^)]*\)/g, "$1")
-    .replace(/[#>*_~|-]/g, " ");
-  const words = readableText.match(/[\p{L}\p{N}]+(?:['’-][\p{L}\p{N}]+)*/gu)?.length ?? 0;
-  return Math.max(1, Math.ceil(words / 200));
 }
 
 export function filterAndSortPosts(

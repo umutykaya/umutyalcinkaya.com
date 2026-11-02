@@ -12,6 +12,7 @@ const Navbar = () => {
   const { theme, toggleTheme } = useTheme();
   const { user, isAdmin, logout } = useAuth();
   const location = useLocation();
+  const blogActive = location.pathname.startsWith("/blog");
 
   const navLinks = [
     { label: t("nav.apps"), href: "/#apps" },
@@ -44,6 +45,15 @@ const Navbar = () => {
               {link.label}
             </a>
           ))}
+          <Link
+            to="/blog"
+            aria-current={blogActive ? "page" : undefined}
+            className={`text-sm transition-colors duration-200 ${
+              blogActive ? "text-foreground font-medium" : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            Blog
+          </Link>
           {user && (
             <>
               <Link
@@ -130,6 +140,16 @@ const Navbar = () => {
                 {link.label}
               </a>
             ))}
+            <Link
+              to="/blog"
+              onClick={() => setOpen(false)}
+              aria-current={blogActive ? "page" : undefined}
+              className={`text-sm transition-colors ${
+                blogActive ? "text-foreground font-medium" : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              Blog
+            </Link>
             {user && (
               <>
                 <Link to="/appointments" onClick={() => setOpen(false)} className="text-sm text-muted-foreground hover:text-foreground transition-colors">

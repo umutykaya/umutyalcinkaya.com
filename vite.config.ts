@@ -25,7 +25,7 @@ export default defineConfig(({ mode }) => ({
   },
   plugins: [
     mdx({
-      remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter, remarkGfm],
+      remarkPlugins: [remarkFrontmatter, remarkGfm, remarkMdxFrontmatter],
       rehypePlugins: [
         rehypeSlug,
         [rehypeAutolinkHeadings, { behavior: "wrap" }],

@@ -20,6 +20,8 @@ import ManageBookings from "./pages/admin/ManageBookings.tsx";
 import CalendarSync from "./pages/admin/CalendarSync.tsx";
 import GitHub from "./pages/GitHub.tsx";
 import Resume from "./pages/Resume.tsx";
+import BlogIndex from "./pages/BlogIndex.tsx";
+import BlogPost from "./pages/BlogPost.tsx";
 
 const queryClient = new QueryClient();
 
@@ -36,6 +38,8 @@ const App = () => (
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/resume" element={<Resume />} />
+              <Route path="/blog" element={<BlogIndex />} />
+              <Route path="/blog/:slug" element={<BlogPost />} />
               <Route path="/contact" element={<Navigate to="/#contact" replace />} />
               <Route path="/github" element={<GitHub />} />
               <Route

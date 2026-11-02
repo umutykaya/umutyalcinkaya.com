@@ -18,11 +18,20 @@ function getAutoTheme(): Theme {
   return isNightTime() ? "dark" : "light";
 }
 
+function getStoredValue(key: string): string | null {
+  if (typeof window === "undefined") return null;
+  try {
+    return window.localStorage.getItem(key);
+  } catch {
+    return null;
+  }
+}
+
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [manual, setManual] = useState<boolean>(() => localStorage.getItem("theme-manual") === "true");
+  const [manual, setManual] = useState<boolean>(() => getStoredValue("theme-manual") === "true");
   const [theme, setTheme] = useState<Theme>(() => {
-    if (localStorage.getItem("theme-manual") === "true") {
-      const stored = localStorage.getItem("theme");
+    if (getStoredValue("theme-manual") === "true") {
+      const stored = getStoredValue("theme");
       if (stored === "light" || stored === "dark") return stored;
     }
     return getAutoTheme();

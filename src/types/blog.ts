@@ -16,7 +16,6 @@ export interface BlogPost extends BlogFrontmatter {
 
 export interface BlogMdxModule {
   default: ComponentType<{ components?: Record<string, ComponentType> }>;
-  frontmatter: BlogFrontmatter;
 }
 
 export interface CalloutProps {

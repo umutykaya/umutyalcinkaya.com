@@ -1,0 +1,20 @@
+[
+  {
+    "title": "Hello, world",
+    "date": "2026-10-28",
+    "summary": "A quick hello, and a place to share what I am learning and building.",
+    "tags": ["personal", "updates"],
+    "lang": "en",
+    "slug": "hello-world",
+    "readingTime": 1
+  },
+  {
+    "title": "A small Terraform module, made easier to reason about",
+    "date": "2026-10-30",
+    "summary": "A few practical habits for keeping Terraform modules predictable, reviewable, and safe to change.",
+    "tags": ["terraform", "infrastructure", "engineering"],
+    "lang": "en",
+    "slug": "terraform-basics",
+    "readingTime": 1
+  }
+]
