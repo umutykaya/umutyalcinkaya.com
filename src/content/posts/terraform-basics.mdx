@@ -1,0 +1,46 @@
+---
+title: "A small Terraform module, made easier to reason about"
+date: "2026-10-30"
+summary: "A few practical habits for keeping Terraform modules predictable, reviewable, and safe to change."
+tags:
+  - terraform
+  - infrastructure
+  - engineering
+lang: en
+---
+
+Terraform is easier to maintain when a module has a small interface and makes its assumptions visible. Start with explicit inputs, validate the values that matter, and avoid hiding important defaults.
+
+## Keep inputs deliberate
+
+| Habit | Why it helps |
+| --- | --- |
+| Use descriptive variable names | Makes plans easier to review |
+| Validate constrained values | Catches mistakes before apply |
+| Keep outputs focused | Gives callers a stable interface |
+
+## A compact example
+
+```hcl
+variable "environment" {
+  description = "Deployment environment."
+  type        = string
+
+  validation {
+    condition     = contains(["dev", "staging", "prod"], var.environment)
+    error_message = "Use dev, staging, or prod."
+  }
+}
+
+resource "terraform_data" "deployment" {
+  input = {
+    environment = var.environment
+  }
+}
+```
+
+Keep the plan in version control and review the diff before applying it. For production systems, pair that workflow with a remote state backend and a deliberate access policy.
+
+<Callout type="tip" title="A review habit">
+  Treat every plan as a change proposal. A second pair of eyes is valuable even when the diff looks small.
+</Callout>
