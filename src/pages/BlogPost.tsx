@@ -73,11 +73,11 @@ const BlogPost = ({ initialModule }: BlogPostProps) => {
 
   if (!post) {
     return (
-      <SitePageLayout>
-        <section className="container mx-auto max-w-3xl px-6 pb-24 pt-32">
+      <SitePageLayout readingMode>
+        <section className="mx-auto max-w-3xl px-6 pb-24 pt-32 sm:px-8">
           <p className="mb-3 font-mono text-sm text-accent">404</p>
-          <h1 className="mb-4 text-3xl font-bold text-foreground">Post not found</h1>
-          <p className="mb-8 text-muted-foreground">The post you are looking for does not exist.</p>
+          <h1 className="mb-4 font-serif text-4xl font-normal text-neutral-900 dark:text-neutral-100">Post not found</h1>
+          <p className="mb-8 text-neutral-600 dark:text-neutral-300">The post you are looking for does not exist.</p>
           <Link to="/blog" className="text-accent underline underline-offset-4 hover:text-accent/80">
             Back to blog
           </Link>
@@ -87,8 +87,8 @@ const BlogPost = ({ initialModule }: BlogPostProps) => {
   }
 
   return (
-    <SitePageLayout>
-      <article className="prose prose-neutral dark:prose-invert max-w-none container mx-auto px-6 pb-24 pt-32">
+    <SitePageLayout readingMode>
+      <article className="blog-article prose prose-neutral dark:prose-invert mx-auto max-w-[680px] px-6 pb-24 pt-32 sm:px-8">
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd }} />
         <p className="not-prose mb-6">
           <Link
@@ -98,11 +98,11 @@ const BlogPost = ({ initialModule }: BlogPostProps) => {
             ← Back to blog
           </Link>
         </p>
-        <header className="not-prose mb-10 border-b border-border/50 pb-8">
-          <h1 className="mb-4 text-4xl font-bold leading-tight tracking-tight text-foreground sm:text-5xl">
+        <header className="not-prose mb-8 border-b border-neutral-200 pb-7 dark:border-neutral-700">
+          <h1 className="mb-5 font-serif text-4xl font-normal leading-tight tracking-tight text-neutral-900 dark:text-neutral-100 sm:text-[2.75rem]">
             {post.title}
           </h1>
-          <div className="mb-5 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-muted-foreground">
+          <div className="mb-5 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-neutral-500 dark:text-neutral-400">
             <time dateTime={post.date}>
               {new Intl.DateTimeFormat(post.lang ?? "en", {
                 dateStyle: "long",
@@ -117,7 +117,7 @@ const BlogPost = ({ initialModule }: BlogPostProps) => {
               <li key={tag}>
                 <Link
                   to={`/blog?tag=${encodeURIComponent(tag)}`}
-                  className="rounded-full bg-secondary px-2.5 py-1 text-xs text-secondary-foreground hover:text-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+                  className="rounded-full bg-neutral-100 px-2.5 py-1 text-xs text-neutral-700 transition-colors hover:bg-neutral-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring dark:bg-neutral-800 dark:text-neutral-200 dark:hover:bg-neutral-700"
                 >
                   {tag}
                 </Link>
@@ -125,15 +125,17 @@ const BlogPost = ({ initialModule }: BlogPostProps) => {
             ))}
           </ul>
         </header>
-        <p className="not-prose mb-8 text-xl leading-relaxed text-muted-foreground">{post.summary}</p>
+        <p className="not-prose mb-8 font-serif text-xl leading-relaxed text-neutral-700 dark:text-neutral-300">
+          {post.summary}
+        </p>
         {loadError ? (
-          <p role="alert" className="rounded-xl border border-destructive/50 bg-destructive/5 p-4 text-destructive">
+          <p role="alert" className="rounded-lg border border-red-300 bg-red-50 p-4 font-sans text-base text-red-900 dark:border-red-900 dark:bg-red-950 dark:text-red-100">
             {loadError}
           </p>
         ) : PostContent ? (
           <PostContent components={blogMdxComponents} />
         ) : (
-          <p role="status">Loading post…</p>
+          <p role="status" className="font-sans text-base text-neutral-600 dark:text-neutral-300">Loading post…</p>
         )}
       </article>
     </SitePageLayout>
