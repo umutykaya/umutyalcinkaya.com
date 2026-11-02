@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Umut Yalcinkaya Blog</title>
+    <link>https://umutyalcinkaya.com/blog</link>
+    <description>Notes on projects, technology, and ideas worth exploring.</description>
+    <language>en</language>
+    <lastBuildDate>Fri, 30 Oct 2026 00:00:00 GMT</lastBuildDate>
+    <item>
+      <title>A small Terraform module, made easier to reason about</title>
+      <link>https://umutyalcinkaya.com/blog/terraform-basics</link>
+      <guid isPermaLink="true">https://umutyalcinkaya.com/blog/terraform-basics</guid>
+      <pubDate>Fri, 30 Oct 2026 00:00:00 GMT</pubDate>
+      <description>A few practical habits for keeping Terraform modules predictable, reviewable, and safe to change.</description>
+      <category>terraform</category>
+      <category>infrastructure</category>
+      <category>engineering</category>
+    </item>
+    <item>
+      <title>Hello, world</title>
+      <link>https://umutyalcinkaya.com/blog/hello-world</link>
+      <guid isPermaLink="true">https://umutyalcinkaya.com/blog/hello-world</guid>
+      <pubDate>Wed, 28 Oct 2026 00:00:00 GMT</pubDate>
+      <description>A quick hello, and a place to share what I am learning and building.</description>
+      <category>personal</category>
+      <category>updates</category>
+    </item>
+  </channel>
+</rss>

@@ -4,8 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "predev": "bun run scripts/generate-feeds.ts --include-drafts",
     "dev": "vite",
-    "build": "vite build",
+    "prebuild": "bun run scripts/generate-feeds.ts --production",
+    "build": "vite build && bun run scripts/prerender-blog.ts",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview",

@@ -4,5 +4,5 @@ export const blogMdxComponents = {
   a: StyledLink,
   img: LazyImage,
   pre: CodeBlock,
-  Callout,
+  aside: Callout,
 };

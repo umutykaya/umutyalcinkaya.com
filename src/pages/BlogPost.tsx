@@ -14,7 +14,7 @@ const BlogPost = ({ initialModule }: BlogPostProps) => {
   const { slug = "" } = useParams();
   const post = getBlogPosts().find((item) => item.slug === slug);
   const postSlug = post?.slug;
-  const [module, setModule] = useState<BlogMdxModule["default"] | null>(initialModule ?? null);
+  const [module, setModule] = useState<BlogMdxModule["default"] | null>(() => initialModule ?? null);
   const [loadError, setLoadError] = useState<string | null>(null);
 
   useDocumentMeta({
@@ -37,7 +37,7 @@ const BlogPost = ({ initialModule }: BlogPostProps) => {
     }
     loader
       .then((loadedModule) => {
-        if (active) setModule(loadedModule);
+        if (active) setModule(() => loadedModule);
       })
       .catch((error: unknown) => {
         console.error(`Could not load blog post "${postSlug}":`, error);
