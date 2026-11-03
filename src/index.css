@@ -294,6 +294,11 @@
   text-decoration-thickness: 2px;
 }
 
+.blog-article.prose :where(h2, h3, h4) a,
+.blog-article.prose :where(h2, h3, h4) a:hover {
+  text-decoration: none;
+}
+
 .blog-article.prose :where(strong) {
   color: inherit;
   font-weight: 700;
