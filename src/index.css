@@ -239,70 +239,152 @@
 }
 
 .blog-article.prose {
-  color: #292929;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 1.25rem;
-  line-height: 1.78;
+  color: #242424;
+  font-family: Charter, "Bitstream Charter", "Sitka Text", Cambria, Georgia, serif;
+  font-size: 1.3125rem;
+  line-height: 1.6;
+  letter-spacing: -0.003em;
 }
 
 .dark .blog-article.prose {
-  color: #e5e5e5;
+  color: #e0e0e0;
 }
 
-.blog-article.prose :where(p, ul, ol, blockquote) {
-  margin-top: 1.4em;
-  margin-bottom: 1.4em;
+.blog-article.prose :where(p, ul, ol) {
+  margin-top: 1.7em;
+  margin-bottom: 0;
+}
+
+.blog-article.prose :where(li) {
+  margin-top: 0.7em;
+  margin-bottom: 0;
 }
 
 .blog-article.prose :where(h2, h3, h4) {
   color: #242424;
-  font-family: Georgia, "Times New Roman", serif;
-  font-weight: 600;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.015em;
   line-height: 1.25;
+  margin-bottom: 0;
+}
+
+.blog-article.prose :where(h2) {
+  font-size: 1.75rem;
+  margin-top: 2.2em;
+}
+
+.blog-article.prose :where(h3) {
+  font-size: 1.4rem;
+  margin-top: 1.9em;
 }
 
 .dark .blog-article.prose :where(h2, h3, h4) {
-  color: #f0f0f0;
+  color: #f2f2f2;
 }
 
 .blog-article.prose :where(a) {
-  color: #176b53;
+  color: inherit;
+  text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 3px;
 }
 
-.dark .blog-article.prose :where(a) {
-  color: #78c9aa;
+.blog-article.prose :where(a):hover {
+  text-decoration-thickness: 2px;
+}
+
+.blog-article.prose :where(strong) {
+  color: inherit;
+  font-weight: 700;
 }
 
 .blog-article.prose :where(code) {
-  color: #292929;
-  font-family: "JetBrains Mono", monospace;
-  font-size: 0.82em;
+  background: #f2f2f2;
+  border-radius: 4px;
+  color: #242424;
+  font-family: "JetBrains Mono", Menlo, Consolas, monospace;
+  font-size: 0.8em;
+  font-weight: 400;
+  padding: 0.15em 0.35em;
+}
+
+.blog-article.prose :where(code)::before,
+.blog-article.prose :where(code)::after {
+  content: none;
 }
 
 .dark .blog-article.prose :where(code) {
+  background: #2a2a2a;
   color: #e5e5e5;
 }
 
+.blog-article.prose :where(pre) {
+  background: #f7f7f7;
+  border-radius: 6px;
+  color: #242424;
+  margin-top: 2em;
+  margin-bottom: 0;
+  padding: 1.25rem 1.5rem;
+}
+
+.dark .blog-article.prose :where(pre) {
+  background: #1b1b1b;
+}
+
 .blog-article.prose :where(pre code) {
-  font-size: 0.78rem;
+  background: none;
+  font-size: 0.8rem;
   line-height: 1.7;
+  padding: 0;
 }
 
 .blog-article.prose :where(blockquote) {
-  border-left-color: #b7c9c0;
-  color: #525252;
-  font-style: italic;
+  border-left: 3px solid #242424;
+  color: inherit;
+  font-style: normal;
+  margin-top: 2em;
+  margin-bottom: 0;
+  padding-left: 1.5rem;
+  quotes: none;
+}
+
+.blog-article.prose :where(blockquote p)::before,
+.blog-article.prose :where(blockquote p)::after {
+  content: none;
 }
 
 .dark .blog-article.prose :where(blockquote) {
-  border-left-color: #526b60;
-  color: #c4c4c4;
+  border-left-color: #e0e0e0;
+}
+
+.blog-article.prose :where(hr) {
+  border: 0;
+  margin: 3em 0;
+  text-align: center;
+}
+
+.blog-article.prose :where(hr)::before {
+  color: #6b6b6b;
+  content: "···";
+  font-size: 1.75rem;
+  letter-spacing: 0.6em;
+  padding-left: 0.6em;
+}
+
+.blog-article.prose :where(img) {
+  border-radius: 2px;
+  margin: 2.2em auto 0;
+}
+
+.blog-article.prose :where(table) {
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 0.95rem;
+  margin-top: 2em;
 }
 
 .blog-article.prose :where(th) {
-  color: #292929;
+  color: #242424;
 }
 
 .dark .blog-article.prose :where(th) {

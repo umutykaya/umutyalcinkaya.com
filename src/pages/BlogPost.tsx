@@ -99,7 +99,7 @@ const BlogPost = ({ initialModule }: BlogPostProps) => {
           </Link>
         </p>
         <header className="not-prose mb-8 border-b border-neutral-200 pb-7 dark:border-neutral-700">
-          <h1 className="mb-5 font-serif text-4xl font-normal leading-tight tracking-tight text-neutral-900 dark:text-neutral-100 sm:text-[2.75rem]">
+          <h1 className="mb-5 font-sans text-4xl font-bold leading-[1.15] tracking-[-0.022em] text-neutral-900 dark:text-neutral-100 sm:text-[2.75rem]">
             {post.title}
           </h1>
           <div className="mb-5 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-neutral-500 dark:text-neutral-400">
@@ -125,7 +125,7 @@ const BlogPost = ({ initialModule }: BlogPostProps) => {
             ))}
           </ul>
         </header>
-        <p className="not-prose mb-8 font-serif text-xl leading-relaxed text-neutral-700 dark:text-neutral-300">
+        <p className="not-prose mb-8 font-sans text-xl leading-snug text-neutral-700 dark:text-neutral-300">
           {post.summary}
         </p>
         {loadError ? (
