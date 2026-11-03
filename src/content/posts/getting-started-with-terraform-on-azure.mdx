@@ -1,0 +1,305 @@
+---
+title: "Getting Started with Terraform on Azure"
+date: "2026-11-02"
+summary: "Create your first Azure resource group with Terraform and learn the basic workflow: write, plan, apply."
+tags:
+  - terraform
+  - azure
+  - infrastructure
+lang: en
+---
+
+Creating resources in the Azure portal is a good way to learn. You choose a service, fill in a form, and click Create.
+
+But what happens when you need to create the same setup again? Or when someone asks what changed last week?
+
+Terraform gives you another way to manage infrastructure: write down what you want in code, review the changes, and let Terraform make them.
+
+In this post, we will start with one small example: creating an Azure resource group.
+
+## What is Terraform?
+
+Terraform is an infrastructure as code tool.
+
+“Infrastructure as code” means describing your infrastructure in files instead of creating everything manually.
+
+For example, this code describes an Azure resource group:
+
+```hcl
+resource "azurerm_resource_group" "example" {
+  name     = "rg-terraform-learning"
+  location = "westeurope"
+}
+```
+
+You are telling Terraform:
+
+> I want a resource group called `rg-terraform-learning` in West Europe.
+
+You describe the result you want. Terraform works out which actions are needed to reach it.
+
+## Why use code instead of the portal?
+
+The portal is useful, but code makes your setup easier to repeat and review.
+
+You can:
+
+- Save your infrastructure files in Git.
+- Review changes before applying them.
+- Share the same setup with teammates.
+- Reuse code for another environment.
+
+This does not make every change safe automatically. You still need to understand what Terraform plans to do.
+
+## Three terms to know
+
+Before writing more code, let’s define three words.
+
+### Provider
+
+A provider is the connection between Terraform and a service.
+
+For Azure, the Azure Resource Manager provider is commonly used. Its name in Terraform is `azurerm`.
+
+Terraform uses the provider to communicate with Azure.
+
+### Resource
+
+A resource is something Terraform creates or manages.
+
+Examples include:
+
+- A resource group.
+- A virtual network.
+- A storage account.
+
+In our example, `azurerm_resource_group` is the resource type.
+
+### State
+
+State is Terraform’s record of the infrastructure it manages.
+
+It connects an item in your code to a real resource in Azure.
+
+Keep this record safe. Terraform needs it to manage your resources correctly.
+
+## Before you start
+
+For this example, you need:
+
+- Terraform installed.
+- Azure CLI installed.
+- An Azure subscription.
+- Permission to create a resource group in that subscription.
+
+Use a learning subscription rather than a shared production environment.
+
+Sign in to Azure:
+
+```bash
+az login
+```
+
+Select the subscription you want to use:
+
+```bash
+az account set --subscription "<your-subscription-id>"
+```
+
+Replace the placeholder with your own subscription ID.
+
+## Write your first configuration
+
+Create an empty folder and add a file called `main.tf`.
+
+Paste this configuration into it:
+
+```hcl
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "~> 4.0"
+    }
+  }
+}
+
+provider "azurerm" {
+  features {}
+
+  subscription_id = "<your-subscription-id>"
+}
+
+resource "azurerm_resource_group" "example" {
+  name     = "rg-terraform-learning"
+  location = "westeurope"
+}
+```
+
+Replace `<your-subscription-id>` before continuing.
+
+The configuration has three parts:
+
+1. `required_providers` declares the provider Terraform needs.
+2. `provider` configures its connection to Azure.
+3. `resource` describes the resource group.
+
+The version constraint keeps this example within version 4 of the AzureRM provider. It is not a claim that version 4 is the latest release.
+
+## Prepare the folder
+
+Open a terminal in your project folder and run:
+
+```bash
+terraform init
+```
+
+This prepares the working directory and downloads the required provider.
+
+Terraform also creates a dependency lock file called `.terraform.lock.hcl`. Keep this file in Git so other people can use the same selected provider version.
+
+## Format and check the code
+
+Run:
+
+```bash
+terraform fmt
+terraform validate
+```
+
+These commands do different jobs:
+
+- `fmt` makes the formatting consistent.
+- `validate` checks whether the configuration is internally valid.
+
+Validation does not prove that your Azure permissions are correct or that a deployment will succeed. That is why the next step matters.
+
+## Preview the changes
+
+Run:
+
+```bash
+terraform plan
+```
+
+Terraform checks your configuration and the infrastructure it manages, then shows the changes it proposes.
+
+For this new example, you should expect a plan to create one resource group.
+
+Read the plan before continuing. Check the resource name, location, and subscription.
+
+The plan step does not create the resource group.
+
+## Create the resource group
+
+Run:
+
+```bash
+terraform apply
+```
+
+Terraform creates a new plan and asks you to approve it.
+
+Review the changes again. Type `yes` only if they match what you expect.
+
+After the operation finishes, check the Azure portal. Your resource group should be there.
+
+## What happens when you run it again?
+
+Run:
+
+```bash
+terraform plan
+```
+
+If the configuration and managed infrastructure still match, Terraform should report no changes.
+
+Terraform does not create another copy simply because you run it again. It uses configuration, state, and information from Azure to work out what needs to change.
+
+## Make the example reusable
+
+Hard-coded values are fine for a first example. Variables make them easier to change.
+
+Add:
+
+```hcl
+variable "location" {
+  description = "Azure region for the resource group."
+  type        = string
+  default     = "westeurope"
+}
+```
+
+Then update the resource:
+
+```hcl
+resource "azurerm_resource_group" "example" {
+  name     = "rg-terraform-learning"
+  location = var.location
+}
+```
+
+`var.location` reads the variable’s value.
+
+An output lets you display a useful result:
+
+```hcl
+output "resource_group_name" {
+  value = azurerm_resource_group.example.name
+}
+```
+
+After applying, you can inspect outputs with:
+
+```bash
+terraform output
+```
+
+## Look after your state
+
+For an individual exercise, local state is a simple starting point.
+
+For team projects, use shared remote state with appropriate access controls and locking support.
+
+Remember:
+
+- Do not commit state files to Git.
+- State can contain sensitive information.
+- Do not commit credentials or saved plan files.
+- Keep the dependency lock file in Git.
+
+State is not just a temporary file you can delete whenever you want. It is part of how Terraform tracks your infrastructure.
+
+## Clean up your exercise
+
+When you finish, run:
+
+```bash
+terraform destroy
+```
+
+Read the proposed deletions before approving them.
+
+Use this only in your isolated learning environment. Deleting an Azure resource group can also delete resources inside it, including resources added manually.
+
+## What to learn next
+
+You now have the basic Terraform workflow:
+
+```text
+Write → Initialize → Validate → Plan → Apply
+```
+
+Next, learn how to use modules.
+
+A module groups Terraform configuration into a reusable building block. Instead of writing every resource yourself, you can use a module and provide the settings it needs.
+
+That becomes especially useful when building an Azure landing zone.
+
+## Sources
+
+- [HashiCorp: Core Terraform workflow](https://developer.hashicorp.com/terraform/intro/core-workflow)
+- [HashiCorp: Create a Terraform plan](https://developer.hashicorp.com/terraform/tutorials/cli/plan)
+- [HashiCorp: Terraform Associate learning path](https://developer.hashicorp.com/terraform/tutorials/certification-004/associate-study-004)
+- [HashiCorp: Collaborate with Terraform](https://developer.hashicorp.com/terraform/intro/phases/collaborate)
+- Terraform Associate Exam study material supplied by the author.

@@ -1,5 +1,31 @@
 [
   {
+    "title": "Azure Landing Zones with Terraform and Azure Verified Modules: A Beginner’s Guide",
+    "date": "2026-11-03",
+    "summary": "The main ideas behind Azure landing zones and how Terraform and Azure Verified Modules fit together.",
+    "tags": [
+      "terraform",
+      "azure",
+      "landing-zones"
+    ],
+    "lang": "en",
+    "slug": "azure-landing-zones-with-terraform-and-avm",
+    "readingTime": 7
+  },
+  {
+    "title": "Getting Started with Terraform on Azure",
+    "date": "2026-11-02",
+    "summary": "Create your first Azure resource group with Terraform and learn the basic workflow: write, plan, apply.",
+    "tags": [
+      "terraform",
+      "azure",
+      "infrastructure"
+    ],
+    "lang": "en",
+    "slug": "getting-started-with-terraform-on-azure",
+    "readingTime": 5
+  },
+  {
     "title": "A small Terraform module, made easier to reason about",
     "date": "2026-10-30",
     "summary": "A few practical habits for keeping Terraform modules predictable, reviewable, and safe to change.",

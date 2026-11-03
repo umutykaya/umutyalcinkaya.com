@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://umutyalcinkaya.com/</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://umutyalcinkaya.com/about</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://umutyalcinkaya.com/contact</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://umutyalcinkaya.com/github</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://umutyalcinkaya.com/privacy</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://umutyalcinkaya.com/resume</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://umutyalcinkaya.com/blog</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://umutyalcinkaya.com/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://umutyalcinkaya.com/about</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://umutyalcinkaya.com/contact</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://umutyalcinkaya.com/github</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://umutyalcinkaya.com/privacy</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://umutyalcinkaya.com/resume</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://umutyalcinkaya.com/blog</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://umutyalcinkaya.com/blog/azure-landing-zones-with-terraform-and-avm</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://umutyalcinkaya.com/blog/getting-started-with-terraform-on-azure</loc><lastmod>2026-11-02</lastmod></url>
   <url><loc>https://umutyalcinkaya.com/blog/terraform-basics</loc><lastmod>2026-10-30</lastmod></url>
   <url><loc>https://umutyalcinkaya.com/blog/hello-world</loc><lastmod>2026-10-28</lastmod></url>
 </urlset>

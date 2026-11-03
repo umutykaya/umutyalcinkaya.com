@@ -5,7 +5,27 @@
     <link>https://umutyalcinkaya.com/blog</link>
     <description>Notes on projects, technology, and ideas worth exploring.</description>
     <language>en</language>
-    <lastBuildDate>Fri, 30 Oct 2026 00:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Tue, 03 Nov 2026 00:00:00 GMT</lastBuildDate>
+    <item>
+      <title>Azure Landing Zones with Terraform and Azure Verified Modules: A Beginner’s Guide</title>
+      <link>https://umutyalcinkaya.com/blog/azure-landing-zones-with-terraform-and-avm</link>
+      <guid isPermaLink="true">https://umutyalcinkaya.com/blog/azure-landing-zones-with-terraform-and-avm</guid>
+      <pubDate>Tue, 03 Nov 2026 00:00:00 GMT</pubDate>
+      <description>The main ideas behind Azure landing zones and how Terraform and Azure Verified Modules fit together.</description>
+      <category>terraform</category>
+      <category>azure</category>
+      <category>landing-zones</category>
+    </item>
+    <item>
+      <title>Getting Started with Terraform on Azure</title>
+      <link>https://umutyalcinkaya.com/blog/getting-started-with-terraform-on-azure</link>
+      <guid isPermaLink="true">https://umutyalcinkaya.com/blog/getting-started-with-terraform-on-azure</guid>
+      <pubDate>Mon, 02 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Create your first Azure resource group with Terraform and learn the basic workflow: write, plan, apply.</description>
+      <category>terraform</category>
+      <category>azure</category>
+      <category>infrastructure</category>
+    </item>
     <item>
       <title>A small Terraform module, made easier to reason about</title>
       <link>https://umutyalcinkaya.com/blog/terraform-basics</link>

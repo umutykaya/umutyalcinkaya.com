@@ -1,0 +1,296 @@
+---
+title: "Azure Landing Zones with Terraform and Azure Verified Modules: A Beginner’s Guide"
+date: "2026-11-03"
+summary: "The main ideas behind Azure landing zones and how Terraform and Azure Verified Modules fit together."
+tags:
+  - terraform
+  - azure
+  - landing-zones
+lang: en
+---
+
+Creating one Azure resource is fairly straightforward.
+
+Building an environment for several teams takes more planning.
+
+Where should applications run? Who can change the network? How do you apply common rules? Where do shared services belong?
+
+An Azure landing zone helps answer these questions before the environment becomes difficult to manage.
+
+This post explains the main ideas and how Terraform and Azure Verified Modules fit together. It is a starting guide, not a complete production deployment.
+
+## What is an Azure landing zone?
+
+An Azure landing zone is a prepared environment for running workloads in Azure.
+
+A workload might be a website, an internal application, or a data platform.
+
+The landing zone brings together decisions about:
+
+- How resources are organised.
+- Who can access them.
+- How networking works.
+- Which rules apply.
+- How the environment is monitored and operated.
+
+It is not a single Azure resource or a special kind of resource group.
+
+Think of it as preparing a building before people move in. The rooms matter, but so do the entrances, shared services, and safety rules.
+
+## Platform and application landing zones
+
+It helps to separate two ideas.
+
+### Platform landing zone
+
+The platform landing zone provides shared services and organisation-wide foundations.
+
+These might include central networking, management services, and governance.
+
+A platform team usually manages these shared foundations.
+
+### Application landing zone
+
+An application landing zone gives a workload its own environment within those foundations.
+
+For example, an application team might receive a subscription with the required policies and network connections already in place.
+
+The relationship is:
+
+```text
+Platform foundations
+        ↓
+Prepared application environment
+        ↓
+Application resources
+```
+
+The platform makes it easier for teams to deploy applications without rebuilding the same foundations every time.
+
+## How Azure resources are organised
+
+A simplified hierarchy looks like this:
+
+```text
+Management group
+└── Subscription
+    └── Resource group
+        └── Resources
+```
+
+Each level serves a different purpose.
+
+- Management groups organise subscriptions and help apply governance across them.
+- Subscriptions provide a boundary for resource management, access, and billing.
+- Resource groups hold related resources.
+- Resources are the actual services, such as networks and storage accounts.
+
+You do not need a large hierarchy for your first exercise. Start by understanding why each level exists.
+
+## Where Terraform fits
+
+Terraform describes the landing zone in code.
+
+Instead of making every change manually, you can define the configuration, review a plan, and apply approved changes.
+
+For example, the configuration might describe:
+
+- Management groups.
+- Policy assignments.
+- Virtual networks.
+- Shared monitoring resources.
+
+The exact resources depend on your design.
+
+Terraform is the deployment tool. It does not decide your organisation’s architecture for you.
+
+## What are Azure Verified Modules?
+
+Azure Verified Modules, or AVM, are reusable infrastructure modules designed for Azure.
+
+A module packages configuration behind a set of inputs and outputs.
+
+Instead of writing every resource yourself, you choose an appropriate module and provide the settings it needs.
+
+The relationship is:
+
+```text
+Your configuration
+        ↓
+Azure Verified Modules
+        ↓
+Azure resources
+```
+
+Microsoft provides AVM-based options for deploying platform landing zones with Terraform.
+
+You can use modules directly or use the Azure Landing Zones IaC Accelerator, which also helps prepare the deployment workflow.
+
+## Why use modules?
+
+Imagine several teams all need similar network setups.
+
+Without modules, each team might copy a large collection of resource definitions and change it independently.
+
+With a module, the reusable configuration lives in one building block. Each caller supplies its own settings.
+
+Modules can reduce repeated code, but they do not remove the need to understand the infrastructure.
+
+Before using a module, check:
+
+- What it creates.
+- Which inputs it requires.
+- Which defaults it uses.
+- Which permissions it needs.
+- Which provider versions it supports.
+- How upgrades affect existing resources.
+
+A verified module is a useful building block, not a guarantee that every configuration is right for your organisation.
+
+## Start with a small design
+
+Before writing Terraform, sketch your environment.
+
+For a learning exercise, answer these questions:
+
+1. Which subscription will I use?
+2. What am I trying to learn or deploy?
+3. Do I need shared networking?
+4. Which rules should apply?
+5. Where will Terraform state live?
+6. Which identity will run Terraform?
+
+Keep the scope small enough that you can explain every component.
+
+A first lab does not need to reproduce an entire enterprise platform.
+
+## Choose a deployment path
+
+There are two useful starting points.
+
+### Use the landing zone accelerator
+
+The Azure Landing Zones IaC Accelerator helps prepare an environment for deploying and managing a platform landing zone.
+
+It supports Terraform with AVM and can set up a deployment workflow using GitHub or Azure DevOps.
+
+This is a useful path when you want a guided approach that includes automation.
+
+### Use AVM modules directly
+
+You can also build your own Terraform configuration around the modules you need.
+
+This gives you more direct control, but you must handle the surrounding setup yourself, including authentication, state, permissions, and deployment order.
+
+For learning, start with an official working example rather than assembling unfamiliar modules from scratch.
+
+## Read the configuration before running it
+
+Whether you use an accelerator or an example project, inspect the files first.
+
+Look for:
+
+| What to find | Why it matters |
+|---|---|
+| Provider requirements | Shows which providers and versions are needed |
+| Module blocks | Shows which reusable building blocks are used |
+| Variables | Shows the settings you must provide |
+| Outputs | Shows the values made available after deployment |
+| Backend configuration | Shows where Terraform state is stored |
+| Deployment instructions | Shows prerequisites and the intended workflow |
+
+Do not run a configuration simply because it is described as a sample.
+
+Understand which Azure environment it targets and what it will change.
+
+## Plan before applying
+
+Once the prerequisites and inputs are ready, the Terraform workflow is familiar:
+
+```bash
+terraform init
+terraform fmt
+terraform validate
+terraform plan
+```
+
+These commands must run in the directory containing the deployment configuration.
+
+A landing zone may affect more than one subscription or change rules that apply to existing resources.
+
+When reading the plan, ask:
+
+- Are these the intended subscriptions?
+- Are any resources being deleted or replaced?
+- Are policies being assigned at the correct scope?
+- Are the names and regions correct?
+- Do I understand the shared services being created?
+
+Only continue when the proposed changes are clear.
+
+Then run:
+
+```bash
+terraform apply
+```
+
+Review the final plan before approving it.
+
+## Verify more than the command result
+
+A successful Terraform operation means the provider completed the requested actions. It does not prove that the environment meets every requirement.
+
+Check the results in Azure:
+
+- Is the resource organisation correct?
+- Are the expected policy assignments present?
+- Can the intended users access the environment?
+- Do network connections work as designed?
+- Are monitoring resources configured as intended?
+
+Verification connects your original design to what was actually deployed.
+
+## Treat the landing zone as an ongoing project
+
+A landing zone is not finished after its first deployment.
+
+Teams change. Policies evolve. Modules receive updates.
+
+Keep changes small and reviewable:
+
+```text
+Change code
+    ↓
+Review the plan
+    ↓
+Approve the change
+    ↓
+Apply and verify
+```
+
+Use shared, protected state for team deployments. Review module upgrades before applying them.
+
+Be especially careful with cleanup. Destroying shared platform resources can affect applications and teams that depend on them. Use a dedicated lab environment for experiments.
+
+## A sensible learning path
+
+Learn the pieces in this order:
+
+1. Create a resource group with Terraform.
+2. Use variables and outputs.
+3. Understand state.
+4. Deploy one resource through an AVM module.
+5. Read a small landing zone example.
+6. Explore the landing zone accelerator.
+7. Add automation after you understand the manual workflow.
+
+You do not need to understand every Azure service before starting. You do need to understand what your next deployment will change.
+
+## Sources
+
+- [Microsoft Learn: Platform landing zone implementation options](https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/landing-zone/implementation-options)
+- [Microsoft Learn: Deploy Azure Landing Zones](https://learn.microsoft.com/en-us/azure/architecture/landing-zones/landing-zone-deploy)
+- [Microsoft Learn: Azure Verified Modules](https://learn.microsoft.com/en-us/community/content/azure-verified-modules)
+- [Microsoft Learn: Introduction to using Azure Verified Modules for Terraform](https://learn.microsoft.com/en-us/samples/azure-samples/avm-terraform-labs/avm-terraform-labs/)
+- [HashiCorp: Core Terraform workflow](https://developer.hashicorp.com/terraform/intro/core-workflow)
+- [HashiCorp: Collaborate with Terraform](https://developer.hashicorp.com/terraform/intro/phases/collaborate)
