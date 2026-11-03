@@ -81,7 +81,8 @@
   },
   "footer": {
     "rights": "All rights reserved.",
-    "builtWith": "Built with precision & care"
+    "builtWith": "Built with precision & care",
+    "privacy": "Privacy Policy"
   },
   "notFound": {
     "title": "404",

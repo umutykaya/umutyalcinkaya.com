@@ -81,7 +81,8 @@
   },
   "footer": {
     "rights": "Tous droits réservés.",
-    "builtWith": "Fait avec précision et soin"
+    "builtWith": "Fait avec précision et soin",
+    "privacy": "Politique de confidentialité"
   },
   "notFound": {
     "title": "404",

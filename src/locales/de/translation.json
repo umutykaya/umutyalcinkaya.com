@@ -81,7 +81,8 @@
   },
   "footer": {
     "rights": "Alle Rechte vorbehalten.",
-    "builtWith": "Mit Präzision und Sorgfalt gebaut"
+    "builtWith": "Mit Präzision und Sorgfalt gebaut",
+    "privacy": "Datenschutzerklärung"
   },
   "notFound": {
     "title": "404",

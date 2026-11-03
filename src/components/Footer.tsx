@@ -1,5 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { Github, Linkedin, Mail, Twitter, Instagram } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const socials = [
   { icon: Github, label: "GitHub", href: import.meta.env.VITE_GITHUB_URL },
@@ -33,6 +34,18 @@ const Footer = () => {
               );
             })}
           </div>
+
+          <nav aria-label="Footer" className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-muted-foreground">
+            <Link to="/about" className="hover:text-foreground transition-colors">
+              {t("nav.about")}
+            </Link>
+            <Link to="/contact" className="hover:text-foreground transition-colors">
+              {t("nav.contact")}
+            </Link>
+            <Link to="/privacy" className="hover:text-foreground transition-colors">
+              {t("footer.privacy")}
+            </Link>
+          </nav>
 
           {/* Divider */}
           <div className="w-12 h-px bg-border/50" />

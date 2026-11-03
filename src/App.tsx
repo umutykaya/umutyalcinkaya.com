@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -20,6 +20,9 @@ import ManageBookings from "./pages/admin/ManageBookings.tsx";
 import CalendarSync from "./pages/admin/CalendarSync.tsx";
 import GitHub from "./pages/GitHub.tsx";
 import Resume from "./pages/Resume.tsx";
+import About from "./pages/About.tsx";
+import Contact from "./pages/Contact.tsx";
+import PrivacyPolicy from "./pages/PrivacyPolicy.tsx";
 import BlogIndex from "./pages/BlogIndex.tsx";
 import BlogPost from "./pages/BlogPost.tsx";
 
@@ -38,9 +41,11 @@ const App = () => (
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/resume" element={<Resume />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/privacy" element={<PrivacyPolicy />} />
               <Route path="/blog" element={<BlogIndex />} />
               <Route path="/blog/:slug" element={<BlogPost />} />
-              <Route path="/contact" element={<Navigate to="/#contact" replace />} />
               <Route path="/github" element={<GitHub />} />
               <Route
                 path="/profile"
