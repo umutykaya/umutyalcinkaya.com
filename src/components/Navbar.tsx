@@ -4,7 +4,6 @@ import { Link, useLocation } from "react-router-dom";
 import { Menu, X, Sun, Moon, FileText } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useAuth } from "@/contexts/AuthContext";
-import LanguageSwitcher from "./LanguageSwitcher";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -81,7 +80,6 @@ const Navbar = () => {
         </div>
 
         <div className="hidden md:flex items-center gap-2">
-          <LanguageSwitcher />
           <button
             onClick={toggleTheme}
             className="p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
@@ -169,7 +167,6 @@ const Navbar = () => {
               </>
             )}
             <div className="flex items-center gap-2 pt-2 border-t border-border/30">
-              <LanguageSwitcher />
               <button
                 onClick={toggleTheme}
                 className="p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
