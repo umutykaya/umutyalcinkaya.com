@@ -1,6 +1,5 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import AnimatedBackground from "@/components/AnimatedBackground";
 import {
   Briefcase,
   GraduationCap,
@@ -161,7 +160,6 @@ const languages = [
 const Resume = () => {
   return (
     <div className="min-h-screen bg-background relative">
-      <AnimatedBackground />
       <div className="relative z-10">
         <Navbar />
 

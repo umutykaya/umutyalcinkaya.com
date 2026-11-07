@@ -1,13 +1,9 @@
-import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { ArrowRight, ChevronDown, FileText, Github, Linkedin, Mail } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import profilePhoto from "@/assets/pp.png";
 
-// three.js is heavy — load it in its own chunk after first paint
-const KusamaTorus = lazy(() => import("./KusamaTorus"));
-
-const roles = ["Platform Engineer", "Cloud Architect", "DevOps", "Full Stack Developer"];
+const role = "Platform Engineer";
 
 const stack = [
   "AWS",
@@ -24,80 +20,17 @@ const stack = [
   "Helm",
 ];
 
-const prefersReducedMotion = () =>
-  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-// Types out each role, pauses, deletes it, then moves to the next one
-const useTypewriter = (words: string[]) => {
-  const [text, setText] = useState(prefersReducedMotion() ? words[0] : "");
-
-  useEffect(() => {
-    if (prefersReducedMotion()) return;
-
-    let wordIndex = 0;
-    let charIndex = 0;
-    let deleting = false;
-    let timeout: ReturnType<typeof setTimeout>;
-
-    const tick = () => {
-      const word = words[wordIndex];
-      charIndex += deleting ? -1 : 1;
-      setText(word.slice(0, charIndex));
-
-      let delay = deleting ? 40 : 80;
-      if (!deleting && charIndex === word.length) {
-        deleting = true;
-        delay = 1800;
-      } else if (deleting && charIndex === 0) {
-        deleting = false;
-        wordIndex = (wordIndex + 1) % words.length;
-        delay = 400;
-      }
-      timeout = setTimeout(tick, delay);
-    };
-
-    timeout = setTimeout(tick, 600);
-    return () => clearTimeout(timeout);
-  }, [words]);
-
-  return text;
-};
-
 const HeroSection = () => {
   const { t } = useTranslation();
-  const sectionRef = useRef<HTMLElement>(null);
-  const role = useTypewriter(roles);
-
-  // Spotlight follows the cursor via CSS vars, so no re-renders
-  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
-    const el = sectionRef.current;
-    if (!el) return;
-    const rect = el.getBoundingClientRect();
-    el.style.setProperty("--spot-x", `${e.clientX - rect.left}px`);
-    el.style.setProperty("--spot-y", `${e.clientY - rect.top}px`);
-  };
-
   return (
-    <section
-      ref={sectionRef}
-      onMouseMove={handleMouseMove}
-      className="relative min-h-screen flex flex-col justify-center overflow-hidden hero-spotlight"
-    >
-      {/* Gradient orbs */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-accent/10 rounded-full blur-3xl animate-float" />
-      <div
-        className="absolute bottom-1/4 right-1/4 w-72 h-72 bg-accent/5 rounded-full blur-3xl animate-float"
-        style={{ animationDelay: "3s" }}
-      />
-
+    <section className="relative min-h-screen flex flex-col justify-center overflow-hidden">
       <div className="container mx-auto px-6 relative z-10 pt-24 pb-12">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Left: Text content */}
           <div>
             {/* Status badge */}
             <div
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-border/60 bg-secondary/50 backdrop-blur mb-8 opacity-0 animate-fade-up"
-              style={{ animationDelay: "0.1s" }}
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-border/60 bg-secondary/50 backdrop-blur mb-8"
             >
               <span className="relative flex w-2 h-2">
                 <span className="absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-75 animate-ping" />
@@ -110,36 +43,31 @@ const HeroSection = () => {
 
             {/* Main headline */}
             <h1
-              className="text-5xl sm:text-7xl lg:text-8xl font-bold leading-[0.95] mb-6 opacity-0 animate-fade-up"
-              style={{ animationDelay: "0.2s" }}
+              className="text-5xl sm:text-7xl lg:text-8xl font-bold leading-[0.95] mb-6"
             >
               {t("hero.title1")}
               <br />
-              <span className="text-gradient-animated">{t("hero.title2")}</span>
+              <span className="text-gradient">{t("hero.title2")}</span>
             </h1>
 
             {/* Typewriter role */}
             <p
-              className="font-mono text-base sm:text-lg text-foreground/80 mb-6 h-7 opacity-0 animate-fade-up"
-              style={{ animationDelay: "0.3s" }}
-              aria-label={roles.join(", ")}
+              className="font-mono text-base sm:text-lg text-foreground/80 mb-6 h-7"
+             
             >
               <span className="text-accent">~$</span> {role}
-              <span className="hero-caret" aria-hidden="true" />
             </p>
 
             {/* Subtitle */}
             <p
-              className="text-lg sm:text-xl text-muted-foreground max-w-xl mb-10 opacity-0 animate-fade-up"
-              style={{ animationDelay: "0.4s" }}
+              className="text-lg sm:text-xl text-muted-foreground max-w-xl mb-10"
             >
               {t("hero.subtitle")}
             </p>
 
             {/* CTA row */}
             <div
-              className="flex flex-wrap items-center gap-4 opacity-0 animate-fade-up"
-              style={{ animationDelay: "0.6s" }}
+              className="flex flex-wrap items-center gap-4"
             >
               <a
                 href="#contact"
@@ -168,8 +96,7 @@ const HeroSection = () => {
 
             {/* Social links */}
             <div
-              className="flex items-center gap-4 mt-12 opacity-0 animate-fade-up"
-              style={{ animationDelay: "0.8s" }}
+              className="flex items-center gap-4 mt-12"
             >
               <a
                 href={import.meta.env.VITE_GITHUB_URL}
@@ -203,23 +130,14 @@ const HeroSection = () => {
             </div>
           </div>
 
-          {/* Right: Avatar with gradient ring inside a framed torus animation */}
-          <div
-            className="relative flex justify-center opacity-0 animate-fade-up"
-            style={{ animationDelay: "0.6s" }}
-          >
-            <div className="relative flex items-center justify-center w-full max-w-md lg:max-w-lg aspect-square rounded-3xl border border-border bg-card/60 shadow-xl overflow-hidden">
-              <Suspense fallback={null}>
-                <KusamaTorus />
-              </Suspense>
-              <div className="absolute inset-0 rounded-full bg-accent/10 blur-3xl scale-50" />
-              <div className="hero-ring relative rounded-full p-[3px]">
-                <img
-                  src={profilePhoto}
-                  alt="Umut Yalcinkaya"
-                  className="relative w-40 h-40 sm:w-48 sm:h-48 lg:w-56 lg:h-56 rounded-full object-cover bg-background"
-                />
-              </div>
+          {/* Right: Avatar with gradient ring */}
+          <div className="relative flex justify-center">
+            <div className="hero-ring relative rounded-full p-[3px]">
+              <img
+                src={profilePhoto}
+                alt="Umut Yalcinkaya"
+                className="relative w-48 h-48 sm:w-64 sm:h-64 lg:w-80 lg:h-80 xl:w-96 xl:h-96 rounded-full object-cover bg-background"
+              />
             </div>
           </div>
         </div>
@@ -227,15 +145,13 @@ const HeroSection = () => {
 
       {/* Tech stack marquee */}
       <div
-        className="relative z-10 w-full border-y border-border/40 bg-background/30 backdrop-blur-sm py-4 hero-marquee-mask opacity-0 animate-fade-up"
-        style={{ animationDelay: "1s" }}
+        className="relative z-10 w-full border-y border-border/40 bg-background/30 backdrop-blur-sm py-4"
       >
-        <div className="hero-marquee flex w-max gap-12">
-          {[...stack, ...stack].map((tech, i) => (
+        <div className="container mx-auto px-6 flex flex-wrap justify-center gap-x-8 gap-y-2">
+          {stack.map((tech) => (
             <span
-              key={i}
+              key={tech}
               className="font-mono text-sm text-muted-foreground whitespace-nowrap"
-              aria-hidden={i >= stack.length}
             >
               <span className="text-accent/70">#</span> {tech}
             </span>
@@ -246,7 +162,7 @@ const HeroSection = () => {
       {/* Scroll hint */}
       <a
         href="#apps"
-        className="relative z-10 mx-auto mt-6 mb-6 text-muted-foreground hover:text-foreground transition-colors animate-bounce"
+        className="relative z-10 mx-auto mt-6 mb-6 text-muted-foreground hover:text-foreground transition-colors"
         aria-label={t("hero.viewWork")}
       >
         <ChevronDown size={22} />

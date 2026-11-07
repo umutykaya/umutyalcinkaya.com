@@ -99,7 +99,7 @@ const AppsSection = () => {
                 <div className="px-2 sm:px-0 lg:pr-4">
                   <div className="flex items-center gap-3 mb-3">
                     <span className="inline-flex items-center gap-1.5 rounded-full border border-green-500/30 bg-green-500/10 px-2.5 py-0.5 text-[11px] font-medium text-green-600 dark:text-green-400">
-                      <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
                       {t("apps.live")}
                     </span>
                     <span className="text-xs font-mono text-muted-foreground truncate">

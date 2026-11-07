@@ -3,7 +3,6 @@ import { useTranslation } from "react-i18next";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Github, RefreshCw } from "lucide-react";
 import Navbar from "@/components/Navbar";
-import AnimatedBackground from "@/components/AnimatedBackground";
 import BackToHome from "@/components/BackToHome";
 import GitHubProfileCard from "@/components/github/GitHubProfileCard";
 import ContributionHeatmap from "@/components/github/ContributionHeatmap";
@@ -117,7 +116,6 @@ const GitHub = () => {
 
   return (
     <div className="min-h-screen bg-background relative">
-      <AnimatedBackground />
       <div className="relative z-10">
       <Navbar />
 

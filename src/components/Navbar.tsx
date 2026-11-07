@@ -122,7 +122,7 @@ const Navbar = () => {
       </div>
 
       {open && (
-        <div className="md:hidden glass border-t border-border/50 animate-fade-in">
+        <div className="md:hidden glass border-t border-border/50">
           <div className="container mx-auto px-6 py-4 flex flex-col gap-3">
             {navLinks.map((link) => (
               <a

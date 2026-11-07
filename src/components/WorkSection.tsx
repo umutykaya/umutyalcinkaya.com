@@ -113,7 +113,7 @@ const WorkSection = () => {
                 return (
                   <div
                     key={repo.id}
-                    className="opacity-0 animate-fade-up"
+                    className=""
                     style={{ animationDelay: `${0.1 * i}s` }}
                   >
                     <ProjectCard

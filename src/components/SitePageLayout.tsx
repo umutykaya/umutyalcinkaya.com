@@ -1,5 +1,4 @@
 import type { ReactNode } from "react";
-import AnimatedBackground from "@/components/AnimatedBackground";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 
@@ -14,7 +13,6 @@ const SitePageLayout = ({ children, readingMode = false }: SitePageLayoutProps) 
       readingMode ? "reading-layout bg-white text-neutral-900 dark:bg-[#191919] dark:text-neutral-100" : "bg-background"
     }`}
   >
-    {!readingMode && <AnimatedBackground />}
     <div className="relative z-10">
       <Navbar />
       <main>{children}</main>
