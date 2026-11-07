@@ -10,7 +10,7 @@ import AnimatedBackground from "@/components/AnimatedBackground";
 const Index = () => {
   return (
     <div className="min-h-screen bg-background relative">
-      <AnimatedBackground showTorus />
+      <AnimatedBackground />
       <div className="relative z-10">
         <Navbar />
         <HeroSection />

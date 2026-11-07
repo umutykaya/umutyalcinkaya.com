@@ -55,15 +55,12 @@ const KusamaTorus = () => {
     }
 
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(
-      75,
-      window.innerWidth / window.innerHeight,
-      0.1,
-      1000,
-    );
+    const width = () => container.clientWidth || 1;
+    const height = () => container.clientHeight || 1;
+    const camera = new THREE.PerspectiveCamera(75, width() / height(), 0.1, 1000);
     camera.position.z = 20;
 
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setSize(width(), height());
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     container.appendChild(renderer.domElement);
 
@@ -81,25 +78,21 @@ const KusamaTorus = () => {
     const torus = new THREE.Mesh(geometry, material);
     scene.add(torus);
 
+    // Track the frame's size, not the window's
     const handleResize = () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.aspect = width() / height();
       camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setSize(width(), height());
     };
-    window.addEventListener("resize", handleResize);
+    const resizeObserver = new ResizeObserver(handleResize);
+    resizeObserver.observe(container);
 
-    // Fade out over the first ~60% of a viewport of scrolling
+    // Skip GPU work while the frame is scrolled out of view
     let visible = true;
-    const handleScroll = () => {
-      const opacity = Math.max(
-        0,
-        1 - window.scrollY / (window.innerHeight * 0.6),
-      );
-      container.style.opacity = String(opacity);
-      visible = opacity > 0;
-    };
-    handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
+    const intersectionObserver = new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting;
+    });
+    intersectionObserver.observe(container);
 
     const reduceMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
@@ -107,7 +100,6 @@ const KusamaTorus = () => {
 
     let frameId = 0;
     const animate = () => {
-      // Skip GPU work while scrolled out of view
       if (visible) {
         material.uniforms.time.value += 0.01;
         torus.rotation.x += 0.001;
@@ -125,8 +117,8 @@ const KusamaTorus = () => {
 
     return () => {
       cancelAnimationFrame(frameId);
-      window.removeEventListener("resize", handleResize);
-      window.removeEventListener("scroll", handleScroll);
+      resizeObserver.disconnect();
+      intersectionObserver.disconnect();
       geometry.dispose();
       material.dispose();
       renderer.dispose();
@@ -135,10 +127,7 @@ const KusamaTorus = () => {
   }, []);
 
   return (
-    <div
-      ref={containerRef}
-      className="absolute inset-0 transition-opacity duration-150"
-    />
+    <div ref={containerRef} className="absolute inset-0" />
   );
 };
 

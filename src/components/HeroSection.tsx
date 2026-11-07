@@ -1,8 +1,11 @@
-import { useEffect, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { ArrowRight, ChevronDown, FileText, Github, Linkedin, Mail } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import profilePhoto from "@/assets/pp.png";
+
+// three.js is heavy — load it in its own chunk after first paint
+const KusamaTorus = lazy(() => import("./KusamaTorus"));
 
 const roles = ["Platform Engineer", "Cloud Architect", "DevOps", "Full Stack Developer"];
 
@@ -19,14 +22,6 @@ const stack = [
   "Django",
   "Databricks",
   "Helm",
-];
-
-const whoami = [
-  { key: "role", value: "Senior Platform Engineer" },
-  { key: "exp", value: "8+ years" },
-  { key: "cloud", value: "AWS · Azure · GCP" },
-  { key: "iac", value: "Terraform · Bicep · CDK" },
-  { key: "loc", value: "Netherlands" },
 ];
 
 const prefersReducedMotion = () =>
@@ -208,41 +203,22 @@ const HeroSection = () => {
             </div>
           </div>
 
-          {/* Right: Avatar with gradient ring + floating terminal card */}
+          {/* Right: Avatar with gradient ring inside a framed torus animation */}
           <div
             className="relative flex justify-center opacity-0 animate-fade-up"
             style={{ animationDelay: "0.6s" }}
           >
-            <div className="relative">
-              <div className="absolute -inset-6 rounded-full bg-accent/15 blur-3xl" />
+            <div className="relative flex items-center justify-center w-full max-w-md lg:max-w-lg aspect-square rounded-3xl border border-border bg-card/60 shadow-xl overflow-hidden">
+              <Suspense fallback={null}>
+                <KusamaTorus />
+              </Suspense>
+              <div className="absolute inset-0 rounded-full bg-accent/10 blur-3xl scale-50" />
               <div className="hero-ring relative rounded-full p-[3px]">
                 <img
                   src={profilePhoto}
                   alt="Umut Yalcinkaya"
-                  className="relative w-48 h-48 sm:w-64 sm:h-64 lg:w-80 lg:h-80 xl:w-96 xl:h-96 rounded-full object-cover bg-background"
+                  className="relative w-40 h-40 sm:w-48 sm:h-48 lg:w-56 lg:h-56 rounded-full object-cover bg-background"
                 />
-              </div>
-
-              <div className="hidden sm:block absolute -bottom-10 -left-16 lg:-left-24 w-72 rounded-xl glass shadow-2xl animate-float">
-                <div className="flex items-center gap-1.5 px-3 py-2 border-b border-border/50">
-                  <span className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
-                  <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/80" />
-                  <span className="w-2.5 h-2.5 rounded-full bg-green-500/80" />
-                  <span className="ml-2 text-[10px] font-mono text-muted-foreground">
-                    zsh — umut
-                  </span>
-                </div>
-                <div className="px-4 py-3 font-mono text-xs leading-relaxed">
-                  <p className="text-muted-foreground">
-                    <span className="text-accent">~$</span> whoami --verbose
-                  </p>
-                  {whoami.map((line) => (
-                    <p key={line.key} className="whitespace-pre">
-                      <span className="text-accent/80">{line.key.padEnd(7)}</span>
-                      <span className="text-foreground/90">{line.value}</span>
-                    </p>
-                  ))}
-                </div>
               </div>
             </div>
           </div>
