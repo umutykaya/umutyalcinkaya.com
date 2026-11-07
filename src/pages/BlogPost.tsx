@@ -4,6 +4,7 @@ import SitePageLayout from "@/components/SitePageLayout";
 import { blogMdxComponents } from "@/components/blog/mdx-component-map";
 import { getBlogPosts, loadPostBody } from "@/lib/blog-posts";
 import type { BlogMdxModule } from "@/types/blog";
+import BlogThumbnail from "@/components/blog/BlogThumbnail";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 
 interface BlogPostProps {
@@ -125,6 +126,7 @@ const BlogPost = ({ initialModule }: BlogPostProps) => {
             ))}
           </ul>
         </header>
+        <BlogThumbnail post={post} className="not-prose mb-8 aspect-[16/9] w-full rounded-xl" />
         <p className="not-prose mb-8 font-sans text-xl leading-snug text-neutral-700 dark:text-neutral-300">
           {post.summary}
         </p>
