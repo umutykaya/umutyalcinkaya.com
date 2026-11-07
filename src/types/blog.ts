@@ -7,6 +7,8 @@ export interface BlogFrontmatter {
   tags: string[];
   draft?: boolean;
   lang?: string;
+  /** Optional thumbnail image URL/path; a generated thumbnail is used when omitted. */
+  image?: string;
 }
 
 export interface BlogPost extends BlogFrontmatter {

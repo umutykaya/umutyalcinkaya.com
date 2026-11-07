@@ -1,6 +1,7 @@
 import { Link, useSearchParams } from "react-router-dom";
 import SitePageLayout from "@/components/SitePageLayout";
 import { getBlogPosts } from "@/lib/blog-posts";
+import BlogThumbnail from "@/components/blog/BlogThumbnail";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 
 const BlogIndex = () => {
@@ -67,7 +68,16 @@ const BlogIndex = () => {
           <ul>
             {posts.map((post) => (
               <li key={post.slug} className="border-b border-neutral-200 py-7 first:pt-2 dark:border-neutral-700">
-                <article>
+                <article className="flex flex-col gap-5 sm:flex-row sm:items-start">
+                  <Link
+                    to={`/blog/${post.slug}`}
+                    tabIndex={-1}
+                    aria-hidden="true"
+                    className="block w-full shrink-0 sm:w-48"
+                  >
+                    <BlogThumbnail post={post} className="aspect-[16/9] w-full rounded-lg" />
+                  </Link>
+                  <div className="min-w-0 flex-1">
                   <header>
                     <h2 className="mb-2 font-serif text-2xl font-semibold leading-snug text-neutral-900 dark:text-neutral-100 sm:text-[1.7rem]">
                       <Link
@@ -103,6 +113,7 @@ const BlogIndex = () => {
                       </li>
                     ))}
                   </ul>
+                  </div>
                 </article>
               </li>
             ))}

@@ -90,6 +90,7 @@ export function parsePost(slug: string, source: string): BlogPost {
     summary,
     tags,
     ...(draftValue === "true" ? { draft: true } : {}),
+    ...(typeof values.image === "string" && values.image ? { image: values.image } : {}),
     lang: typeof values.lang === "string" ? values.lang : "en",
   };
 
