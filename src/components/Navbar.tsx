@@ -95,6 +95,14 @@ const Navbar = () => {
             <FileText size={16} />
             {t("nav.resume")}
           </Link>
+          {!user && (
+            <Link
+              to="/register"
+              className="text-sm font-semibold px-4 py-2 rounded-lg bg-amber-400 text-slate-900 shadow-sm hover:bg-amber-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400 transition-colors"
+            >
+              {t("nav.register")}
+            </Link>
+          )}
           <a
             href="/#contact"
             className="text-sm px-4 py-2 rounded-lg bg-accent text-accent-foreground hover:bg-accent/90 transition-colors"
@@ -112,6 +120,15 @@ const Navbar = () => {
             <FileText size={14} />
             {t("nav.resume")}
           </Link>
+          {!user && (
+            <Link
+              to="/register"
+              onClick={() => setOpen(false)}
+              className="text-sm font-semibold px-3 py-1.5 rounded-lg bg-amber-400 text-slate-900 hover:bg-amber-300 transition-colors"
+            >
+              {t("nav.register")}
+            </Link>
+          )}
           <button
             onClick={() => setOpen(!open)}
             className="text-foreground"
